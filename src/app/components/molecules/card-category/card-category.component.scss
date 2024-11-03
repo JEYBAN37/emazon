@@ -2,12 +2,10 @@
     font-family: 'Poppins', sans-serif;
     max-width: 24rem; /* Ancho máximo */
     border-radius: 0.5rem; /* Bordes redondeados */
-    overflow: hidden; /* Oculta el desbordamiento */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06); /* Sombra */
     background-color: #ffffff; /* Fondo blanco */
     border: 1px solid #e2e8f0; /* Borde ligero */
     display: flex;
-    justify-content: center;
     flex-direction: column;
   }
   
@@ -39,7 +37,7 @@
     padding: 1.5rem; /* Espaciado interno */
     font-size: 1rem; /* Tamaño de fuente base */
     color: #4a5568; /* Gris oscuro para contenido */
-    flex: 1; /* Permite que el contenido crezca */
+    height: 100%; /* Altura máxima del contenedor */
 
   }
   
@@ -49,6 +47,7 @@
     background-color: #f9fafb; /* Fondo claro */
     text-align: right; /* Alineación del contenido del footer */
     font-size: 0.875rem; /* Tamaño de fuente más pequeño */
+    margin-bottom: 30px;
   }
 
   .space-vertical {

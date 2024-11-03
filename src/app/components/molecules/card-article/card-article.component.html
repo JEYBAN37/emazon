@@ -1,0 +1,58 @@
+
+<div class="card">
+    <div class="card-header">
+        <h1 class="card-title">Crear Articulo</h1>
+        <h2 class="card-description">Agrega nuevo articulo</h2>
+    </div>
+    <form [formGroup] = "articleForm" >
+        <div class="card-content space-vertical-content ">
+
+            <app-input
+            label="Nombre"
+            [control]="nameControl('name')"
+            [errorMessages]="[
+              { key: 'required', message: 'El nombre es requerido' },
+              { key: 'maxlength', message: 'El nombre debe ser menor a 50 caracteres' }
+            ]"
+          ></app-input>
+
+            <app-text-input
+            label="Descripcion"
+            [control]="nameControl('description')"
+            [errorMessages]="[
+              { key: 'required', message: 'descripcion es requerida' },
+              { key: 'maxlength', message: 'nombre debe ser menor a 90 caracters' }
+            ]"
+          ></app-text-input>
+
+        <app-input
+            label="Cantidad"
+            type="number"
+            [control]="nameControl('quantity')"
+            [errorMessages]="[
+              { key: 'required', message: 'La cantidad es requerida' }]"
+          ></app-input>
+
+          <app-input
+          label="Marca"
+          [control]="nameControl('brand')"
+          [errorMessages]="[
+            { key: 'required', message: 'La marca es requerida' }
+          ]"
+        ></app-input>
+
+        <app-input
+        label="Categoria"
+        type="select"
+        [control]="nameControl('articleCategories')"
+        [errorMessages]="[
+          { key: 'required', message: 'La categoria es requerida' }
+        ]"
+      ></app-input>
+
+        </div>
+        <div class="card-footer">
+            <button class="btn-primary" (click)="send()">Crear</button>
+        </div>
+    </form>
+</div>

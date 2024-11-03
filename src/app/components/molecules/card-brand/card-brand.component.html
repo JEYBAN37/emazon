@@ -1,0 +1,31 @@
+
+<div class="card">
+    <div class="card-header">
+        <h1 class="card-title">Crear Marca</h1>
+        <h2 class="card-description">Agregar nueva marca</h2>
+    </div>
+    <form [formGroup] = "categoryForm" >
+
+        <div class="card-content space-vertical-content ">
+            <app-input
+            [control]="nameControl('name')"
+            label="Nombre"
+            [errorMessages]="[
+              { key: 'required', message: 'El nombre es requerido' },
+              { key: 'maxlength', message: 'El nombre debe ser menor a 50 caracteres' }
+            ]"
+          ></app-input>
+          <app-text-input
+          label="Descripcion"
+          [control]="nameControl('description')"
+          [errorMessages]="[
+            { key: 'required', message: 'descripcion es requerida' },
+            { key: 'maxlength', message: 'nombre debe ser menor a 90 caracters' }
+          ]"
+        ></app-text-input>
+        </div>
+        <div class="card-footer">
+            <button class="btn-primary" (click)="send()" >Crear</button>
+        </div>
+    </form>
+</div>

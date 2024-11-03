@@ -1,0 +1,88 @@
+<div class="card">
+  <div class="card-header">
+    <h1 class="card-title">Crear Usuario Auxiliar</h1>
+    <h2 class="card-description">Agrega nuevo usuario</h2>
+  </div>
+  <form [formGroup]="userAuxForm">
+    <div class="card-content space-vertical-content">
+      <app-input
+        [control]="nameControl('name')"
+        label="Nombre"
+        [errorMessages]="[
+          { key: 'required', message: 'El nombre es requerido' },
+          {
+            key: 'maxlength',
+            message: 'El nombre debe ser menor a 50 caracteres'
+          }
+        ]"
+      ></app-input>
+
+      <app-input
+        [control]="nameControl('lastName')"
+        label="Apellidos"
+        [errorMessages]="[
+          { key: 'required', message: 'El Apellidos es requerido' },
+          {
+            key: 'maxlength',
+            message: 'El Apellidos debe ser menor a 50 caracteres'
+          }
+        ]"
+      ></app-input>
+
+      <app-input
+        [control]="nameControl('dni')"
+        label="Dni"
+        [errorMessages]="[
+          { key: 'required', message: 'El dni es requerido' },
+          { key: 'maxlength', message: 'El dni debe ser menor a 18 caracteres' }
+        ]"
+      ></app-input>
+
+      <app-input
+        [control]="nameControl('telephone')"
+        label="Telefono"
+        [errorMessages]="[
+          { key: 'required', message: 'El Celular es requerido' },
+          {
+            key: 'maxlength',
+            message: 'El Celular debe ser menor a 13 caracteres'
+          }
+        ]"
+      ></app-input>
+
+      <app-input
+        [control]="nameControl('dateAge')"
+        label="Fecha de Nacimiento"
+        type="date"
+        [errorMessages]="[
+          { key: 'required', message: 'Fecha de Nacimiento es requerida' },
+          { key: 'dateValidator', message: 'Fecha de Nacimiento es invalida' }
+        ]"
+      ></app-input>
+
+      <app-input
+        [control]="nameControl('email')"
+        label="Correo electronico"
+        type="email"
+        [errorMessages]="[
+          { key: 'required', message: 'Email es requerida' },
+          { key: 'email', message: 'Email es invalida' }
+        ]"
+      ></app-input>
+
+      <app-input
+      [control]="nameControl('password')"
+      label="Contraseña"
+      type="password"
+      [errorMessages]="[
+        { key: 'required', message: ' Contraseña es requerida' },
+        { key: 'maxlength', message: ' Contraseña debe ser menor a 50 caracters' },
+        { key: 'minlength', message: ' Contraseña debe ser mayor a 6 caracters' }
+      ]"
+    ></app-input>
+    </div>
+    <div class="card-footer">
+      <button class="btn-primary" (click)="send()">Crear</button>
+    </div>
+  </form>
+</div>

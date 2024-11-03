@@ -1,0 +1,42 @@
+// Variables de tamaño
+$font-size-small: 1.5rem;
+$font-size-medium: 2rem;
+$font-size-large: 2.5rem;
+
+// Estilos del encabezado h1
+h1 {
+  font-family: Arial, sans-serif;
+  margin: 0.5rem 0;
+  line-height: 1.2;
+
+  &.small {
+    font-size: $font-size-small;
+  }
+
+  &.medium {
+    font-size: $font-size-medium;
+  }
+
+  &.large {
+    font-size: $font-size-large;
+  }
+}
+
+// Responsividad
+@media (max-width: 768px) {
+  h1 {
+    font-size: $font-size-small;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  h1 {
+    font-size: $font-size-medium;
+  }
+}
+
+@media (min-width: 1025px) {
+  h1 {
+    font-size: $font-size-large;
+  }
+}

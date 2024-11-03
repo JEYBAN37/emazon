@@ -1,0 +1,15 @@
+<div class="space-vertical">
+  <label class="form-label">{{ label }}</label>
+  <input
+    class="form-input"
+    [type]="type"
+    [formControl]="control" 
+  />
+  <div *ngIf="control?.invalid && (control?.touched || control?.dirty)">
+    <ng-container *ngFor="let error of errorMessages">
+      <span class="span-error" *ngIf="control?.hasError(error.key)">
+        {{ error.message }}
+      </span>
+    </ng-container>
+  </div>
+</div>
