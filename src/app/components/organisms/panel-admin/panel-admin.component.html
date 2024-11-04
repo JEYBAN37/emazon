@@ -14,39 +14,68 @@
   
       <div class="tabs-content">
         <ng-container *ngIf="selectedTab === 0">
-          <div style="width: 100%; height:520px; display: flex; flex-direction: row; padding: 8px; ">
+          <div style="width: 100%; height:520px; display: flex; flex-direction: row; ">
             
             <div style="padding: 5px; width: 35%;">
               <app-card-category></app-card-category>
             </div>
             <div style="padding: 5px; width: 65%;">
-               <app-card-get-categories></app-card-get-categories>
+               <app-card-get-stock 
+               [service]="stockServiceCategory"
+               label='Todas las Categorias' 
+               description="visualiza todas las categorias"
+               [columns]="['name', 'description']"
+              ></app-card-get-stock>
              </div>
          
           </div>
         </ng-container>
 
         <ng-container *ngIf="selectedTab === 1">
-          <div style="width: 100%; height:520px; display: flex; flex-direction: row; padding: 8px; ">
-            
+          <div style="width: 100%; height:520px; display: flex; flex-direction: row; ">
             <div style="padding: 5px; width: 35%;">
               <app-card-brand></app-card-brand>
             </div>
             <div style="padding: 5px; width: 65%;">
-               <app-card-get-categories></app-card-get-categories>
+              <app-card-get-stock
+                [service]="stockServiceBrand"
+                label="Todas las Marcas"
+                description="Listado de Marcas en stock"
+                [columns]="['name', 'description']">
+              </app-card-get-stock>
+
              </div>
          </div>
-    
         </ng-container>
-
-
 
         <ng-container *ngIf="selectedTab === 2">
-          <app-card-article></app-card-article>
+          <div style="width: 100%; height:520px; display: flex; flex-direction: row;">
+
+            <div style="padding: 5px; width: 35%;">
+              <app-card-article></app-card-article>
+            </div>
+            <div style="padding: 5px; width: 65%;">
+              <app-card-get-stock 
+              [service]="stockServiceArticle"
+               label='Todas los Articulos' 
+               description="visualiza todas los articulos"
+               [columns]="['name', 'description','quantity','price']"
+               [size] = '5'
+               ></app-card-get-stock>
+             </div>
+         </div>
         </ng-container>
-        <ng-container *ngIf="selectedTab === 3">
-          <app-card-user-aux></app-card-user-aux>
-        </ng-container>
+
       </div>
+
+
+      
+        <div style="padding: 5px; width: 35%; margin-top: 10px;">
+          <app-card-user-aux></app-card-user-aux>
+          <img src="" alt="">
+        </div>
+
+
+
     </div>
   </div>

@@ -14,7 +14,6 @@
   .card-header {
     display: flex;
     flex-direction: column;
-    padding: 1.5rem; /* Espaciado interno */
     border-bottom: 1px solid #e2e8f0; /* Separador */
     background-color: #f9fafb; /* Fondo claro */
     text-align: center;
@@ -132,12 +131,6 @@
     line-height: 2.76;
   }
 
-  .card-content {
-    display: flex;
-    padding: 1.5rem;
-    overflow-y: auto; /* Permite el scroll vertical */
-    height: 70%; /* Altura máxima del contenedor */
-}
 
 table {
     width: 100%;
@@ -169,4 +162,22 @@ tr{
   font-weight: 300;
   line-height: 19.6px; /* Tamaño de fuente más pequeño */
   color: #4B3A5A; /* Color gris para descripción */
+}
+
+
+.card-content {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 1.5rem;
+  overflow-y: auto; /* Permite el desplazamiento vertical */
+  max-height: 310px; /* Ajusta según tus necesidades */
+}
+
+
+.btn-secundary {
+  padding: 10px;
+  background-color: #fff;
+  border: none;
+  cursor: pointer;
 }

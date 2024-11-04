@@ -1,0 +1,40 @@
+<div class="card">
+    <div class="card-header">
+        <h1 class="card-title">{{ label }}</h1>
+        <h2 class="card-description">{{ description }}</h2>
+    </div>
+    <div class="card-content">
+      <div style="width: 100%; padding-bottom: 10px;">
+        <button class="btn-primary" (click)="toggleOrder()">
+           {{ ascending ? 'dsc' : 'Asc' }}
+        </button>
+      </div>
+      <table>
+            <thead>
+              <tr>
+                <th *ngFor="let column of columns">{{ column }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of data">
+                <td *ngFor="let column of columns">{{ item[column] }}</td>
+              </tr>
+            </tbody>
+          </table>
+            <!-- Botones de paginación -->
+            <div style="width: 100%; display: flex; flex-direction: row; justify-content:  center;    align-items: center; margin-top: 5px;">
+      <button (click)="prevPage()" [disabled]="page === 0"  class="btn-secundary">
+        <img style="height:20px ;transform: rotate(180deg); z-index: -1;" src="assets\arrow_forward_ios.svg" alt="Anterior"  />   
+      </button>
+      <span >{{ page + 1 }}</span>
+      <button (click)="nextPage()"   class="btn-secundary">
+        <img style="height:20px ; z-index: -1;  " src="assets\arrow_forward_ios.svg" alt="Sigueinte"  />
+      </button>
+   
+ 
+  </div>
+
+  <!-- Botón para alternar el orden -->
+ 
+    </div>
+</div>

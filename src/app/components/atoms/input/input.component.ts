@@ -1,5 +1,5 @@
 import { Component, forwardRef, Input } from '@angular/core';
-import { ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR, NgModel } from '@angular/forms';
+import { FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 @Component({
   selector: 'app-input',
   templateUrl: './input.component.html',
