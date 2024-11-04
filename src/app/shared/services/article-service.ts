@@ -8,7 +8,7 @@ export class Article implements ObjectStock {
     description!: string;
     quantity!:number;
     price:number = 0;
-    brand!:Brand;
+    brand!:string;
     articleCategories : number[] = [] 
   }
 
@@ -21,16 +21,24 @@ export class Article implements ObjectStock {
     providedIn: 'root'
   })
   export class ArticleService implements ObjectServiceInterface {
-    private apiUrl = 'http://localhost:8086/secure/articles/'; // Cambia esta URL por la de tu API
-  
+    private apiUrl = 'http://localhost:8086/'; // Cambia esta URL por la de tu API
+    private token ='eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlkIjo4Niwic3ViIjoianVwdXNzQGV4YW1wbGUuY29tIiwiaWF0IjoxNzMwNjI1NzQ1LCJleHAiOjE3MzA3MTIxNDV9.E74P3Vw0WLCbf5fznfLaxMxblPk4kkTah9v_dmqGzyI';
     constructor(private http: HttpClient) {}
 
-    get(page: number, size: number,ascending:true,byName:string): Observable<Article[]> {
+    create(object: Article): Observable<Article> {
+      const headers = new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.token}`
+      });
+  
+      return this.http.post<Article>(this.apiUrl + 'admin/articles/', object, { headers })
 
-      const token ='eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiVVNFUiAiLCJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlkIjo4Niwic3ViIjoianVwdXNzQGV4YW1wbGUuY29tIiwiaWF0IjoxNzMwNjYwNjA0LCJleHAiOjE3MzA3NDcwMDR9.3p53ny1vR0HccSuvhFegzG35QzhlUsWaJxHdV2dkR7s';
+  }
+
+    get(page: number, size: number,ascending:true,byName:string): Observable<Article[]> {
       const headers = new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}` // Incluir el token Bearer
+        'Authorization': `Bearer ${this.token}` // Incluir el token Bearer
       });
       // Agregar los parámetros
       let params = new HttpParams()
@@ -41,16 +49,7 @@ export class Article implements ObjectStock {
 
         
   
-      return this.http.get<Article[]>(this.apiUrl, { headers, params });
-    }
-
-
-    create(object: Article): Observable<Article> {
-        const headers = new HttpHeaders({
-            'Content-Type': 'application/json'
-          });
-      
-          return this.http.post<Article>(this.apiUrl, object, { headers });  
+      return this.http.get<Article[]>(this.apiUrl + 'secure/articles/', { headers, params });
     }
 
   }

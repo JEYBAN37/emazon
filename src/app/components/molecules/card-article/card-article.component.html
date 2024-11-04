@@ -1,5 +1,11 @@
 
 <div class="card">
+  <div *ngIf="showSuccess" class="alert alert-success show">
+    {{ successMessage }}
+  </div>
+  <div *ngIf="showError" class="alert alert-danger show">
+    {{ errorMessage }}
+  </div>
     <div class="card-header">
         <h1 class="card-title">Crear Articulo</h1>
         <h2 class="card-description">Agrega nuevo articulo</h2>
@@ -32,7 +38,13 @@
             [errorMessages]="[
               { key: 'required', message: 'La cantidad es requerida' }]"
           ></app-input>
-
+          <app-input
+          label="Precio"
+          type="number"
+          [control]="nameControl('price')"
+          [errorMessages]="[
+            { key: 'required', message: 'La cantidad es requerida' }]"
+        ></app-input>
           <app-input
           label="Marca"
           [control]="nameControl('brand')"
@@ -41,14 +53,12 @@
           ]"
         ></app-input>
 
-        <app-input
-        label="Categoria"
-        type="select"
-        [control]="nameControl('articleCategories')"
-        [errorMessages]="[
-          { key: 'required', message: 'La categoria es requerida' }
-        ]"
-      ></app-input>
+
+      <!-- En tu template HTML -->
+<select formControlName="articleCategories" multiple>
+  <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+</select>
+
 
         </div>
         <div class="card-footer">

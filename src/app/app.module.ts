@@ -28,7 +28,6 @@ import { CardGetStockComponent } from './components/molecules/card-get-stock/car
     CardUserAuxComponent,
     PanelAdminComponent,
     CardGetStockComponent
-
   ],
   imports: [
     BrowserModule,

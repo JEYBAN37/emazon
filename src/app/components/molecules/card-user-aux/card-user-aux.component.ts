@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ObjectServiceInterface, ObjectStock } from 'src/app/shared/services/stock-service-interface';
 
 @Component({
   selector: 'app-card-user-aux',
@@ -7,7 +8,12 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
   styleUrls: ['./card-user-aux.component.scss']
 })
 export class CardUserAuxComponent implements OnInit {
+  successMessage: string | null = null;
+  errorMessage: string | null = null;
+  showSuccess: boolean = false;
+  showError: boolean = false;
   public userAuxForm !: FormGroup
+  @Input() service!: ObjectServiceInterface; 
   constructor(private fromBuilder : FormBuilder) {
     this.userAuxForm = this.fromBuilder.group({
       name:['',[Validators.required, Validators.maxLength(50)]],
@@ -38,9 +44,41 @@ export class CardUserAuxComponent implements OnInit {
       this.userAuxForm.markAllAsTouched();
       return;
     }
-    
-    // If form is valid, proceed with form submission logic
-    console.log('Form submitted:', this.userAuxForm.value);
+
+    const objectStock:ObjectStock = {
+      name: this.userAuxForm.value.name,
+      lastName: this.userAuxForm.value.lastName,
+      dni: this.userAuxForm.value.dni,
+      telephone : this.userAuxForm.value.telephone,
+      dateAge : this.userAuxForm.value.dateAge,
+      email: this.userAuxForm.value.email,
+      password :  this.userAuxForm.value.password
+    }
+    console.log("Formulario enviado", objectStock); // Muestra la estructura
+
+    this.service.create(objectStock).subscribe({
+        next: (response) => {
+            console.log('Respuesta del backend:', response);
+            this.successMessage = "Formulario enviado exitosamente";
+            this.showSuccess = true;
+            this.errorMessage = null;
+
+            setTimeout(() => {
+                this.showSuccess = false;
+            }, 5000);
+        },
+        error: (error) => {
+            console.error('Error al enviar solicitud:', error);
+            this.errorMessage = error.error?.message || "Hubo un error al enviar el formulario";
+            this.showError = true;
+
+            setTimeout(() => {
+                this.showError = false;
+            }, 5000);
+
+            this.successMessage = null;
+        }
+    });
   }
 
   nameControl(variable:string): FormControl {

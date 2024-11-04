@@ -12,6 +12,7 @@ export class PanelAdminComponent implements OnInit {
   stockServiceCategory : CategoryService
   stockServiceBrand : BrandService
   stockServiceArticle : ArticleService
+
   
   constructor(
     private categoryServiceInstance: CategoryService,

@@ -4,10 +4,10 @@ import { Brand } from './article-service';
 
 export interface ObjectStock {
     name: string;
-    description: string;
+    description?: string;
     quantity?:number;
     price?:number;
-    brand?:Brand;
+    brand?:string;
     articleCategories ?: number[];
     [key: string]: any;
   }

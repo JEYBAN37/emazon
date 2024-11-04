@@ -17,7 +17,9 @@
           <div style="width: 100%; height:520px; display: flex; flex-direction: row; ">
             
             <div style="padding: 5px; width: 35%;">
-              <app-card-category></app-card-category>
+              <app-card-category
+              [service]="stockServiceCategory"
+              ></app-card-category>
             </div>
             <div style="padding: 5px; width: 65%;">
                <app-card-get-stock 
@@ -34,7 +36,9 @@
         <ng-container *ngIf="selectedTab === 1">
           <div style="width: 100%; height:520px; display: flex; flex-direction: row; ">
             <div style="padding: 5px; width: 35%;">
-              <app-card-brand></app-card-brand>
+              <app-card-brand
+               [service]="stockServiceBrand"
+              ></app-card-brand>
             </div>
             <div style="padding: 5px; width: 65%;">
               <app-card-get-stock
@@ -52,7 +56,8 @@
           <div style="width: 100%; height:520px; display: flex; flex-direction: row;">
 
             <div style="padding: 5px; width: 35%;">
-              <app-card-article></app-card-article>
+              <app-card-article
+              [service]="stockServiceArticle"></app-card-article>
             </div>
             <div style="padding: 5px; width: 65%;">
               <app-card-get-stock 
@@ -67,15 +72,10 @@
         </ng-container>
 
       </div>
-
-
-      
-        <div style="padding: 5px; width: 35%; margin-top: 10px;">
-          <app-card-user-aux></app-card-user-aux>
-          <img src="" alt="">
-        </div>
-
-
-
+      <div style="padding: 5px; width: 100%; margin-top: 10px;">
+        <app-card-user-aux
+        [service]="stockServiceArticle" ></app-card-user-aux>
+        <img src="" alt="">
+      </div>
     </div>
   </div>
