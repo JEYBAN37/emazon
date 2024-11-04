@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Brand } from './article-service';
+import { InjectionToken } from '@angular/core';
 
+export const OBJECT_SERVICE = new InjectionToken<ObjectServiceInterface>('ObjectServiceInterface');
 export interface ObjectStock {
     name: string;
     description?: string;

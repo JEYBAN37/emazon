@@ -12,7 +12,7 @@
     <form [formGroup] = "categoryForm" >
         <div class="card-content space-vertical-content ">
             <app-input
-            [control]="nameControl('name')"
+            [control]="getFormControl('name')"
             label="Nombre"
             [errorMessages]="[
               { key: 'required', message: 'El nombre es requerido' },
@@ -22,7 +22,7 @@
 
           <app-text-input
           label="Descripcion"
-          [control]="nameControl('description')"
+          [control]="getFormControl('description')"
           [errorMessages]="[
             { key: 'required', message: 'descripcion es requerida' },
             { key: 'maxlength', message: 'nombre debe ser menor a 90 caracters' }
