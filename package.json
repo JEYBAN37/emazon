@@ -45,7 +45,8 @@
     },
     "testPathIgnorePatterns": [
       "<rootDir>/node_modules/",
-      "<rootDir>/dist/"
+      "<rootDir>/dist/",
+      "<rootDir>/src/polyfills.ts"
     ],
     "testMatch": [
       "**/__tests__/**/*.[jt]s?(x)", 

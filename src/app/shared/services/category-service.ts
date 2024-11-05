@@ -12,7 +12,7 @@ export class Category implements ObjectStock {
     providedIn: 'root'
   })
   export class CategoryService implements ObjectServiceInterface {
-    token ='eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiVVNFUiAiLCJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlkIjo4Niwic3ViIjoianVwdXNzQGV4YW1wbGUuY29tIiwiaWF0IjoxNzMwNjYwNjA0LCJleHAiOjE3MzA3NDcwMDR9.3p53ny1vR0HccSuvhFegzG35QzhlUsWaJxHdV2dkR7s';
+    token ='eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlkIjo4Nywic3ViIjoiamVzQGV4YW1wbGUuY29tIiwiaWF0IjoxNzMwNzc3MDI0LCJleHAiOjE3MzA4NjM0MjR9.Yv-FvrZRnPBZRr3kNFKcaJQPojMPBktbVaf48DlbzX8';
     
     private apiUrl = 'http://localhost:8086/'; // Cambia esta URL por la de tu API
   

@@ -3,7 +3,7 @@ import { InjectionToken } from '@angular/core';
 
 export const OBJECT_SERVICE = new InjectionToken<ObjectServiceInterface>('ObjectServiceInterface');
 export interface ObjectStock {
-    name: string;
+    name?: string;
     description?: string;
     quantity?:number;
     price?:number;

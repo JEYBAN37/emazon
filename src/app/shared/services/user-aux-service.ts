@@ -5,11 +5,13 @@ import { Injectable } from "@angular/core";
 
 export class User implements ObjectStock {
     name!: string;
-    description!: string;
-    quantity!:number;
-    price:number = 0;
+    lastName!: string;
+    dni!:number;
+    telephone:number = 0;
     brand!:string;
-    articleCategories : number[] = [] 
+    dateAge !: Date;
+    email!: string;
+    password!: string;
   }
 
   export class Brand {
@@ -22,9 +24,13 @@ export class User implements ObjectStock {
   })
   
   export class UserAuxService implements ObjectServiceInterface {
-    private apiUrl = 'http://localhost:8086/'; // Cambia esta URL por la de tu API
-    private token ='eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlkIjo4Niwic3ViIjoianVwdXNzQGV4YW1wbGUuY29tIiwiaWF0IjoxNzMwNjI1NzQ1LCJleHAiOjE3MzA3MTIxNDV9.E74P3Vw0WLCbf5fznfLaxMxblPk4kkTah9v_dmqGzyI';
+    private apiUrl = 'http://localhost:8088/'; // Cambia esta URL por la de tu API
+    private token ='eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlkIjo4Nywic3ViIjoiamVzQGV4YW1wbGUuY29tIiwiaWF0IjoxNzMwNzc3MDI0LCJleHAiOjE3MzA4NjM0MjR9.Yv-FvrZRnPBZRr3kNFKcaJQPojMPBktbVaf48DlbzX8';
     constructor(private http: HttpClient) {}
+    
+  get(page: number, size: number, ascending: boolean, byBrand?: string, byArticle?: string, byName?: string): Observable<ObjectStock[]> {
+    throw new Error("Method not implemented.");
+  }
 
     create(object: User): Observable<User> {
       const headers = new HttpHeaders({
@@ -32,25 +38,8 @@ export class User implements ObjectStock {
           'Authorization': `Bearer ${this.token}`
       });
   
-      return this.http.post<User>(this.apiUrl + 'admin/articles/', object, { headers })
+      return this.http.post<User>(this.apiUrl + 'admin/register/aux_bodega', object, { headers })
 
   }
-
-    get(page: number, size: number,ascending:true,byName:string): Observable<User[]> {
-      const headers = new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.token}` // Incluir el token Bearer
-      });
-      // Agregar los parámetros
-      let params = new HttpParams()
-        .set('page', page.toString())
-        .set('size', size.toString())
-        .set('ascending', ascending.toString())
-        ;
-
-        
-  
-      return this.http.get<User[]>(this.apiUrl + 'secure/articles/', { headers, params });
-    }
 
   }

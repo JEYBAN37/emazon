@@ -1,0 +1,30 @@
+<div class="card w-full max-w-md mx-auto">
+    <div class="card-header">
+      <h2 class="card-title">Selecciona tu tipo de usuario</h2>
+      <p class="card-description">Elige el tipo de cuenta que mejor se adapte a tus necesidades.</p>
+    </div>
+    <form (submit)="handleSubmit($event)">
+      <div class="card-content">
+        <div class="radio-group">
+          <ng-container *ngFor="let type of userTypes">
+            <div class="radio-item">
+              <input type="radio" id="{{type.id}}" name="userType" [value]="type.id" ((click))="selectedType"/>
+              <label [for]="type.id" class="flex items-center">
+                <i class="icon" [ngClass]="type.icon"></i>
+                <div class="description">
+                  <p class="name">{{ type.name }}</p>
+                  <p class="details">{{ type.description }}</p>
+                </div>
+              </label>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button type="submit" [disabled]="!selectedType" class="btn btn-primary w-full">
+          Continuar
+        </button>
+      </div>
+    </form>
+  </div>
+  

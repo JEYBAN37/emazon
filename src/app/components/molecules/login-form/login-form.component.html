@@ -1,0 +1,43 @@
+<div class="login-container">
+    <div class="card">
+    <h1 class="card-title">Iniciar Sesión</h1>
+      <h3 class="subtitle">Bienvenido {{username}}</h3>
+      <p class="card-description">Ingrese sus credenciales para acceder a su cuenta de Emazon.</p>
+      <form [formGroup]="loginForm">
+        <div class="form-group">
+            <app-input
+            [control]="nameControl('email')"
+            label="Correo Electronico"
+            type="email"
+            [errorMessages]="[
+              { key: 'required', message: 'El email es requerido' },
+            ]"
+          ></app-input>
+        </div>
+        <div class="form-group">
+            <app-input
+            [control]="nameControl('password')"
+            label="Contraseña"
+            type="password"
+            [errorMessages]="[
+              { key: 'required', message: 'La contraseña es requerida' },
+            ]"
+          ></app-input>
+        </div>
+ 
+        <div *ngIf="showSuccess" class="alert alert-success show">
+            {{ successMessage }}
+          </div>
+          <div *ngIf="showError" class="alert alert-danger show">
+            {{ errorMessage }}
+          </div>
+          <div class="form-center-button">
+            <button class="btn"  (click)="send()">
+                <h2>{{ 'Iniciar Sesión' }}</h2>
+              </button>
+          </div>
+       
+      </form>
+    </div>
+  </div>
+  

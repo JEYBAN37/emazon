@@ -20,7 +20,7 @@ export class CardBrandComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private cdr: ChangeDetectorRef,
-    @Inject(OBJECT_SERVICE) private objectService: ObjectServiceInterface 
+    //@Inject(OBJECT_SERVICE) private objectService: ObjectServiceInterface 
   ) {}
   
     ngOnInit(): void {
@@ -65,8 +65,6 @@ export class CardBrandComponent implements OnInit {
   }
 
   private handleError(error: any) {
-    console.error('Error al enviar solicitud:', error);
-    
     this.errorMessage = error.error?.message || "Hubo un error al enviar";
     this.showError = true;
     this.successMessage = null;

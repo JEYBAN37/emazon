@@ -205,6 +205,40 @@ describe('CardCategoryComponent', () => {
       expect(nameControl.errors?.['maxlength']).toBeTruthy();
     });
 
+    it('should handle error if service call fails with a message', async () => {
+      component.categoryForm.setValue({ name: 'Brand Name', description: 'Brand Description' });
+      mockService.create.mockReturnValue(throwError(() => ({ error: { message: 'Error occurred' } })));
+  
+      await component.send();
+  
+      expect(component.errorMessage).toBe('Error occurred');
+      expect(component.showError).toBe(true);
+      expect(component.successMessage).toBeNull();
+  
+      // Verify error message disappears after timeout
+      jest.useFakeTimers();
+      jest.advanceTimersByTime(2001);
+      expect(component.showError).toBe(false);
+      jest.useRealTimers();
+    });
+  
+    it('should handle error if service call fails without a message', async () => {
+      component.categoryForm.setValue({ name: 'Brand Name', description: 'Brand Description' });
+      mockService.create.mockReturnValue(throwError(() => ({ error: {} }))); // Simulate error with no message
+  
+      await component.send();
+  
+      expect(component.errorMessage).toBe('Hubo un error al enviar'); // Default error message
+      expect(component.showError).toBe(true);
+      expect(component.successMessage).toBeNull();
+  
+      // Verify error message disappears after timeout
+      jest.useFakeTimers();
+      jest.advanceTimersByTime(2001);
+      expect(component.showError).toBe(false);
+      jest.useRealTimers();
+    });
+
   });
 
 });

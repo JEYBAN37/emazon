@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ObjectServiceInterface, ObjectStock } from 'src/app/shared/services/stock-service-interface';
 
@@ -12,10 +12,23 @@ export class CardUserAuxComponent implements OnInit {
   errorMessage: string | null = null;
   showSuccess: boolean = false;
   showError: boolean = false;
-  public userAuxForm !: FormGroup
+
   @Input() service!: ObjectServiceInterface; 
-  constructor(private fromBuilder : FormBuilder) {
-    this.userAuxForm = this.fromBuilder.group({
+  objectStock!: ObjectStock;
+  public userAuxForm !: FormGroup;
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private cdr: ChangeDetectorRef,
+    //@Inject(OBJECT_SERVICE) private objectService: ObjectServiceInterface // Usar el token aquí
+  ) {}
+  
+   ngOnInit(): void {
+    this.initForm();
+  }
+
+  public initForm() {
+    this.userAuxForm = this.formBuilder.group({
       name:['',[Validators.required, Validators.maxLength(50)]],
       lastName:['',[Validators.required, Validators.maxLength(90)]],
       dni:['',Validators.required,Validators.maxLength(18)],
@@ -23,13 +36,11 @@ export class CardUserAuxComponent implements OnInit {
       dateAge:['',Validators.required,this.dateValidator],
       email:['',Validators.required,Validators.email],
       password:['',Validators.required,Validators.minLength(6),Validators.maxLength(50)]
-    })
-   }
-
-  ngOnInit(): void {
+    });
   }
 
-  private dateValidator(control: AbstractControl): { [key: string]: boolean } | null {
+
+  public dateValidator(control: AbstractControl): { [key: string]: boolean } | null {
     // Check if the value is a valid date
     const dateValue = new Date(control.value);
     if (isNaN(dateValue.getTime())) {
@@ -40,7 +51,6 @@ export class CardUserAuxComponent implements OnInit {
 
   send(){
     if (this.userAuxForm.invalid) {
-      // Mark all controls as touched to show validation messages
       this.userAuxForm.markAllAsTouched();
       return;
     }
@@ -54,31 +64,40 @@ export class CardUserAuxComponent implements OnInit {
       email: this.userAuxForm.value.email,
       password :  this.userAuxForm.value.password
     }
-    console.log("Formulario enviado", objectStock); // Muestra la estructura
 
+  
     this.service.create(objectStock).subscribe({
-        next: (response) => {
-            console.log('Respuesta del backend:', response);
-            this.successMessage = "Formulario enviado exitosamente";
-            this.showSuccess = true;
-            this.errorMessage = null;
-
-            setTimeout(() => {
-                this.showSuccess = false;
-            }, 5000);
-        },
-        error: (error) => {
-            console.error('Error al enviar solicitud:', error);
-            this.errorMessage = error.error?.message || "Hubo un error al enviar el formulario";
-            this.showError = true;
-
-            setTimeout(() => {
-                this.showError = false;
-            }, 5000);
-
-            this.successMessage = null;
-        }
+      next: (response) => this.handleSuccess(response),
+      error: (error) => this.handleError(error)
     });
+  }
+  public handleSuccess(response: any) {
+    console.log('Respuesta del backend:', response);
+    this.successMessage = "Formulario enviado exitosamente";
+    this.showSuccess = true;
+    this.errorMessage = null;
+
+    this.cdr.detectChanges(); // Actualiza la vista
+
+    setTimeout(() => {
+      this.showSuccess = false;
+      this.cdr.detectChanges();
+    }, 2000);
+  }
+
+  public handleError(error: any) {
+    console.error('Error al enviar solicitud:', error);
+    
+    this.errorMessage = error.error?.message || "Hubo un error al enviar";
+    this.showError = true;
+    this.successMessage = null;
+
+    this.cdr.detectChanges();
+
+    setTimeout(() => {
+      this.showError = false;
+      this.cdr.detectChanges();
+    }, 2000);
   }
 
   nameControl(variable:string): FormControl {

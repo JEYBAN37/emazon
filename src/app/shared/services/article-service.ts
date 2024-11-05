@@ -22,7 +22,7 @@ export class Article implements ObjectStock {
   })
   export class ArticleService implements ObjectServiceInterface {
     private apiUrl = 'http://localhost:8086/'; // Cambia esta URL por la de tu API
-    private token ='eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlkIjo4Niwic3ViIjoianVwdXNzQGV4YW1wbGUuY29tIiwiaWF0IjoxNzMwNjI1NzQ1LCJleHAiOjE3MzA3MTIxNDV9.E74P3Vw0WLCbf5fznfLaxMxblPk4kkTah9v_dmqGzyI';
+    private token ='eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlkIjo4Nywic3ViIjoiamVzQGV4YW1wbGUuY29tIiwiaWF0IjoxNzMwNzc3MDI0LCJleHAiOjE3MzA4NjM0MjR9.Yv-FvrZRnPBZRr3kNFKcaJQPojMPBktbVaf48DlbzX8';
     constructor(private http: HttpClient) {}
 
     create(object: Article): Observable<Article> {

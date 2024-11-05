@@ -23,7 +23,7 @@ export class CardCategoryComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private cdr: ChangeDetectorRef,
-    @Inject(OBJECT_SERVICE) private objectService: ObjectServiceInterface // Usar el token aquí
+    //@Inject(OBJECT_SERVICE) private objectService: ObjectServiceInterface // Usar el token aquí
   ) {}
 
   ngOnInit(): void {

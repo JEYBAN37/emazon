@@ -1,0 +1,43 @@
+<div class="container">
+    <h1 class="title">Marketplace</h1>
+    
+    <form (submit)="handleSearch($event)" class="search-form">
+      <input
+        type="text"
+        placeholder="Buscar productos..."
+        [(ngModel)]="searchTerm"
+        name="search"
+        class="search-input"
+      />
+      <button type="submit" class="search-button">
+        <span class="icon-search">🔍</span> Buscar
+      </button>
+    </form>
+  
+    <div class="product-grid">
+      <ng-container *ngFor="let product of products">
+        <div class="product-card">
+          <div class="card-header">
+            <h2 class="card-title">{{ product.name }}</h2>
+          </div>
+          <div class="card-content">
+            <p class="product-category">{{ product.brand.name }}</p>
+            <ul>
+                <li *ngFor="let category of product.articleCategories">
+                  {{ category.name }}
+                </li>
+              </ul>
+            <p class="product-price">${{ product.price }}</p>
+          </div>
+          <div class="card-footer">
+            <button class="add-to-cart-button">
+              <span class="icon-cart">🛒</span>
+            </button>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  
+    <p *ngIf="products.length === 0" class="no-products">No se encontraron productos.</p>
+  </div>
+  
