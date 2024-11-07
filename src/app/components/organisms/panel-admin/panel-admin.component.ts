@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ArticleService } from 'src/app/shared/services/article-service';
-import { BrandService } from 'src/app/shared/services/brand-service';
-import { CategoryService } from 'src/app/shared/services/category-service';
-import { UserAuxService } from 'src/app/shared/services/user-aux-service';
+import { ArticleJson, BrandJson, CategoryJson } from 'src/app/shared/models/article-json';
+
 
 @Component({
   selector: 'app-panel-admin',
@@ -10,23 +8,34 @@ import { UserAuxService } from 'src/app/shared/services/user-aux-service';
   styleUrls: ['./panel-admin.component.scss']
 })
 export class PanelAdminComponent implements OnInit {
-  stockServiceCategory : CategoryService
-  stockServiceBrand : BrandService
-  stockServiceArticle : ArticleService
-  userServiceAux : UserAuxService
+ 
+  articlesClass = ArticleJson;
+  categoryClass = BrandJson;
+  brandClass = CategoryJson
 
-  
-  constructor(
-    private categoryServiceInstance: CategoryService,
-    private brandServiceInstance :BrandService,
-    private articlesServiceIsntance : ArticleService,
-    private userAuxServiceInstance : UserAuxService
-  ) {
-    this.stockServiceCategory = categoryServiceInstance;
-    this.stockServiceBrand =  brandServiceInstance;// Asigna el servicio en el constructor
-    this.stockServiceArticle = articlesServiceIsntance;
-    this.userServiceAux = userAuxServiceInstance;
-  }
+  articleFields =  [
+    { key: 'name', label: 'Nombre' },
+    { key: 'quantity', label: 'Cantidad' },
+    { key: 'price', label: 'Precio' }
+  ];
+
+  stockFields =  [
+    { key: 'name', label: 'Nombre' },
+    { key: 'description', label: 'Descripcion' }
+  ];
+
+  categoryCustomParams = { size:5 };
+
+
+  articlesColumns = ['Nombre', 'Cantidad', 'Precio'];
+  stockColumns = ['Nombre', 'Descripcion'];
+
+
+  apiUrlArticles = 'http://localhost:8086/secure/articles/';
+  apiUrlCategory = 'http://localhost:8086/secure/category/';
+  apiUrlBrand = 'http://localhost:8086/secure/brands/';
+
+  constructor() {}
 
   ngOnInit(): void {
   }

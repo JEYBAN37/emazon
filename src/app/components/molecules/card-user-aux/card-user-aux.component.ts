@@ -1,6 +1,6 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ObjectServiceInterface, ObjectStock } from 'src/app/shared/services/stock-service-interface';
+import { OBJECT_SERVICE, ObjectServiceInterface, ObjectStock } from 'src/app/shared/services/stock-service-interface';
 
 @Component({
   selector: 'app-card-user-aux',
@@ -41,13 +41,18 @@ export class CardUserAuxComponent implements OnInit {
 
 
   public dateValidator(control: AbstractControl): { [key: string]: boolean } | null {
-    // Check if the value is a valid date
+    if (!control.value) {
+      return null; // Si no hay valor, no hay error
+    }
+  
     const dateValue = new Date(control.value);
     if (isNaN(dateValue.getTime())) {
-      return { invalidDate: true }; // return error if invalid
+      return { invalidDate: true }; // Retornar error si la fecha es inválida
     }
-    return null; // return null if valid
+  
+    return null; // Retornar null si es válida
   }
+  
 
   send(){
     if (this.userAuxForm.invalid) {

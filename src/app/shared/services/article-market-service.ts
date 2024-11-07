@@ -1,20 +1,17 @@
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { Brand } from "../models/brand-interface";
 
 export class ArticleMarket {
     name!: string;
     description!: string;
     quantity!: number;
-    price: number = 0;
+    price!: number;
     brand!: Brand;
     articleCategories!: Category[];
 }
 
-export class Brand {
-    id!: number;
-    name!: string;
-}
 
 export class Category {
     id!: number;

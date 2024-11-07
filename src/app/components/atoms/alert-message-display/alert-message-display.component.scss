@@ -1,0 +1,38 @@
+.alert-success {
+    color: #fff;
+    background-color: #00B990;
+    padding: 5px;
+
+   
+  }
+  
+  .alert-danger {
+    color: #D51A52;
+    background-color: #f8d7da;
+    padding: 5px;
+
+
+  }
+  
+  .alert {
+    visibility: hidden; /* Inicialmente oculto */
+    opacity: 0; /* Inicialmente invisible */
+    transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out; /* Transición para aparecer y desaparecer */
+    pointer-events: none; /* Evita que el ratón interactúe con el elemento */
+    height: 20px; /* Altura fija para mantener el tamaño del div */
+
+    text-align: center;
+    border-radius: 5px 5px 0px 0px;
+  }
+  
+  .alert.show {
+    visibility: visible; /* Visible cuando se le añade la clase show */
+    opacity: 1; /* Hace que sea visible */
+    pointer-events: auto; /* Permite la interacción */
+  }
+  
+  .alert.fade-out {
+    opacity: 0; /* Cuando se inicia la desaparición */
+    visibility: hidden; /* Oculta el elemento después de la transición */
+  }
+  

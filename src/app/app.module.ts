@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LabelComponent } from './components/atoms/label/label.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PanelAdminComponent } from './components/organisms/panel-admin/panel-admin.component';
 import { InputComponent } from './components/atoms/input/input.component';
@@ -21,6 +21,9 @@ import { AdminPageComponent } from './components/template/admin-page/admin-page.
 import { UserTypeSelectionComponentComponent } from './components/organisms/user-type-selection-component/user-type-selection-component.component';
 import { MarketplaceComponent } from './components/template/marketplace-component/marketplace-component.component';
 import { BuyPageComponent } from './components/template/buy-page/buy-page.component';
+import { AuthInterceptor } from './shared/services/factory-api/auth-interceptor.service';
+import { AlertMessageDisplayComponent } from './components/atoms/alert-message-display/alert-message-display.component';
+import { SubmitButtonComponent } from './components/atoms/submit-button/submit-button.component';
 
 
 
@@ -42,7 +45,9 @@ import { BuyPageComponent } from './components/template/buy-page/buy-page.compon
     AdminPageComponent,
     UserTypeSelectionComponentComponent,
     MarketplaceComponent,
-    BuyPageComponent
+    BuyPageComponent,
+    AlertMessageDisplayComponent,
+    SubmitButtonComponent
   ],
   imports: [
     BrowserModule,
@@ -51,7 +56,9 @@ import { BuyPageComponent } from './components/template/buy-page/buy-page.compon
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

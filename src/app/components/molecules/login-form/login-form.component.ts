@@ -1,8 +1,8 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/shared/services/login-service';
-import { ObjectServiceInterface } from 'src/app/shared/services/stock-service-interface';
+import { OBJECT_SERVICE, ObjectServiceInterface } from 'src/app/shared/services/stock-service-interface';
 
 @Component({
   selector: 'app-login-form',
@@ -24,18 +24,18 @@ export class LoginFormComponent implements OnInit  {
       private formBuilder: FormBuilder,
       private cdr: ChangeDetectorRef,
       private router: Router,
-      //@Inject(OBJECT_SERVICE) private objectService: ObjectServiceInterface 
+      @Inject(OBJECT_SERVICE) private objectService: ObjectServiceInterface 
     ) {}
     
   ngOnInit(): void {
     this.initForm();
   }
 
-  private initForm() {
+  public initForm() {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
-      rememberMe: [false]
+
     });
   }
 
@@ -56,7 +56,7 @@ export class LoginFormComponent implements OnInit  {
     });
   }
 
-  private handleSuccess(response: any) {
+  public handleSuccess(response: any) {
     console.log('Respuesta del backend:', response);
     this.successMessage = "Formulario enviado exitosamente";
     this.showSuccess = true;
@@ -70,7 +70,7 @@ export class LoginFormComponent implements OnInit  {
     }, 2000);
   }
 
-  private handleError(error: any) {
+  public handleError(error: any) {
     this.errorMessage = error.error?.message || "Hubo un error al enviar";
     this.showError = true;
     this.successMessage = null;

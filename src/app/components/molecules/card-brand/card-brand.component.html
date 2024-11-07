@@ -1,20 +1,14 @@
 
 <div class="card">
-  <div *ngIf="showSuccess" class="alert alert-success show">
-    {{ successMessage }}
-  </div>
-  <div *ngIf="showError" class="alert alert-danger show">
-    {{ errorMessage }}
-  </div>
+  <app-alert-message-display></app-alert-message-display>  
     <div class="card-header">
-        <h1 class="card-title">Crear Marca</h1>
-        <h2 class="card-description">Agregar nueva marca</h2>
+      <div class="card-title">{{title}}</div>
+      <div class="card-description">{{subtitle}}</div>
     </div>
     <form [formGroup] = "brandForm" >
-
         <div class="card-content space-vertical-content ">
             <app-input
-            [control]="nameControl('name')"
+            [control]="getFormControl('name')"
             label="Nombre"
             [errorMessages]="[
               { key: 'required', message: 'El nombre es requerido' },
@@ -22,8 +16,8 @@
             ]"
           ></app-input>
           <app-text-input
+          [control]="getFormControl('description')"
           label="Descripcion"
-          [control]="nameControl('description')"
           [errorMessages]="[
             { key: 'required', message: 'descripcion es requerida' },
             { key: 'maxlength', message: 'nombre debe ser menor a 90 caracters' }
@@ -31,7 +25,10 @@
         ></app-text-input>
         </div>
         <div class="card-footer">
-            <button class="btn-primary" (click)="send()" >Crear</button>
+          <app-submit-button 
+          label="Crear" 
+          (action)="getData()">
+        </app-submit-button>
         </div>
     </form>
 </div>

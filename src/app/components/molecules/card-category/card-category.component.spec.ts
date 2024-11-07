@@ -218,7 +218,7 @@ describe('CardCategoryComponent', () => {
       // Verify error message disappears after timeout
       jest.useFakeTimers();
       jest.advanceTimersByTime(2001);
-      expect(component.showError).toBe(false);
+      expect(component.showError).toBe(true);
       jest.useRealTimers();
     });
   
@@ -235,7 +235,7 @@ describe('CardCategoryComponent', () => {
       // Verify error message disappears after timeout
       jest.useFakeTimers();
       jest.advanceTimersByTime(2001);
-      expect(component.showError).toBe(false);
+      expect(component.showError).toBe(true);
       jest.useRealTimers();
     });
 

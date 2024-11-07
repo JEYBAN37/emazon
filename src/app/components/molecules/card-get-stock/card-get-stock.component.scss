@@ -5,10 +5,7 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06); /* Sombra */
     background-color: #ffffff; /* Fondo blanco */
     border: 1px solid #e2e8f0; /* Borde ligero */
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-
+    height: 100%;
   }
   
   .card-header {
@@ -170,7 +167,6 @@ tr{
   align-items: center;
   flex-direction: column;
   padding: 1.5rem;
-  overflow-y: auto; /* Permite el desplazamiento vertical */
   max-height: 310px; /* Ajusta según tus necesidades */
 }
 

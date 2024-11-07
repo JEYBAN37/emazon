@@ -2,8 +2,8 @@
   <label class="form-label">{{ label }}</label>
   <textarea 
   class="form-textarea" 
-  rows="3" 
-  [formControl]="control"></textarea>
+  [formControl]="control"
+  ></textarea>
   <div *ngIf="control?.invalid && (control?.touched || control?.dirty)">
     <ng-container *ngFor="let error of errorMessages">
       <span class="span-error" *ngIf="control?.hasError(error.key)">

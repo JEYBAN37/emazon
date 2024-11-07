@@ -1,6 +1,10 @@
-import { ChangeDetectorRef, Component, Inject, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { OBJECT_SERVICE, ObjectServiceInterface, ObjectStock } from 'src/app/shared/services/stock-service-interface';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {  FormControl, FormGroup } from '@angular/forms';
+import { Brand } from 'src/app/shared/models/brand-interface';
+import { AlertMessageService } from 'src/app/shared/services/alerts-services/alert-message.service';
+import { BrandFormBuilderService } from 'src/app/shared/services/brands/brand-form-builder.service';
+import { BrandService } from 'src/app/shared/services/brands/brand.service';
+import { ValidationService } from 'src/app/shared/services/validations/validation.service';
 
 @Component({
   selector: 'app-card-brand',
@@ -8,77 +12,43 @@ import { OBJECT_SERVICE, ObjectServiceInterface, ObjectStock } from 'src/app/sha
   styleUrls: ['./card-brand.component.scss']
 })
 export class CardBrandComponent implements OnInit {
-  successMessage: string | null = null;
-  errorMessage: string | null = null;
-  showSuccess: boolean = false;
-  showError: boolean = false;
-
-  @Input() service!: ObjectServiceInterface; 
-  objectStock!: ObjectStock;
   public brandForm !: FormGroup
-
+  public title : string = "Crear Marca"
+  public subtitle : string = "Agrega nueva Marca"
+  
   constructor(
-    private formBuilder: FormBuilder,
-    private cdr: ChangeDetectorRef,
-    //@Inject(OBJECT_SERVICE) private objectService: ObjectServiceInterface 
+    public brandService: BrandService,
+    public brandFormBuilder: BrandFormBuilderService,
+    public validationService: ValidationService,
+    public alertService: AlertMessageService,
+    public cdr: ChangeDetectorRef
   ) {}
   
-    ngOnInit(): void {
-    this.initForm();
+  ngOnInit(): void {
+    this.brandForm = this.brandFormBuilder.initBrandForm();
   }
 
-  private initForm() {
-    this.brandForm = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.maxLength(50)]],
-      description: ['', [Validators.required, Validators.maxLength(90)]]
-    });
-  }
-
-
-  send() {
-    if (this.brandForm.invalid) {
-      this.brandForm.markAllAsTouched();
+  getData(): void {
+    if (this.brandForm.invalid) { 
+      this.validationService.markFormGroupTouched(this.brandForm);
       return;
     }
 
-    const objectStock = this.brandForm.value;
-
-
-    this.service.create(objectStock).subscribe({
-      next: (response) => this.handleSuccess(response),
-      error: (error) => this.handleError(error)
+    const brand: Brand = { ...this.brandForm.value };
+    this.brandService.fetchBrandData(brand).subscribe({
+      next: (response) => {
+        this.alertService.showSuccess('Categoria creada exitosamente');
+        this.brandForm.reset();
+      },
+      error: (error) => {
+        this.alertService.showError(
+          error.error?.message || 'Hubo un error al enviar'
+        );
+      },
     });
   }
 
-  private handleSuccess(response: any) {
-    console.log('Respuesta del backend:', response);
-    this.successMessage = "Formulario enviado exitosamente";
-    this.showSuccess = true;
-    this.errorMessage = null;
-
-    this.cdr.detectChanges(); // Actualiza la vista
-
-    setTimeout(() => {
-      this.showSuccess = false;
-      this.cdr.detectChanges();
-    }, 2000);
-  }
-
-  private handleError(error: any) {
-    this.errorMessage = error.error?.message || "Hubo un error al enviar";
-    this.showError = true;
-    this.successMessage = null;
-
-    this.cdr.detectChanges();
-
-    setTimeout(() => {
-      this.showError = false;
-      this.cdr.detectChanges();
-    }, 2000);
-  }
-
-
-  nameControl(variable : string): FormControl {
-    return this.brandForm.get(variable) as FormControl;
+  getFormControl(controlName: string): FormControl {
+    return this.brandForm.get(controlName) as FormControl;
   }
 }

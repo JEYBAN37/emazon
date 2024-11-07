@@ -1,68 +1,66 @@
-
 <div class="card">
-  <div *ngIf="showSuccess" class="alert alert-success show">
-    {{ successMessage }}
+  <app-alert-message-display></app-alert-message-display>  <!-- Componente de alertas -->
+  <div class="card-header">
+    <div class="card-title">{{titleArticle}}</div>
+    <div class="card-description">{{subtitle}}</div>
   </div>
-  <div *ngIf="showError" class="alert alert-danger show">
-    {{ errorMessage }}
-  </div>
-    <div class="card-header">
-        <h1 class="card-title">Crear Articulo</h1>
-        <h2 class="card-description">Agrega nuevo articulo</h2>
+  <form [formGroup]="articleForm">
+    <div class="card-content space-vertical-content">
+      <app-input
+        [control]="getFormControl('name')"
+        label="Nombre"
+        [errorMessages]="[
+          { key: 'required', message: 'El nombre es requerido' },
+          {
+            key: 'maxlength',
+            message: 'El nombre debe ser menor a 50 caracteres'
+          }
+        ]"
+      ></app-input>
+
+      <app-text-input
+        label="Descripcion"
+        [control]="getFormControl('description')"
+        [errorMessages]="[
+          { key: 'required', message: 'descripcion es requerida' },
+          { key: 'maxlength', message: 'nombre debe ser menor a 90 caracters' }
+        ]"
+      ></app-text-input>
+
+      <app-input
+        [control]="getFormControl('quantity')"
+        label="Cantidad"
+        type="number"
+        [errorMessages]="[
+          { key: 'required', message: 'La cantidad es requerida' }
+        ]"
+      ></app-input>
+      <app-input
+        [control]="getFormControl('price')"
+        label="Precio"
+        type="number"
+        [errorMessages]="[
+          { key: 'required', message: 'La cantidad es requerida' }
+        ]"
+      ></app-input>
+      <app-input
+        [control]="getFormControl('brand')"
+        label="Marca"
+        [errorMessages]="[
+          { key: 'required', message: 'La marca es requerida' }
+        ]"
+      ></app-input>
+      <select formControlName="articleCategories" multiple>
+        <option *ngFor="let category of categories" [value]="category">
+          {{ category }}
+        </option>
+      </select>
     </div>
-    <form [formGroup] = "articleForm" >
-        <div class="card-content space-vertical-content ">
-
-            <app-input
-            label="Nombre"
-            [control]="nameControl('name')"
-            [errorMessages]="[
-              { key: 'required', message: 'El nombre es requerido' },
-              { key: 'maxlength', message: 'El nombre debe ser menor a 50 caracteres' }
-            ]"
-          ></app-input>
-
-            <app-text-input
-            label="Descripcion"
-            [control]="nameControl('description')"
-            [errorMessages]="[
-              { key: 'required', message: 'descripcion es requerida' },
-              { key: 'maxlength', message: 'nombre debe ser menor a 90 caracters' }
-            ]"
-          ></app-text-input>
-
-        <app-input
-            label="Cantidad"
-            type="number"
-            [control]="nameControl('quantity')"
-            [errorMessages]="[
-              { key: 'required', message: 'La cantidad es requerida' }]"
-          ></app-input>
-          <app-input
-          label="Precio"
-          type="number"
-          [control]="nameControl('price')"
-          [errorMessages]="[
-            { key: 'required', message: 'La cantidad es requerida' }]"
-        ></app-input>
-          <app-input
-          label="Marca"
-          [control]="nameControl('brand')"
-          [errorMessages]="[
-            { key: 'required', message: 'La marca es requerida' }
-          ]"
-        ></app-input>
-
-
-      <!-- En tu template HTML -->
-<select formControlName="articleCategories" multiple>
-  <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
-</select>
-
-
-        </div>
-        <div class="card-footer">
-            <button class="btn-primary" (click)="send()">Crear</button>
-        </div>
-    </form>
+    <div class="card-footer">
+      <app-submit-button 
+        label="Crear" 
+        (action)="getData()">
+      </app-submit-button>
+    </div>
+  </form>
 </div>

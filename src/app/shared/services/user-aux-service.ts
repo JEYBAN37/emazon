@@ -25,7 +25,7 @@ export class User implements ObjectStock {
   
   export class UserAuxService implements ObjectServiceInterface {
     private apiUrl = 'http://localhost:8088/'; // Cambia esta URL por la de tu API
-    private token ='eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlkIjo4Nywic3ViIjoiamVzQGV4YW1wbGUuY29tIiwiaWF0IjoxNzMwNzc3MDI0LCJleHAiOjE3MzA4NjM0MjR9.Yv-FvrZRnPBZRr3kNFKcaJQPojMPBktbVaf48DlbzX8';
+    private token ='eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlkIjo5MCwic3ViIjoiamVzc3NAZXhhbXBsZS5jb20iLCJpYXQiOjE3MzA4NDQ1MjUsImV4cCI6MTczMDkzMDkyNX0.dBhgQl_7y3iHNnlbESTAw_S4WSObUn_ocRa-UqIiQW8';
     constructor(private http: HttpClient) {}
     
   get(page: number, size: number, ascending: boolean, byBrand?: string, byArticle?: string, byName?: string): Observable<ObjectStock[]> {

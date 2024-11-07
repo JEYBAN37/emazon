@@ -8,42 +8,55 @@ describe('CardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CardComponent]
+      declarations: [CardComponent],
     }).compileComponents();
-
-    fixture = TestBed.createComponent(CardComponent);
-    component = fixture.componentInstance;
   });
 
-  it('should create the card component', () => {
+  beforeEach(() => {
+    fixture = TestBed.createComponent(CardComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create the component', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should render the card title correctly', () => {
-    component.title = 'Test Card Title';
-    fixture.detectChanges(); // Update the template
-    const titleElement = fixture.debugElement.query(By.css('h3')); // Assuming an <h3> is used for the title
-    expect(titleElement.nativeElement.textContent).toContain('Test Card Title');
+  it('should display the default title', () => {
+    const titleElement = fixture.debugElement.query(By.css('h1')).nativeElement;
+    expect(titleElement.textContent).toContain('Título de la Tarjeta');
   });
 
-  it('should render the card content correctly', () => {
-    component.content = 'Test Card Content';
-    fixture.detectChanges(); // Update the template
-    const contentElement = fixture.debugElement.query(By.css('.card-content')); // Assuming a class is used for content
-    expect(contentElement.nativeElement.textContent).toContain('Test Card Content');
+  it('should display the default content', () => {
+    const contentElement = fixture.debugElement.query(By.css('p')).nativeElement;
+    expect(contentElement.textContent).toContain('Contenido de la tarjeta. Aquí puedes agregar cualquier información adicional.');
   });
 
-  it('should display the image when imageUrl is provided', () => {
-    component.imageUrl = 'http://example.com/image.jpg';
-    fixture.detectChanges(); // Update the template
-    const imgElement = fixture.debugElement.query(By.css('img')); // Assuming an <img> element is used
-    expect(imgElement.nativeElement.src).toContain('http://example.com/image.jpg');
+  it('should display the input title when provided', () => {
+    component.title = 'Nuevo Título';
+    fixture.detectChanges();
+    const titleElement = fixture.debugElement.query(By.css('h1')).nativeElement;
+    expect(titleElement.textContent).toContain('Nuevo Título');
   });
 
-  it('should render the button with the correct text', () => {
-    component.buttonText = 'Test Button';
-    fixture.detectChanges(); // Update the template
-    const buttonElement = fixture.debugElement.query(By.css('button')); // Assuming a <button> element is used
-    expect(buttonElement.nativeElement.textContent).toContain('Test Button');
+  it('should display the input content when provided', () => {
+    component.content = 'Nuevo contenido de la tarjeta';
+    fixture.detectChanges();
+    const contentElement = fixture.debugElement.query(By.css('p')).nativeElement;
+    expect(contentElement.textContent).toContain('Nuevo contenido de la tarjeta');
+  });
+
+  it('should display the input image URL when provided', () => {
+    component.imageUrl = 'https://via.placeholder.com/150';
+    fixture.detectChanges();
+    const imgElement = fixture.debugElement.query(By.css('img')).nativeElement;
+    expect(imgElement.src).toContain('https://via.placeholder.com/150');
+  });
+
+  it('should display the input button text when provided', () => {
+    component.buttonText = 'Nuevo Botón';
+    fixture.detectChanges();
+    const buttonElement = fixture.debugElement.query(By.css('button')).nativeElement;
+    expect(buttonElement.textContent).toContain('Nuevo Botón');
   });
 });
