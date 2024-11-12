@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpParams, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -47,6 +47,14 @@ export class ApiFactoryService {
     return this.http.put<T>(endpoint, body, {
       params: httpParams
     });
+  }
+
+  delete<T>(endpoint: string, body: any = {}): Observable<HttpEvent<T>> {
+    const req = new HttpRequest('DELETE', endpoint, body, {
+      responseType: 'json'
+    });
+  
+    return this.http.request<T>(req);
   }
 }
 

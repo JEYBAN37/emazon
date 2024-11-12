@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { FormBuilder, FormGroup, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ArticleFormBuilderService } from './article-form-builder.service';
 
 describe('ArticleFormBuilderService', () => {
@@ -7,7 +7,8 @@ describe('ArticleFormBuilderService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [FormBuilder, ArticleFormBuilderService]
+      imports: [ReactiveFormsModule],
+      providers: [ArticleFormBuilderService, FormBuilder],
     });
     service = TestBed.inject(ArticleFormBuilderService);
   });
@@ -16,46 +17,39 @@ describe('ArticleFormBuilderService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should initialize article form with default values and validators', () => {
-    const form: FormGroup = service.initArticleForm();
+  it('should initialize a form with correct default values and validators', () => {
+    const form = service.initArticleForm();
 
-    // Verificar que el formulario fue inicializado
-    expect(form).toBeTruthy();
-    expect(form.controls).toHaveProperty('name');
-    expect(form.controls).toHaveProperty('description');
-    expect(form.controls).toHaveProperty('quantity');
-    expect(form.controls).toHaveProperty('price');
-    expect(form.controls).toHaveProperty('brand');
-    expect(form.controls).toHaveProperty('articleCategories');
+    // Check that the form group is defined and has all the expected controls
+    expect(form).toBeDefined();
+    expect(form.controls['name']).toBeDefined();
+    expect(form.controls['description']).toBeDefined();
+    expect(form.controls['quantity']).toBeDefined();
+    expect(form.controls['price']).toBeDefined();
+    expect(form.controls['brand']).toBeDefined();
+    expect(form.controls['articleCategories']).toBeDefined();
 
-    // Verificar los valores iniciales de cada control
-    expect(form.get('name')?.value).toBe('');
-    expect(form.get('description')?.value).toBe('');
-    expect(form.get('quantity')?.value).toBe('');
-    expect(form.get('price')?.value).toBe('');
-    expect(form.get('brand')?.value).toBe('');
-    expect(form.get('articleCategories')?.value).toEqual([]);
+    // Check default values
+    expect(form.controls['name'].value).toBe('');
+    expect(form.controls['description'].value).toBe('');
+    expect(form.controls['quantity'].value).toBe('');
+    expect(form.controls['price'].value).toBe('');
+    expect(form.controls['brand'].value).toBe('');
+    expect(form.controls['articleCategories'].value).toEqual([]);
 
-    // Verificar validadores utilizando la función auxiliar
-    expect(hasValidator(form.get('name'), Validators.required)).toBe(false);
-    expect(hasValidator(form.get('name'), Validators.maxLength(50))).toBe(false);
+    // Helper function to check if a control has a specific validator
+    const hasValidator = (control:any, validator:any) => {
+      const validators = control.validator ? [control.validator] : [];
+      return validators.some(v => v === validator || v.name === validator.name);
+    };
 
-    expect(hasValidator(form.get('description'), Validators.required)).toBe(false);
-    expect(hasValidator(form.get('description'), Validators.maxLength(90))).toBe(false);
+    // Check validators for each form control
+    expect(hasValidator(form.controls['name'], Validators.required)).toBe(false);
+    expect(hasValidator(form.controls['name'], Validators.maxLength(50))).toBe(true);
 
-    expect(hasValidator(form.get('quantity'), Validators.required)).toBe(false);
-    expect(hasValidator(form.get('price'), Validators.required)).toBe(false);
-    expect(hasValidator(form.get('brand'), Validators.required)).toBe(false);
-    expect(hasValidator(form.get('articleCategories'), Validators.required)).toBe(false);
+    expect(hasValidator(form.controls['description'], Validators.required)).toBe(false);
+    expect(hasValidator(form.controls['description'], Validators.maxLength(90))).toBe(true);
+
+ 
   });
 });
-
-/**
- * Helper function to check if a specific validator is present on a control
- */
-function hasValidator(control: AbstractControl | null, validator: ValidatorFn): boolean {
-  if (!control || !control.validator) return false;
-
-  const validatorFn = control.validator({} as AbstractControl);
-  return validatorFn && Object.values(validatorFn).includes(validator) || false;
-}

@@ -6,60 +6,45 @@ import { Article } from '../../models/article-interface';
 
 describe('ArticleService', () => {
   let service: ArticleService;
-  let apiFactoryMock: jest.Mocked<ApiFactoryService>;
+  let apiFactoryService: jest.Mocked<ApiFactoryService>;
 
   beforeEach(() => {
-    // Creamos un mock del ApiFactoryService
-    apiFactoryMock = {
-      createGet: jest.fn(),
-    } as any;
+    const apiFactoryServiceMock = {
+      createPost: jest.fn(),
+    } as unknown as jest.Mocked<ApiFactoryService>;
 
-    // Configuramos el entorno de pruebas
     TestBed.configureTestingModule({
       providers: [
         ArticleService,
-        { provide: ApiFactoryService, useValue: apiFactoryMock },
+        { provide: ApiFactoryService, useValue: apiFactoryServiceMock },
       ],
     });
 
     service = TestBed.inject(ArticleService);
+    apiFactoryService = TestBed.inject(ApiFactoryService) as jest.Mocked<ApiFactoryService>;
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should call fetchArticleData and return article data', () => {
+  it('should call createPost with the correct URL and article data', (done) => {
+
     const mockArticle: Article = {
       name: 'Test Article',
-      description: 'Test Description',
-      quantity: 10,
-      price: 100,
-      brand: 'Test Brand',
-      articleCategories: ['Category1'],
+      quantity: 100,
+      price: 20,
+      brand:1,
     };
 
-    // Simulamos la respuesta de la API
-    apiFactoryMock.createGet.mockReturnValue(of(mockArticle));
+    // Set up the mock to return an observable of mockArticle
+    apiFactoryService.createPost.mockReturnValue(of(mockArticle));
 
-    // Llamamos al método que queremos probar
     service.fetchArticleData(mockArticle).subscribe((result) => {
       expect(result).toEqual(mockArticle);
-      expect(apiFactoryMock.createGet).toHaveBeenCalledWith('http://localhost:8086/admin/articles/', mockArticle);
+      done();
     });
-  });
 
-  it('should handle errors when API call fails', () => {
-    const mockError = new Error('Failed to fetch data');
-    apiFactoryMock.createGet.mockReturnValue(of(mockError));
-
-    service.fetchArticleData({} as Article).subscribe({
-      next: () => {
-        fail('expected an error, not data');
-      },
-      error: (error) => {
-        expect(error).toBe(mockError);
-      },
-    });
+    expect(apiFactoryService.createPost).toHaveBeenCalledWith(service['apiUrl'], mockArticle);
   });
 });

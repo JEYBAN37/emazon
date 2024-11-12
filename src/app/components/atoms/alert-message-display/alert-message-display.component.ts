@@ -17,14 +17,14 @@ export class AlertMessageDisplayComponent implements OnInit {
       this.successMessage = message;
       setTimeout(() => {
         this.successMessage = null;
-      }, 100000);
+      }, 4000);
     });
 
     this.alertService.errorMessage$.subscribe((message) => {
       this.errorMessage = message;
       setTimeout(() => {
         this.errorMessage = null;
-      }, 100000);
+      }, 4000);
     });
   }
 }

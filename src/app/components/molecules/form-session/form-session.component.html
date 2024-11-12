@@ -1,0 +1,33 @@
+<div #scrollContainer class="card">
+    <app-alert-message-display></app-alert-message-display>  <!-- Componente de alertas -->
+    <div class="card-header">
+      <div class="card-title">{{typeUser}}</div>
+      <div class="card-description">{{subtitle}}</div>
+    </div>
+    <form [formGroup]="userForm">
+      <div class="card-content space-vertical-content">
+        <app-input
+          [control]="getFormControl('email')"
+          label="Email"
+          [errorMessages]="[
+            { key: 'required', message: 'El email es requerido' },
+          ]"
+        ></app-input>
+        <app-input
+          [control]="getFormControl('password')"
+          label="Contraseña"
+          type="password"
+          [errorMessages]="[
+            { key: 'required', message: 'La contraseña es requerida' }
+          ]"
+        ></app-input>
+      </div>
+      <div class="card-footer">
+        <app-submit-button 
+          label="Ingresar" 
+          (action)="getData()">
+        </app-submit-button>
+      </div>
+    </form>
+  </div>
+  

@@ -1,0 +1,48 @@
+<div class="card">
+  <app-alert-message-display></app-alert-message-display>  
+  <div class="card-header">
+    <h1 class="card-title">{{ label }}</h1>
+    <h2 class="card-description">{{ description }}</h2>
+  </div>
+  <div class="card-content">
+    <table>
+      <thead>
+        <tr>
+          <th *ngFor="let column of columns">{{ column }}</th>
+          <th>Acciones</th> <!-- Columna para el botón de eliminación -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let supply of supplies; let i = index">
+          <td *ngFor="let field of fieldsToDisplay">
+            {{ getPropertyValue(supply, field.key) }}
+          </td>
+          <!-- Botón de eliminación -->
+          <td>
+            <app-submit-button 
+              label="Eliminar"  
+              (action)="removeSupply(i)"
+            ></app-submit-button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Botones de paginación -->
+  <div
+    style="
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      margin-top: 10px;
+    "
+  >
+    <app-submit-button 
+      label="Enviar suministros a Stock"  
+      (action)="sendSupplies()"
+    ></app-submit-button>
+  </div>
+</div>

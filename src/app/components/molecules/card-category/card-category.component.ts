@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ChangeDetectorRef } from '@angular/core';
 import { CategoryFormBuilderService } from 'src/app/shared/services/category/category-form-builder.service';
@@ -11,12 +11,13 @@ import { Category } from 'src/app/shared/models/category-interface';
   selector: 'app-card-category',
   templateUrl: './card-category.component.html',
   styleUrls: ['./card-category.component.scss'],
+  providers: [AlertMessageService]
 })
 export class CardCategoryComponent implements OnInit {
   public categoryForm!: FormGroup;
   public title : string = "Crear Categoria"
   public subtitle : string = "Agrega nueva categoria"
-
+  @Output() refresGet = new EventEmitter<void>();
   constructor(
     public validationService: ValidationService,
     public categoryFromBuilder: CategoryFormBuilderService,
@@ -40,6 +41,7 @@ export class CardCategoryComponent implements OnInit {
       next: (response) => {
         this.alertService.showSuccess('Categoria creada exitosamente');
         this.categoryForm.reset();
+        this.refresGet.emit(); 
       },
       error: (error) => {
         this.alertService.showError(

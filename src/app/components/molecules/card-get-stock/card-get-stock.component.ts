@@ -16,7 +16,8 @@ export class CardGetStockComponent<T> implements OnInit {
   @Input() columns: string[] = [];                      // Columnas que se mostrarán
   @Input() apiUrl!: string;                             // URL de la API
   
-  page: number = 0;                                     // Página actual
+  page: number = 0;
+  sizeData : number = 0;                                     // Página actual
   ascending: boolean = false;                           // Orden ascendente/descendente
   byCategory!: string;                                  // Categoría de los datos
   searchTerm: string = '';                               // Término de búsqueda
@@ -37,12 +38,16 @@ export class CardGetStockComponent<T> implements OnInit {
     this.apiFactory.createGet<T[]>(this.apiUrl, combinedParams).subscribe(
       (objects: T[]) => {
         this.data = objects;  
-        console.log(objects)
+        this.sizeData = objects.length; // Guardar los datos obtenidos
       },
       (error) => {
         console.error('Error al obtener los datos de stock:', error);
       }
     );
+  }
+
+   refresh() {
+    this.loadData()
   }
 
   ngOnInit(): void {
@@ -57,8 +62,9 @@ export class CardGetStockComponent<T> implements OnInit {
   }
 
   nextPage(): void {
-    this.page++;  // Aumentar la página
-    this.loadData();  // Cargar los datos de la nueva página
+    if (this.sizeData !== 1)  // Si hay 5 elementos en la página
+      this.page++;  // Aumentar la página
+      this.loadData();  // Cargar los datos de la nueva página
   }
 
   toggleOrder(): void {

@@ -1,8 +1,9 @@
 export interface Article {
-    name: string,
-    description: string,
-    quantity: number,
-    price: number,
-    brand: string,
-    articleCategories: string[],
+    name?: string | null,
+    description?: string | null,
+    quantity?: number | null, 
+    price?: number | null,
+    brand?: number | null,
+    articleCategories?: number[] | null,
 }
+

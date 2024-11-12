@@ -1,0 +1,93 @@
+<div class="container">
+  <h1 class="title">Marketplace</h1>
+  <div style="margin-bottom: 50px; width: 800px;">
+    <app-panel-search (searchParams)="handleFilterChange($event)"></app-panel-search>
+  </div>
+
+  <div class="product-grid">
+    <ng-container *ngFor="let product of data">
+      <div class="product-card" (click)="openProductDetails(product)">
+        <div class="card-header">
+          <h2 class="card-title">{{ product.name }}</h2>
+        </div>
+        <div class="card-content">
+          <p class="product-category">{{ product.brand.name }}</p>
+          <ul>
+            <li *ngFor="let category of product.articleCategories">
+              {{ category.name }}
+            </li>
+          </ul>
+          <p class="product-price">${{ product.price }}</p>
+        </div>
+        <span *ngIf="isInCart(product)" class="in-cart-icon">✔️ En Carrito</span>
+
+      </div>
+    </ng-container>
+  </div>
+
+  <div *ngIf="selectedProduct" class="modal-overlay">
+  
+    <div class="modal-content">
+      <app-alert-message-display></app-alert-message-display> 
+      <h2>{{ selectedProduct.name }}</h2>
+      <p><strong>Marca:</strong> {{ selectedProduct.brand.name }}</p>
+      <p><strong>Precio:</strong> ${{ selectedProduct.price }}</p>
+      <ul>
+        <li *ngFor="let category of selectedProduct.articleCategories">
+          {{ category.name }}
+        </li>
+      </ul>
+      <input 
+        class="search-input"
+        type="number"
+        [(ngModel)]="selectedProduct.quantity"
+        min="1"
+        placeholder="Cantidad"
+      />
+      <button (click)="toggleCart(selectedProduct, selectedProduct.quantity)" class="add-to-cart-button">
+        <span *ngIf="isInCart(selectedProduct)" class="icon-cart">✔️</span>
+        <span *ngIf="!isInCart(selectedProduct)" class="icon-cart">🛒 Agregar</span>
+      </button>
+      <button (click)="closeModal()" class="close-button">Cerrar</button>
+    </div>
+  </div>
+
+
+  <p *ngIf="data.length === 0" class="no-products">No se encontraron productos.</p>
+
+  <div
+  style="
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5px;
+  "
+>
+  <button
+    (click)="prevPage()"
+    [disabled]="page === 0"
+    class="btn-secundary"
+  >
+    <img
+      style="height: 20px; transform: rotate(180deg); z-index: -1"
+      src="assets\arrow_forward_ios.svg"
+      alt="Anterior"
+    />
+  </button>
+  <span>{{ page + 1 }}</span>
+  <button (click)="nextPage()" class="btn-secundary">
+    <img
+      style="height: 20px; z-index: -1"
+      src="assets\arrow_forward_ios.svg"
+      alt="Sigueinte"
+    />
+  </button>
+</div>
+
+  <!-- Contador del carrito -->
+  <div class="cart-info">
+    <p>Productos en el carrito: {{ cartCount }}</p>
+  </div>
+</div>

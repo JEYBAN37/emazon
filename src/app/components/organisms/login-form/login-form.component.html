@@ -1,0 +1,35 @@
+<div class="login-container">
+  <div class="card">
+    <h1 class="card-title">{{title}}</h1>
+    <h3 class="subtitle">{{subtitle}}</h3>
+    <p class="card-description">{{userSelected}}</p>
+    <div style="width: 100%; display: flex; justify-content: center; gap: 20px;">
+
+      <button class="button" (click)="selectUser('1')">
+        <img src="./assets/comprador.png" />
+        <div class="button-text">{{client}}</div>
+      </button>
+
+
+      <button class="button" (click)="selectUser('2')">
+        <img src="./assets/empleado.png"/>
+        <div class="button-text">{{employee}}</div>
+      </button>
+
+
+      <button class="button"  (click)="selectUser('3')">
+        <img src="./assets/ajustes.png"/>
+        <div class="button-text">{{admin}}</div>
+      </button>
+    </div>
+    <div class="selected-content">
+      <app-form-session route="/panel-emploiment" typeUser="Empleado"  subtitle="Ingresa tus credenciales" *ngIf="selectedUser === '2'"></app-form-session>
+      
+      <div *ngIf="selectedUser === '1'" class="cliente">
+        <app-form-session route="/marketplace" typeUser="Cliente" subtitle="Ingresa tus credenciales"></app-form-session>
+        <button class="active-link" (click)="toRegister()">Registrate</button>
+      </div>
+        <app-form-session route="/panel-admin" typeUser="Administrador"  subtitle="Ingresa tus credenciales" *ngIf="selectedUser === '3'"></app-form-session>
+    </div>
+  </div>
+</div>

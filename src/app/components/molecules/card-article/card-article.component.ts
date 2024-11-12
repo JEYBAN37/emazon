@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Article } from 'src/app/shared/models/article-interface';
 import { AlertMessageService } from 'src/app/shared/services/alerts-services/alert-message.service';
@@ -10,12 +10,15 @@ import { ValidationService } from 'src/app/shared/services/validations/validatio
   selector: 'app-card-article',
   templateUrl: './card-article.component.html',
   styleUrls: ['./card-article.component.scss'],
+  providers: [AlertMessageService]
 })
 
 export class CardArticleComponent implements OnInit {
   public articleForm!: FormGroup;
   public titleArticle : string = "Crear Articulo"
   public subtitle : string = "Agrega nuevo articulo"
+  @ViewChild('scrollContainer') scrollContainer!: ElementRef;
+  @Output() refresGet = new EventEmitter<void>();
 
   categories = [
     133535
@@ -40,12 +43,18 @@ export class CardArticleComponent implements OnInit {
       return;
     }
 
+   // this.scrollContainer.nativeElement.scrollTo({
+    //  top: 0,
+     // behavior: 'smooth' // hace el desplazamiento suave
+    //});
+
     const article: Article = {
        ...this.articleForm.value };
 
     this.articleService.fetchArticleData(article).subscribe({
       next: (response) => {
-        this.alertService.showSuccess('Categoria creada exitosamente');
+        this.alertService.showSuccess('Articulo creado exitosamente');
+        this.refresGet.emit(); 
         this.articleForm.reset();
       },
       error: (error) => {
@@ -59,4 +68,5 @@ export class CardArticleComponent implements OnInit {
   getFormControl(controlName: string): FormControl {
     return this.articleForm.get(controlName) as FormControl;
   }
+  
 }

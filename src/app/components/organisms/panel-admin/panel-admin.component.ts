@@ -1,5 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ArticleJson, BrandJson, CategoryJson } from 'src/app/shared/models/article-json';
+import { CardGetStockComponent } from '../../molecules/card-get-stock/card-get-stock.component';
+
+interface Tab {
+  label: string;
+  component: any; // Replace 'any' with the component type when applicable
+}
 
 
 @Component({
@@ -11,23 +17,29 @@ export class PanelAdminComponent implements OnInit {
  
   articlesClass = ArticleJson;
   categoryClass = BrandJson;
-  brandClass = CategoryJson
+  brandClass = CategoryJson;
 
-  articleFields =  [
+  @ViewChild('componenteGetArticle') getArticle!: CardGetStockComponent<any>;
+  @ViewChild('componenteGetBrand') getBrand!: CardGetStockComponent<any>;
+  @ViewChild('componenteGetCategory') getCategory!: CardGetStockComponent<any>;
+
+  articleFields: { key: string; label: string }[] = [
     { key: 'name', label: 'Nombre' },
     { key: 'quantity', label: 'Cantidad' },
-    { key: 'price', label: 'Precio' }
+    { key: 'price', label: 'Precio' },
+    { key: 'brand.name', label: 'Marca' }
   ];
 
-  stockFields =  [
+  stockFields: { key: string; label: string }[] = [
     { key: 'name', label: 'Nombre' },
     { key: 'description', label: 'Descripcion' }
   ];
 
-  categoryCustomParams = { size:5 };
+
+  categoryCustomParams = { size: 5 };
 
 
-  articlesColumns = ['Nombre', 'Cantidad', 'Precio'];
+  articlesColumns = ['Nombre', 'Cantidad', 'Precio','Marca'];
   stockColumns = ['Nombre', 'Descripcion'];
 
 
@@ -51,5 +63,9 @@ export class PanelAdminComponent implements OnInit {
 
   selectTab(index: number): void {
     this.selectedTab = index;
+  }
+
+  refreshBHandler(component : CardGetStockComponent<any> ) {
+    component.refresh(); // Llama al método de refresco en Componente B
   }
 }

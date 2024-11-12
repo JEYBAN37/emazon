@@ -1,0 +1,35 @@
+/* Contenedor principal */
+.form-container {
+    display: flex;
+    flex-direction: column; /* Por defecto en una columna */
+    gap: 1rem; /* Espacio entre los elementos */
+    width: 100%;
+  }
+  
+  /* Estilo de los inputs */
+  .form-container input {
+    width: 100%; /* Hace que los inputs ocupen todo el ancho de su contenedor */
+    padding: 0.5rem;
+    box-sizing: border-box;
+    height: 30px; 
+    border: 1px solid #cbd5e0; /* Borde gris claro */
+    border-radius: 0.375rem;  /* Bordes redondeados */        /* Tamaño de fuente base */
+    color: #4a5568;           /* Color del texto */
+    transition: border-color 0.2s; /* Transición suave para el borde */
+    font-size:0.875rem; 
+    font-weight: 500;
+    padding: 0.5rem;
+    box-sizing: border-box;
+  }
+  
+  /* Layout para pantallas grandes (3 columnas) */
+  @media (min-width: 768px) {
+    .form-container {
+      flex-direction: row; /* Cambia a disposición en fila */
+      flex-wrap: wrap; /* Permite que los elementos se distribuyan en varias filas */
+    }
+    .form-container input {
+      flex: 1 1 calc(33.333% - 1rem); /* 3 columnas de igual ancho */
+    }
+  }
+  

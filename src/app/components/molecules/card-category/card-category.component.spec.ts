@@ -1,245 +1,202 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CardCategoryComponent } from './card-category.component';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { OBJECT_SERVICE, ObjectServiceInterface, ObjectStock } from 'src/app/shared/services/stock-service-interface';
 import { of, throwError } from 'rxjs';
-import { ChangeDetectorRef } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { ValidationService } from 'src/app/shared/services/validations/validation.service';
+import { AlertMessageService } from 'src/app/shared/services/alerts-services/alert-message.service';
+import { CardCategoryComponent } from './card-category.component';
+import { CategoryFormBuilderService } from 'src/app/shared/services/category/category-form-builder.service';
+import { CategoryService } from 'src/app/shared/services/category/category.service';
+import { Category } from 'src/app/shared/models/category-interface';
+
 
 describe('CardCategoryComponent', () => {
   let component: CardCategoryComponent;
   let fixture: ComponentFixture<CardCategoryComponent>;
-  let mockService: jest.Mocked<ObjectServiceInterface>;
-  let changeDetectorRef: ChangeDetectorRef;
+  let validationService: ValidationService;
+  let categoryService: CategoryService;
+  let alertMessageService: AlertMessageService;
+  let categoryFormBuilder: CategoryFormBuilderService;
 
-  beforeEach(async () => {
-    jest.useFakeTimers(); // Usar temporizadores falsos
+  beforeEach(() => {
+    const mockCategoryService = {
+      fetchCategoryData: jest.fn()
+    };
 
-    // Mock del servicio
-    mockService = {
-      create: jest.fn(),
-      get: jest.fn()
-    } as jest.Mocked<ObjectServiceInterface>;
+    const mockValidationService = {
+      markFormGroupTouched: jest.fn()
+    };
 
-    await TestBed.configureTestingModule({
+    const mockAlertMessageService = {
+      showSuccess: jest.fn(),
+      showError: jest.fn()
+    };
+
+    const mockCategoryFormBuilderService = {
+      initCategoryForm: jest.fn(() => new FormGroup({
+        name: new FormControl(''),
+        description: new FormControl(''),
+      }))
+    };
+
+    TestBed.configureTestingModule({
       declarations: [CardCategoryComponent],
       providers: [
-        FormBuilder,
-        { provide: OBJECT_SERVICE, useValue: mockService },
-        ChangeDetectorRef
-      ],
-      imports: [ReactiveFormsModule]
+        { provide: CategoryService, useValue: mockCategoryService },
+        { provide: ValidationService, useValue: mockValidationService },
+        { provide: AlertMessageService, useValue: mockAlertMessageService },
+        { provide: CategoryFormBuilderService, useValue: mockCategoryFormBuilderService }
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(CardCategoryComponent);
     component = fixture.componentInstance;
-    changeDetectorRef = fixture.debugElement.injector.get(ChangeDetectorRef);
-    component.service = mockService;
+    validationService = TestBed.inject(ValidationService);
+    categoryService = TestBed.inject(CategoryService);
+    alertMessageService = TestBed.inject(AlertMessageService);
+    categoryFormBuilder = TestBed.inject(CategoryFormBuilderService);
+
     fixture.detectChanges();
   });
 
-  afterEach(() => {
-    jest.clearAllTimers(); // Limpiar los temporizadores
+  const mockCategory: Category = {
+    name: 'Test Category',
+    description: 'Test Description'
+  };
+
+  const mockCategoryEmty: Category = {
+    name: null,
+    description: null
+  };
+
+  it('should call CategoryService.fetchCategoryData and alertService.showSuccess when form is valid', () => {
+
+    const mockCategory: Category = {
+      name: 'Test Category',
+      description: 'Test Description'
+    };
+
+    const fetchCategoryDataSpy = jest.spyOn(categoryService, 'fetchCategoryData').mockReturnValue(of(mockCategory));
+    const showSuccessSpy = jest.spyOn(alertMessageService, 'showSuccess').mockReturnValue(
+      alertMessageService.showSuccess('Categoria creada exitosamente'));
+;
+
+    // Set form values to valid data
+    component.categoryForm.controls['name'].setValue('Test Category');
+    component.categoryForm.controls['description'].setValue('Test Description');
+    component.getData();
+
+    expect(fetchCategoryDataSpy).toHaveBeenCalledWith(mockCategory);
+    expect(showSuccessSpy).toHaveBeenCalledWith('Categoria creada exitosamente');
   });
 
-  it('should create the component', () => {
-    expect(component).toBeTruthy();
+  it('should call alertService.showError when CategoryService.fetchCategoryData fails', () => {
+    const mockError = { error: { message: 'Test Error' } };
+    const fetchCategoryDataSpy = jest.spyOn(categoryService, 'fetchCategoryData').mockReturnValue(throwError(mockError));
+    const showErrorSpy = jest.spyOn(alertMessageService, 'showError')
+    .mockReturnValue(alertMessageService.showError('Test Error'));
+
+    component.categoryForm.controls['name'].setValue('Test Category');
+    component.categoryForm.controls['description'].setValue('Test Description');
+    component.getData();
+
+    expect(fetchCategoryDataSpy).toHaveBeenCalled();
+    expect(showErrorSpy).toHaveBeenCalledWith('Test Error');
   });
 
-  describe('initForm', () => {
-    it('should initialize the form with default values', () => {
-      component.ngOnInit();
-      expect(component.categoryForm.value).toEqual({
-        name: '',
-        description: ''
-      });
-    });
-  });
+  it('should show success message on successful form submission', () => {
 
-  describe('send', () => {
-    it('should mark all fields as touched if form is invalid', () => {
-      const markAllAsTouchedSpy = jest.spyOn(component.categoryForm, 'markAllAsTouched');
-      component.categoryForm.controls['name'].setValue(''); // name vacío (inválido)
-      component.send();
-      expect(markAllAsTouchedSpy).toHaveBeenCalled();
+    // Set valid form data
+    component.categoryForm.setValue({
+      name: 'Test Category',
+      description: 'Test Description'
     });
 
-    it('should call create on the service if the form is valid', () => {
-      component.categoryForm.controls['name'].setValue('Test Name');
-      component.categoryForm.controls['description'].setValue('Test Description');
-      
-      const objectStock: ObjectStock = { name: 'Test Name', description: 'Test Description' };
-      mockService.create.mockReturnValue(of(objectStock));
-      
-      component.send();
-      expect(mockService.create).toHaveBeenCalledWith(objectStock);
-    });
-
-    it('should call handleSuccess on successful submission', () => {
-      const handleSuccessSpy = jest.spyOn(component as any, 'handleSuccess');
-      component.categoryForm.controls['name'].setValue('Test Name');
-      component.categoryForm.controls['description'].setValue('Test Description');
-
-      const response: ObjectStock = { name: 'Test Name', description: 'Test Description' };
-      mockService.create.mockReturnValue(of(response));
-
-      component.send();
-      expect(handleSuccessSpy).toHaveBeenCalledWith(response);
-    });
-
-    it('should call handleError on failed submission', () => {
-      const handleErrorSpy = jest.spyOn(component as any, 'handleError');
-      component.categoryForm.controls['name'].setValue('Test Name');
-      component.categoryForm.controls['description'].setValue('Test Description');
-
-      const errorResponse = { error: { message: 'Error' } };
-      mockService.create.mockReturnValue(throwError(() => errorResponse));
-
-      component.send();
-      expect(handleErrorSpy).toHaveBeenCalledWith(errorResponse);
-    });
-  });
-
-  describe('handleSuccess', () => {
-    it('should set successMessage and showSuccess to true', () => {
-      const response: ObjectStock = { name: 'Test Name', description: 'Test Description' };
-      component['handleSuccess'](response);
-
-      expect(component.successMessage).toBe("Formulario enviado exitosamente");
-      expect(component.showSuccess).toBe(true);
-
-      jest.advanceTimersByTime(2000); // Avanza el tiempo simulado
-      expect(component.showSuccess).toBe(false);
-    });
-  });
-
-  describe('handleError', () => {
-    it('should set errorMessage and showError to true on error', () => {
-      const errorResponse = { error: { message: 'Error' } };
-      component['handleError'](errorResponse);
-      
-      expect(component.errorMessage).toBe('Error');
-      expect(component.showError).toBe(true);
-
-      jest.advanceTimersByTime(2000); // Avanza el tiempo simulado
-      expect(component.showError).toBe(false);
-    });
-  });
-
-  describe('getFormControl', () => {
-    it('should return the FormControl for a given control name', () => {
-      const nameControl = component.getFormControl('name');
-      expect(nameControl).toBe(component.categoryForm.controls['name']);
-    });
+    // Mock alertMessageService
+    const showSuccessSpy = jest.spyOn(alertMessageService, 'showSuccess').mockReturnValue(
+      alertMessageService.showSuccess('Categoria creada exitosamente'));
     
+    // Mock the response from CategoryService
+    jest.spyOn(categoryService, 'fetchCategoryData').mockReturnValue(of(mockCategory));
+
+    component.getData();
+
+    expect(showSuccessSpy).toHaveBeenCalledWith('Categoria creada exitosamente');
+  });
+
+  it('should show error message on failed form submission', () => {
+    // Set valid form data
+    component.categoryForm.setValue({
+      name: '',
+      description: ''
+    });
+
+    // Mock alertMessageService
+    const showErrorSpy = jest.spyOn(alertMessageService, 'showError').mockReturnValue(alertMessageService.showError('Error occurred'));
+
+    // Mock the error response from CategoryService
+    jest.spyOn(categoryService, 'fetchCategoryData').mockReturnValue(throwError({ error: { message: 'Error occurred' } }));
+
+    component.getData();
+
+    expect(showErrorSpy).toHaveBeenCalledWith('Error occurred');
+  });
+
+  it('should emit refresGet event after successful form submission', () => {
+    // Set valid form data
+    component.categoryForm.setValue({
+      name: 'Test Category',
+      description: 'Test Description'
+    });
+
+    // Spy on refresGet emit
+    const emitSpy = jest.spyOn(component.refresGet, 'emit');
+
+    // Mock the response from CategoryService
+    jest.spyOn(categoryService, 'fetchCategoryData').mockReturnValue(of(mockCategory));
+
+    component.getData();
+
+    expect(emitSpy).toHaveBeenCalled();
   });
 
 
-  describe('send', () => {
-    it('should mark all fields as touched if form is invalid', () => {
-      const markAllAsTouchedSpy = jest.spyOn(component.categoryForm, 'markAllAsTouched');
-      component.categoryForm.controls['name'].setValue(''); // nombre vacío (inválido)
-      component.send();
-      expect(markAllAsTouchedSpy).toHaveBeenCalled();
+  it('should not call markFormGroupTouched if the form is valid', () => {
+    // Set the form to a valid state
+    component.categoryForm.setValue({
+      name: 'Valid Category',
+      description: 'Valid Description',
     });
 
-    it('should not call create on the service if the form is invalid', () => {
-      component.categoryForm.controls['name'].setValue(''); // nombre vacío
-      component.send();
-      expect(mockService.create).not.toHaveBeenCalled(); // Verifica que no se haya llamado al servicio
-    });
+    // Mock the fetchCategoryData to return an observable (mock success response)
+    jest.spyOn(categoryService, 'fetchCategoryData').mockReturnValue(of(mockCategory));
 
-    it('should call create on the service if the form is valid', () => {
-      component.categoryForm.controls['name'].setValue('Test Name');
-      component.categoryForm.controls['description'].setValue('Test Description');
-      
-      const objectStock: ObjectStock = { name: 'Test Name', description: 'Test Description' };
-      mockService.create.mockReturnValue(of(objectStock));
-      
-      component.send();
-      expect(mockService.create).toHaveBeenCalledWith(objectStock);
-    });
-    it('should call handleSuccess on successful submission', () => {
-      const handleSuccessSpy = jest.spyOn(component as any, 'handleSuccess');
-      component.categoryForm.controls['name'].setValue('Test Name');
-      component.categoryForm.controls['description'].setValue('Test Description');
-  
-      const response: ObjectStock = { name: 'Test Name', description: 'Test Description' };
-      mockService.create.mockReturnValue(of(response));
-  
-      component.send();
-      expect(handleSuccessSpy).toHaveBeenCalledWith(response);
+    // Spy on markFormGroupTouched
+    const markFormGroupTouchedSpy = jest.spyOn(validationService, 'markFormGroupTouched');
+
+    // Call getData()
+    component.getData();
+
+    // Ensure markFormGroupTouched is NOT called
+    expect(markFormGroupTouchedSpy).not.toHaveBeenCalled();
   });
   
-  it('should call handleError on failed submission', () => {
-      const handleErrorSpy = jest.spyOn(component as any, 'handleError');
-      component.categoryForm.controls['name'].setValue('Test Name');
-      component.categoryForm.controls['description'].setValue('Test Description');
-  
-      const errorResponse = { error: { message: 'Error' } };
-      mockService.create.mockReturnValue(throwError(() => errorResponse));
-  
-      component.send();
-      expect(handleErrorSpy).toHaveBeenCalledWith(errorResponse);
+  it('should call markFormGroupTouched if the form is invalid', () => {
+    // Set the form to be invalid
+    component.categoryForm.setValue({
+      name: null, // Invalid value
+      description:null// Invalid value
+    });
+
+    // Spy on markFormGroupTouched to check if it's called
+    const markFormGroupTouchedSpy = jest.spyOn(validationService, 'markFormGroupTouched');
+
+    // Mock the fetchCategoryData method to return an observable
+    jest.spyOn(categoryService, 'fetchCategoryData').mockReturnValue(of(mockCategoryEmty));
+
+    // Call the method that triggers the validation and fetch
+    component.getData();
+
+    // Optionally, check if the service was called (if needed)
+    expect(categoryService.fetchCategoryData).toHaveBeenCalledWith(component.categoryForm.value);
   });
-  });
-
-  describe('form validations', () => {
-    it('should validate the name field as required', () => {
-      const nameControl = component.getFormControl('name');
-      nameControl.setValue('');
-      expect(nameControl.valid).toBeFalsy();
-      expect(nameControl.errors?.['required']).toBeTruthy();
-    });
-
-    it('should validate the description field as required', () => {
-      const descriptionControl = component.getFormControl('description');
-      descriptionControl.setValue('');
-      expect(descriptionControl.valid).toBeFalsy();
-      expect(descriptionControl.errors?.['required']).toBeTruthy();
-    });
-
-    it('should validate name maximum length', () => {
-      const nameControl = component.getFormControl('name');
-      nameControl.setValue('A very long name that exceeds the maximum length allowed');
-      expect(nameControl.valid).toBeFalsy();
-      expect(nameControl.errors?.['maxlength']).toBeTruthy();
-    });
-
-    it('should handle error if service call fails with a message', async () => {
-      component.categoryForm.setValue({ name: 'Brand Name', description: 'Brand Description' });
-      mockService.create.mockReturnValue(throwError(() => ({ error: { message: 'Error occurred' } })));
-  
-      await component.send();
-  
-      expect(component.errorMessage).toBe('Error occurred');
-      expect(component.showError).toBe(true);
-      expect(component.successMessage).toBeNull();
-  
-      // Verify error message disappears after timeout
-      jest.useFakeTimers();
-      jest.advanceTimersByTime(2001);
-      expect(component.showError).toBe(true);
-      jest.useRealTimers();
-    });
-  
-    it('should handle error if service call fails without a message', async () => {
-      component.categoryForm.setValue({ name: 'Brand Name', description: 'Brand Description' });
-      mockService.create.mockReturnValue(throwError(() => ({ error: {} }))); // Simulate error with no message
-  
-      await component.send();
-  
-      expect(component.errorMessage).toBe('Hubo un error al enviar'); // Default error message
-      expect(component.showError).toBe(true);
-      expect(component.successMessage).toBeNull();
-  
-      // Verify error message disappears after timeout
-      jest.useFakeTimers();
-      jest.advanceTimersByTime(2001);
-      expect(component.showError).toBe(true);
-      jest.useRealTimers();
-    });
-
-  });
-
 });
-

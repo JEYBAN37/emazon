@@ -1,0 +1,43 @@
+
+<div class="card">
+    <app-alert-message-display></app-alert-message-display>  
+      <div class="card-header">
+        <div class="card-title">{{title}}</div>
+        <div class="card-description">{{subtitle}}</div>
+      </div>
+      <form [formGroup] = "supplyForm" >
+          <div class="card-content space-vertical-content ">
+              <app-input
+              [control]="getFormControl('idArticle')"
+              label="Id"
+              [errorMessages]="[
+                { key: 'required', message: 'El id es requerido' },
+                { key: 'pattern', message: 'El id debe ser numerico' },
+              ]"
+            ></app-input>
+            <app-input
+            [control]="getFormControl('quantity')"
+            label="Cantidad"
+            type = "number"
+            [errorMessages]="[
+              { key: 'required', message: 'La cantidad es requerida' },
+              { key: 'pattern', message: 'La cantidad debe ser numerica' },
+            ]"
+          ></app-input>
+          <app-input
+          [control]="getFormControl('state')"
+          label="Estado"
+          [errorMessages]="[
+            { key: 'required', message: 'El Estado es requerido' },
+          ]"
+        ></app-input>
+          </div>
+          <div class="card-footer">
+            <app-submit-button 
+            label="Crear" 
+            (action)="getData()">
+          </app-submit-button>
+          </div>
+      </form>
+  </div>
+  

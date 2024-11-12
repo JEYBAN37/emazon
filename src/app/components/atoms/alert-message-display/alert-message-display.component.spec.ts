@@ -31,7 +31,7 @@ describe('AlertMessageDisplayComponent', () => {
     expect(successElement.textContent).toContain('Success Message');
 
     // Avanza el temporizador en 2000ms para hacer desaparecer el mensaje
-    tick(2000);
+    tick(4000);
     fixture.detectChanges();
 
     // Verificar que el mensaje de éxito desaparece después de 2 segundos
@@ -49,7 +49,7 @@ describe('AlertMessageDisplayComponent', () => {
     expect(errorElement.textContent).toContain('Error Message');
 
     // Avanza el temporizador en 2000ms para hacer desaparecer el mensaje
-    tick(2000);
+    tick(4000);
     fixture.detectChanges();
 
     // Verificar que el mensaje de error desaparece después de 2 segundos

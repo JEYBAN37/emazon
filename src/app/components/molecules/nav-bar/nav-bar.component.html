@@ -1,27 +1,22 @@
 <nav class="navbar">
-    <div class="container">
-      <div class="navbar-content">
-        <div class="navbar-brand">
-          <a routerLink="/" class="brand-text">Emazon</a>
-        </div>
-        <div class="navbar-links desktop">
-          <a routerLink="/productos" class="nav-link">Estadisticas</a>
-          <a routerLink="/servicios" class="nav-link">Perfil</a>
-          <a routerLink="/contacto" class="nav-link">Cerrar Sesion</a>
-        </div>
-        <div class="menu-icon mobile">
-          <button (click)="toggleMenu()" aria-label="Menú principal" class="menu-toggle">
-            <span *ngIf="isMenuOpen">✖</span> <!-- 'X' icon -->
-            <span *ngIf="!isMenuOpen">☰</span> <!-- Menu icon -->
-          </button>
-        </div>
+  <div class="container">
+    <div class="navbar-content">
+      <div class="navbar-brand">
+        <a routerLink="/" class="brand-text">Emazon</a>
+      </div>
+      <div class="navbar-links desktop">
+        <a *ngFor="let link of navLinks" [routerLink]="link.route" class="nav-link">{{ link.name }}</a>
+      </div>
+      <div class="menu-icon mobile">
+        <button (click)="toggleMenu()" aria-label="Menú principal" class="menu-toggle">
+          <span *ngIf="isMenuOpen">✖</span> <!-- 'X' icon -->
+          <span *ngIf="!isMenuOpen">☰</span> <!-- Menu icon -->
+        </button>
       </div>
     </div>
-    <div *ngIf="isMenuOpen" class="mobile-menu">
-     
-      <a routerLink="/productos" class="nav-link">Estadisticas</a>
-          <a routerLink="/servicios" class="nav-link">Perfil</a>
-          <a routerLink="/contacto" class="nav-link">Cerrar Sesion</a>
-    </div>
-  </nav>
-  
+  </div>
+
+  <div *ngIf="isMenuOpen" class="mobile-menu">
+    <a *ngFor="let link of navLinks" [routerLink]="link.route" class="nav-link">{{ link.name }}</a>
+  </div>
+</nav>

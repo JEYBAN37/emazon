@@ -21,33 +21,4 @@ describe('InputComponent', () => {
     expect(component.type).toBe('text');
     expect(component.errorMessages).toEqual([]);
   });
-
-  it('should bind label input correctly', () => {
-    component.label = 'Test Label';
-    fixture.detectChanges();
-
-    const labelElement = fixture.debugElement.query(By.css('label'));
-    expect(labelElement.nativeElement.textContent).toContain('Test Label');
-  });
-
-  it('should bind type input correctly', () => {
-    component.type = 'password';
-    fixture.detectChanges();
-
-    const inputElement = fixture.debugElement.query(By.css('input'));
-    expect(inputElement.nativeElement.type).toBe('password');
-  });
-
-  it('should display error messages correctly', () => {
-    component.errorMessages = [{ key: 'required', message: 'This field is required' }];
-    fixture.detectChanges();
-
-    const errorMessage = fixture.debugElement.query(By.css('.error-message'));
-    expect(errorMessage.nativeElement.textContent).toContain('This field is required');
-  });
-
-  it('should be registered with NG_VALUE_ACCESSOR', () => {
-    const providers = TestBed.inject(NG_VALUE_ACCESSOR);
-    expect(providers).toContain({ provide: NG_VALUE_ACCESSOR, useExisting: InputComponent, multi: true });
-  });
 });

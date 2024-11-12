@@ -1,13 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 
 import { BrandFormBuilderService } from './brand-form-builder.service';
-import { AbstractControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 
 describe('BrandFormBuilderService', () => {
   let service: BrandFormBuilderService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [ReactiveFormsModule],
+      providers: [BrandFormBuilderService, FormBuilder],
+    });
     service = TestBed.inject(BrandFormBuilderService);
   });
 
@@ -19,7 +22,7 @@ describe('BrandFormBuilderService', () => {
     const form: FormGroup = service.initBrandForm();
 
     // Verificar que el formulario fue inicializado
-    expect(form).toBeTruthy();
+    expect(form).toBeDefined();
     expect(form.controls).toHaveProperty('name');
     expect(form.controls).toHaveProperty('description');
 

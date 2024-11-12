@@ -10,7 +10,7 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = 'eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlkIjo5MSwic3ViIjoiamV5c3NzQGV4YW1wbGUuY29tIiwiaWF0IjoxNzMwOTIwNjM2LCJleHAiOjE3MzEwMDcwMzZ9.DeZJra5al1wBnKQkE8NuIuIxNhWpes8Vqx9fQFBnN9E';
+    const token = 'eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiVVNFUiAiLCJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlkIjo5Mywic3ViIjoianNnc0BleGFtcGxlLmNvbSIsImlhdCI6MTczMTM3NTU1NiwiZXhwIjoxNzMxNDYxOTU2fQ.eHR9ZHzrmsu3YsKTGMWYoku3l7LnSzQg2pSjevqe_I0';
     
     if (token) {
       const clonedRequest = req.clone({

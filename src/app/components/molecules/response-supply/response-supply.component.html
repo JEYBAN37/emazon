@@ -1,0 +1,21 @@
+<div class="card">
+    <div class="card-header">
+      <h1 class="card-title">{{ label }}</h1>
+      <h2 class="card-description">{{ description }}</h2>
+    </div>
+    <div class="card-content">
+      <table>
+        <thead>
+          <tr>
+            <th *ngFor="let column of columns">{{ column }}</th>
+        </thead>
+        <tbody>
+          <tr *ngFor=" let supply of supplies">
+            <td *ngFor="let field of fieldsToDisplay">
+              {{ getPropertyValue(supply, field.key) }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>

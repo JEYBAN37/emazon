@@ -1,0 +1,80 @@
+.card {
+    max-height: max-content;
+    font-family: 'Poppins', sans-serif;
+    max-width: 24rem; /* Ancho máximo */
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem; /* Bordes redondeados */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06); /* Sombra */
+    background-color: #ffffff; /* Fondo blanco */
+  }
+  
+  .card-header {
+    padding: 1rem; /* Espaciado interno */
+    border-bottom: 1px solid #e2e8f0; /* Separador */
+    background-color: #f9fafb; /* Fondo claro */
+  }
+  
+  .card-title {
+    font-size: 30px; /* Tamaño de fuente para título */
+    font-weight: 700;
+    line-height: 36px;
+    letter-spacing: -0.025em;
+    font-style: normal;
+    padding-bottom: 2px;
+  }
+  
+  .card-description {
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 19.6px; /* Tamaño de fuente más pequeño */
+    color: #4B3A5A; /* Color gris para descripción */
+  }
+  
+  .card-content {
+    padding: 1.5rem 1.5rem 1rem 1rem;
+    font-size: 1rem; /* Tamaño de fuente base */
+    color: #4a5568; /* Gris oscuro para contenido */
+    height: 100%; /* Altura máxima del contenedor */
+  
+  }
+  
+  .card-footer {
+    padding: 1rem 1.5rem 1rem 1rem;
+    border-top: 1px solid #e2e8f0; /* Separador */
+    background-color: #f9fafb; /* Fondo claro */
+    text-align: right; /* Alineación del contenido del footer */
+    font-size: 0.875rem; /* Tamaño de fuente más pequeño */
+  }
+  
+  .space-vertical {
+    display: flex;
+    margin-top: 10px;
+    flex-direction: column;
+  }
+  
+  .space-vertical-content > * + * {
+    margin-top: 1rem; 
+  }
+  
+  
+  
+  .form-textarea:focus {
+    border-color: #4B3A5A; /* Borde azul al enfocar */
+    outline: none; /* Quitar borde de enfoque predeterminado */
+    background-color: #ffffff; /* Fondo blanco al enfocar */
+  }
+  
+  .input-container {
+    margin-bottom: 1rem; /* Espacio inferior para separación */
+  }
+  
+  .form-label {
+    font-size: 0.875rem; /* Tamaño de fuente pequeño */
+    font-weight: 500;    /* Peso medio */
+    color: #4a5568;      /* Gris oscuro */
+    display: block;      /* Para que el label ocupe toda la línea */
+    margin-bottom: 0.5rem; /* Espacio inferior */
+  }
+  
+  
+  

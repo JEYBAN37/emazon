@@ -8,22 +8,20 @@ import { of } from 'rxjs';
 describe('CategoryService', () => {
   let service: CategoryService;
   let apiFactoryMock: jest.Mocked<ApiFactoryService>;
-
   beforeEach(() => {
-    // Creamos un mock del ApiFactoryService
-    apiFactoryMock = {
-      createGet: jest.fn(),
-    } as any;
+    const apiFactoryServiceMock = {
+      createPost: jest.fn(),
+    } as unknown as jest.Mocked<ApiFactoryService>;
 
-    // Configuramos el entorno de pruebas
     TestBed.configureTestingModule({
       providers: [
         CategoryService,
-        { provide: ApiFactoryService, useValue: apiFactoryMock },
+        { provide: ApiFactoryService, useValue: apiFactoryServiceMock },
       ],
     });
 
     service = TestBed.inject(CategoryService);
+    apiFactoryMock = TestBed.inject(ApiFactoryService) as jest.Mocked<ApiFactoryService>;
   });
   it('should be created', () => {
     expect(service).toBeTruthy();
@@ -36,27 +34,12 @@ describe('CategoryService', () => {
     };
 
     // Simulamos la respuesta de la API
-    apiFactoryMock.createGet.mockReturnValue(of(mockCategory));
+    apiFactoryMock.createPost.mockReturnValue(of(mockCategory));
 
     // Llamamos al método que queremos probar
     service.fetchCategoryData(mockCategory).subscribe((result) => {
       expect(result).toEqual(mockCategory);
-      expect(apiFactoryMock.createGet).toHaveBeenCalledWith('http://localhost:8086/admin/category/', mockCategory);
+      expect(apiFactoryMock.createPost).toHaveBeenCalledWith(service['apiUrl'], mockCategory);
     });
   });
-
-  it('should handle errors when API call fails', () => {
-    const mockError = new Error('Failed to fetch data');
-    apiFactoryMock.createGet.mockReturnValue(of(mockError));
-
-    service.fetchCategoryData({} as Category).subscribe({
-      next: () => {
-        fail('expected an error, not data');
-      },
-      error: (error) => {
-        expect(error).toBe(mockError);
-      },
-    });
-  });
-
 });

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-nav-bar',
@@ -6,14 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./nav-bar.component.scss']
 })
 export class NavBarComponent implements OnInit {
+  @Input() navLinks: { route: string, name: string }[] = []; // Array of route-name pairs
   isMenuOpen = false;
 
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
   }
+
   constructor() { }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void { }
 }

@@ -1,0 +1,126 @@
+
+<div class="login-container">
+    <div class="card">
+        <div  class="card-header">
+            <h1 class="card-title">{{title}}</h1>
+            <h3 class="subtitle">{{subtitle}}</h3>
+        </div>
+  
+        <form [formGroup]="userRegisterForm">
+            <div class="card-content space-vertical-content">
+              <div class="form-double">
+                <div class="child">
+                  <app-input
+                    [control]="getFormControl('name')"
+                    label="Nombre"
+                    [errorMessages]="[
+                      { key: 'required', message: 'El nombre es requerido' },
+                      {
+                        key: 'maxlength',
+                        message: 'El nombre debe ser menor a 50 caracteres'
+                      }
+                    ]"
+                  ></app-input>
+                </div>
+        
+                <div class="child">
+                  <app-input
+                    [control]="getFormControl('lastName')"
+                    label="Apellidos"
+                    [errorMessages]="[
+                      { key: 'required', message: 'El Apellido es requerido' },
+                      {
+                        key: 'maxlength',
+                        message: 'El nombre debe ser menor a 50 caracteres'
+                      }
+                    ]"
+                  ></app-input>
+                </div>
+              </div>
+        
+              <div class="form-double">
+                <div class="child">
+                  <app-input
+                    [control]="getFormControl('dateAge')"
+                    label="Fecha de Nacimiento"
+                    type="date"
+                    [errorMessages]="[
+                      { key: 'required', message: 'Fecha de Nacimiento es requerida' }
+                    ]"
+                  ></app-input>
+                </div>
+        
+                <div class="child">
+                  <app-input
+                    [control]="getFormControl('dni')"
+                    label="Cedula"
+                    [errorMessages]="[
+                      { key: 'required', message: 'Cedula es requerida' },
+                      {
+                        key: 'maxlength',
+                        message: 'Cedula debe ser menor a 18 caracteres'
+                      }
+                    ]"
+                  ></app-input>
+                </div>
+              </div>
+        
+              <div class="form-double">
+                <div class="child">
+                  <app-input
+                    [control]="getFormControl('email')"
+                    label="Correo electronico"
+                    type="email"
+                    [errorMessages]="[
+                      { key: 'required', message: 'email es requerido' }
+                    ]"
+                  ></app-input>
+                </div>
+        
+                <div class="child">
+                  <app-input
+                    [control]="getFormControl('telephone')"
+                    label="Telefono"
+                    [errorMessages]="[
+                      { key: 'required', message: 'Telefono es requerido' }
+                    ]"
+                  ></app-input>
+                </div>
+              </div>
+        
+              <div class="form-double">
+                <div class="child">
+                  <app-input
+                    [control]="getFormControl('password')"
+                    label="Contraseña"
+                    type="password"
+                    [errorMessages]="[
+                      { key: 'required', message: 'Contraseña es requerido' }
+                    ]"
+                  ></app-input>
+                </div>
+        
+                <div class="child">
+                  <app-input
+                    [control]="getFormControl('confirmPassword')"
+                    label="Confirmar Contraseña"
+                    type="password"
+                    [errorMessages]="[
+                      { key: 'required', message: 'Confirmar Contraseña es requerido' }
+                    ]"
+                  ></app-input>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer">
+              <app-submit-button label="Crear" (action)="getData()">
+              </app-submit-button>
+              <button class="active-link" (click)="toLogin()">Ir a Login</button>
+
+            </div>
+            
+          </form>
+
+    </div>
+  </div>
+  

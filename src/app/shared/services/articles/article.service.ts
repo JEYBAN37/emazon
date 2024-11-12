@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { ApiFactoryService } from 'src/app/shared/services/factory-api/api-factory.service';
 import { Observable } from 'rxjs';
 import { Article } from '../../models/article-interface';
+import { ArticleJson } from '../../models/article-json';
 
 
 @Injectable({
@@ -16,4 +17,6 @@ export class ArticleService {
   fetchArticleData(article: Article): Observable<Article> {
     return this.apiFactory.createPost<Article>(this.apiUrl, article);
   }
+
+
 }

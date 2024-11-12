@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import {  FormControl, FormGroup } from '@angular/forms';
 import { Brand } from 'src/app/shared/models/brand-interface';
 import { AlertMessageService } from 'src/app/shared/services/alerts-services/alert-message.service';
@@ -9,12 +9,14 @@ import { ValidationService } from 'src/app/shared/services/validations/validatio
 @Component({
   selector: 'app-card-brand',
   templateUrl: './card-brand.component.html',
-  styleUrls: ['./card-brand.component.scss']
+  styleUrls: ['./card-brand.component.scss'],
+  providers: [AlertMessageService]
 })
 export class CardBrandComponent implements OnInit {
   public brandForm !: FormGroup
   public title : string = "Crear Marca"
   public subtitle : string = "Agrega nueva Marca"
+  @Output() refresGet = new EventEmitter<void>();
   
   constructor(
     public brandService: BrandService,
@@ -37,7 +39,8 @@ export class CardBrandComponent implements OnInit {
     const brand: Brand = { ...this.brandForm.value };
     this.brandService.fetchBrandData(brand).subscribe({
       next: (response) => {
-        this.alertService.showSuccess('Categoria creada exitosamente');
+        this.alertService.showSuccess('Marca creada exitosamente');
+        this.refresGet.emit(); 
         this.brandForm.reset();
       },
       error: (error) => {

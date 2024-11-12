@@ -1,112 +1,61 @@
-import { ChangeDetectorRef, Component, Inject, Input, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { OBJECT_SERVICE, ObjectServiceInterface, ObjectStock } from 'src/app/shared/services/stock-service-interface';
+import { ChangeDetectorRef, Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { UserAux } from 'src/app/shared/models/aux-interface';
+import { AlertMessageService } from 'src/app/shared/services/alerts-services/alert-message.service';
+import { AuxFormBuilderService } from 'src/app/shared/services/auxUser/aux-form-builder.service';
+import { AuxUserService } from 'src/app/shared/services/auxUser/aux-user.service';
+import { ValidationService } from 'src/app/shared/services/validations/validation.service';
 
 @Component({
   selector: 'app-card-user-aux',
   templateUrl: './card-user-aux.component.html',
-  styleUrls: ['./card-user-aux.component.scss']
+  styleUrls: ['./card-user-aux.component.scss'],
+  providers: [AlertMessageService]
 })
 export class CardUserAuxComponent implements OnInit {
-  successMessage: string | null = null;
-  errorMessage: string | null = null;
-  showSuccess: boolean = false;
-  showError: boolean = false;
-
-  @Input() service!: ObjectServiceInterface; 
-  objectStock!: ObjectStock;
-  public userAuxForm !: FormGroup;
-
+  public userAuxForm !: FormGroup
+  public title : string = "Crear Usuario Auxiliar"
+  public subtitle : string = "Agrega nuevo Usuario Auxiliar"
+  
   constructor(
-    private formBuilder: FormBuilder,
-    private cdr: ChangeDetectorRef,
-    //@Inject(OBJECT_SERVICE) private objectService: ObjectServiceInterface // Usar el token aquí
+    public userAuxService: AuxUserService,
+    public userAuxFormBuilder: AuxFormBuilderService,
+    public validationService: ValidationService,
+    public alertService: AlertMessageService,
+    public cdr: ChangeDetectorRef
   ) {}
   
-   ngOnInit(): void {
-    this.initForm();
+  ngOnInit(): void {
+    this.userAuxForm = this.userAuxFormBuilder.initAuxUserForm();
   }
 
-  public initForm() {
-    this.userAuxForm = this.formBuilder.group({
-      name:['',[Validators.required, Validators.maxLength(50)]],
-      lastName:['',[Validators.required, Validators.maxLength(90)]],
-      dni:['',Validators.required,Validators.maxLength(18)],
-      telephone:['',Validators.required,Validators.maxLength(13)],
-      dateAge:['',Validators.required,this.dateValidator],
-      email:['',Validators.required,Validators.email],
-      password:['',Validators.required,Validators.minLength(6),Validators.maxLength(50)]
-    });
-  }
-
-
-  public dateValidator(control: AbstractControl): { [key: string]: boolean } | null {
-    if (!control.value) {
-      return null; // Si no hay valor, no hay error
-    }
-  
-    const dateValue = new Date(control.value);
-    if (isNaN(dateValue.getTime())) {
-      return { invalidDate: true }; // Retornar error si la fecha es inválida
-    }
-  
-    return null; // Retornar null si es válida
-  }
-  
-
-  send(){
-    if (this.userAuxForm.invalid) {
-      this.userAuxForm.markAllAsTouched();
+  getData(): void {
+    if (this.userAuxForm.invalid) { 
+      this.validationService.markFormGroupTouched(this.userAuxForm);
       return;
     }
 
-    const objectStock:ObjectStock = {
-      name: this.userAuxForm.value.name,
-      lastName: this.userAuxForm.value.lastName,
-      dni: this.userAuxForm.value.dni,
-      telephone : this.userAuxForm.value.telephone,
-      dateAge : this.userAuxForm.value.dateAge,
-      email: this.userAuxForm.value.email,
-      password :  this.userAuxForm.value.password
-    }
+    const userAux: UserAux = { ...this.userAuxForm.value };
 
-  
-    this.service.create(objectStock).subscribe({
-      next: (response) => this.handleSuccess(response),
-      error: (error) => this.handleError(error)
+    this.userAuxService.fetchUserAuxData(userAux).subscribe({
+      next: (response) => {
+        this.alertService.showSuccess('Usuario Auxiliar creado exitosamente');
+        this.userAuxForm.reset();
+      },
+      error: (error) => {
+        this.alertService.showError(
+          error.error?.message || 'Hubo un error al enviar'
+        );
+      },
     });
   }
-  public handleSuccess(response: any) {
-    console.log('Respuesta del backend:', response);
-    this.successMessage = "Formulario enviado exitosamente";
-    this.showSuccess = true;
-    this.errorMessage = null;
 
-    this.cdr.detectChanges(); // Actualiza la vista
-
-    setTimeout(() => {
-      this.showSuccess = false;
-      this.cdr.detectChanges();
-    }, 2000);
+    getFormControl(controlName: string): FormControl {
+      return this.userAuxForm.get(controlName) as FormControl;
+    }
   }
 
-  public handleError(error: any) {
-    console.error('Error al enviar solicitud:', error);
-    
-    this.errorMessage = error.error?.message || "Hubo un error al enviar";
-    this.showError = true;
-    this.successMessage = null;
 
-    this.cdr.detectChanges();
 
-    setTimeout(() => {
-      this.showError = false;
-      this.cdr.detectChanges();
-    }, 2000);
-  }
 
-  nameControl(variable:string): FormControl {
-    return this.userAuxForm.get(variable) as FormControl;
-  }
 
-}

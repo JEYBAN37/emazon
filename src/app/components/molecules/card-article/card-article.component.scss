@@ -6,6 +6,9 @@
   border-radius: 0.5rem; /* Bordes redondeados */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06); /* Sombra */
   background-color: #ffffff; /* Fondo blanco */
+  overflow: auto;
+  box-sizing: border-box;
+  max-height: 100%;
 }
 
 .card-header {

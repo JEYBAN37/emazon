@@ -1,0 +1,169 @@
+.login-container {
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(90deg,#d9cce3, #9d3fe7, #9d3fe7, #602093);
+  background-size: 200% 200%;
+  animation: gradientAnimation 6s ease infinite;
+}
+
+@keyframes gradientAnimation {
+  0% {
+      background-position: 0% 50%;
+  }
+  50% {
+      background-position: 100% 50%;
+  }
+  100% {
+      background-position: 0% 50%;
+  }
+}
+
+.space-vertical {
+    display: flex;
+    margin-top: 0.5rem; 
+    flex-direction: column;
+  }
+
+  .card-content {
+    flex: 1; /* Permite que el contenido crezca */
+
+  }
+  
+  .form-double{
+    display: flex;
+    flex-direction: row; /* Alineación horizontal */
+    justify-content: space-between; /* O puedes usar 'space-evenly' o 'center' según tu preferencia */
+    width: 100%; /* Asegura que el contenedor ocupe todo el espacio disponible */
+  }
+  
+
+  .card {
+    background: white;
+    padding: 30px;
+    height: 65%;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 40%;
+  }
+  
+  .card-title {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+  }
+  
+  .card-description {
+    margin-bottom: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+
+  
+  .error-message {
+    color: red;
+    margin-top: 10px;
+  }
+  
+  .card-footer {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem; /* Espaciado interno */
+    border-top: 1px solid #e2e8f0; /* Separador */
+    text-align: right; /* Alineación del contenido del footer */
+    font-size: 0.875rem; /* Tamaño de fuente más pequeño */
+  }
+
+
+  .links {
+    margin-top: 15px;
+    text-align: center;
+  }
+  
+  .links a {
+    margin: 0 5px;
+    text-decoration: none;
+    color: #007bff;
+  }
+  
+.form-label {
+    font-size: 0.875rem; /* Tamaño de fuente pequeño */
+    font-weight: 500;    /* Peso medio */
+    color: #4a5568;      /* Gris oscuro */
+    display: block;      /* Para que el label ocupe toda la línea */
+    margin-bottom: 0.5rem; /* Espacio inferior */
+  }
+  
+  .subtitle {
+    width: 100%; 
+    margin-top: -10px;   
+    margin-bottom: 20px;  
+    color: #4a5568;           /* Color del texto */
+    transition: border-color 0.2s; /* Transición suave para el borde */
+    font-size:0.875rem; 
+    font-weight: 100;
+  }
+  
+  .form-input:focus {
+    border-color: #4B3A5A;   /* Borde azul al enfocar */
+    outline: none;           /* Sin borde predeterminado de enfoque */
+    background-color: #ffffff; /* Fondo blanco al enfocar */
+  }
+
+  .form-center-button {
+    justify-content: center;
+    display: flex;
+    width: 100%;
+  }
+
+  /* Estilo general para los botones */
+
+
+
+
+
+.selected-content{
+  margin-top: 30px;
+}
+
+/* Estilo para el enlace activo */
+.active-link {
+  margin: 20px 125px 0px 125px ;
+  border: 0;
+  background-color: #fff;
+  font-weight: bold;
+  color: #9d3fe7;
+  cursor: pointer; /* Cambia el puntero cuando el mouse pasa sobre el botón */
+  font-size: large;
+  font-weight: 600;
+}
+
+.active-link:hover {
+  color: #060606;
+}
+.space-vertical-content > * + * {
+    margin-top: 1rem; 
+  }
+
+
+.cliente{
+ display: flex; 
+ justify-items: center; 
+ flex-direction: column;
+}
+
+.child {
+    flex: 1; /* Hace que cada hijo ocupe el mismo espacio disponible */
+    width: 50%; /* O puedes usar solo flex: 1 para un reparto proporcional */
+    padding: 0px 30px 0px  30px;  /* Opcional: espacio interno para los hijos */
+    box-sizing: border-box; /* Para incluir padding y border en el cálculo del width */
+}

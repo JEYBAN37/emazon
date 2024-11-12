@@ -1,4 +1,4 @@
 export interface Brand {
-    name:string;
-    description:string
+    name?:string | null;
+    description?:string | null;
 }
