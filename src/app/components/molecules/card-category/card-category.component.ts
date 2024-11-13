@@ -18,6 +18,8 @@ export class CardCategoryComponent implements OnInit {
   public title : string = "Crear Categoria"
   public subtitle : string = "Agrega nueva categoria"
   @Output() refresGet = new EventEmitter<void>();
+
+
   constructor(
     public validationService: ValidationService,
     public categoryFromBuilder: CategoryFormBuilderService,

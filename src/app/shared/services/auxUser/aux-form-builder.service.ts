@@ -15,7 +15,7 @@ export class AuxFormBuilderService {
       telephone: ['', [Validators.required, Validators.maxLength(13)]],
       dateAge: ['', [Validators.required]],
       email:  ['', [Validators.required,Validators.email]],
-      password:  ['', [Validators.required]],
+      password:  ['', [Validators.required]]
     });
   }
 }

@@ -199,4 +199,6 @@ describe('CardCategoryComponent', () => {
     // Optionally, check if the service was called (if needed)
     expect(categoryService.fetchCategoryData).toHaveBeenCalledWith(component.categoryForm.value);
   });
+
+  
 });

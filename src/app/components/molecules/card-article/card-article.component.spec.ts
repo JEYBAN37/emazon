@@ -101,6 +101,8 @@ describe('CardArticleComponent', () => {
     expect(showSuccessSpy).toHaveBeenCalledWith('Categoria creada exitosamente');
   });
 
+
+
   it('should call alertService.showError when ArticleService.fetchArticleData fails', () => {
     const mockError = { error: { message: 'Test Error' } };
     const fetchArticleDataSpy = jest.spyOn(articleService, 'fetchArticleData').mockReturnValue(throwError(mockError));
@@ -234,4 +236,6 @@ describe('CardArticleComponent', () => {
     // Optionally, check if the service was called (if needed)
     expect(articleService.fetchArticleData).toHaveBeenCalledWith(component.articleForm.value);
   });
-});
+  
+}); 
+ 
