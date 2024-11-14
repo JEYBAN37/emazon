@@ -32,6 +32,7 @@
       <h2>{{ selectedProduct.name }}</h2>
       <p><strong>Marca:</strong> {{ selectedProduct.brand.name }}</p>
       <p><strong>Precio:</strong> ${{ selectedProduct.price }}</p>
+      <p><strong>Descripcion:</strong> {{ selectedProduct.description }}</p>
       <ul>
         <li *ngFor="let category of selectedProduct.articleCategories">
           {{ category.name }}
@@ -45,7 +46,7 @@
         placeholder="Cantidad"
       />
       <button (click)="toggleCart(selectedProduct, selectedProduct.quantity)" class="add-to-cart-button">
-        <span *ngIf="isInCart(selectedProduct)" class="icon-cart">✔️</span>
+        <span *ngIf="isInCart(selectedProduct)" class="icon-cart" style="color: green; font-size: 1.5em;">✔️</span>
         <span *ngIf="!isInCart(selectedProduct)" class="icon-cart">🛒 Agregar</span>
       </button>
       <button (click)="closeModal()" class="close-button">Cerrar</button>
@@ -88,6 +89,6 @@
 
   <!-- Contador del carrito -->
   <div class="cart-info">
-    <p>Productos en el carrito: {{ cartCount }}</p>
+    <p>Productos en el carrito: {{ cartService.getCartCount() }}</p>
   </div>
 </div>

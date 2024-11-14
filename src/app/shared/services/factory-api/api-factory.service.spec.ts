@@ -129,4 +129,41 @@ describe('ApiFactoryService', () => {
       req.flush(expectedResponse);
     });
   });
+describe('delete', () => {
+  it('should perform a DELETE request with body', () => {
+    const endpoint = 'http://example.com/api';
+    const body = { id: '123' };
+    const expectedResponse = { success: true };
+
+    service.delete(endpoint, body).subscribe(response => {
+      expect(response).toEqual(expectedResponse);
+    });
+
+    const req = httpMock.expectOne((request) =>
+      request.url === endpoint &&
+      request.method === 'DELETE' &&
+      request.body === body
+    );
+    req.flush(expectedResponse);
+  });
+
+  it('should perform a DELETE request without body', () => {
+    const endpoint = 'http://example.com/api';
+    const expectedResponse = { success: true };
+
+    service.delete(endpoint).subscribe(response => {
+      expect(response).toEqual(expectedResponse);
+    });
+
+    const req = httpMock.expectOne((request) =>
+      request.url === endpoint &&
+      request.method === 'DELETE' &&
+      request.body === null
+    );
+    req.flush(expectedResponse);
+  });
+
+
+  
+});
 });

@@ -6,7 +6,7 @@ import { FormGroup } from '@angular/forms';
   providedIn: 'root'
 })
 export class ValidationService {
-  markFormGroupTouched(formGroup: FormGroup): void {
+  public markFormGroupTouched(formGroup: FormGroup): void {
     Object.values(formGroup.controls).forEach(control => {
       control.markAsTouched();
       if ((control as any).controls) {

@@ -100,4 +100,17 @@ describe('CardSupplyComponent', () => {
     expect(control instanceof FormControl).toBe(true);
   });
 
+  it('debería llamar a markFormGroupTouched si el formulario es inválido vfd', () => {
+    // Marcar el supplyForm como inválido
+    component.supplyForm.get('idArticle')?.setErrors({ required: true });
+    // Espiar la función markFormGroupTouched
+    const markFormGroupTouchedSpy = jest.spyOn(mockValidationService, 'markFormGroupTouched');
+
+    // Llamar al método getData, que debería disparar la validación
+    component.getData();
+
+    // Verificar que markFormGroupTouched se haya llamado
+    expect(markFormGroupTouchedSpy).toHaveBeenCalledWith(component.supplyForm);
+  });
+
 });

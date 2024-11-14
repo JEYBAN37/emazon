@@ -66,4 +66,17 @@ describe('FormSessionComponent', () => {
     expect(control).toBeInstanceOf(FormControl);
     expect(control.value).toBe('test@example.com');
   });
+
+  it('debería llamar a markFormGroupTouched si el formulario es inválido vfd', () => {
+    // Marcar el supplyForm como inválido
+    component.userForm.get('email')?.setErrors({ required: true });
+    // Espiar la función markFormGroupTouched
+    const markFormGroupTouchedSpy = jest.spyOn(validationServiceSpy, 'markFormGroupTouched');
+
+    // Llamar al método getData, que debería disparar la validación
+    component.getData();
+
+    // Verificar que markFormGroupTouched se haya llamado
+    expect(markFormGroupTouchedSpy).toHaveBeenCalledWith(component.userForm);
+  });
 });

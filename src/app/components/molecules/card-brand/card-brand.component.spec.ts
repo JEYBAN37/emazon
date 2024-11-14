@@ -241,4 +241,45 @@ describe('CardBrandComponent', () => {
 
     expect(markFormGroupTouchedSpy).not.toHaveBeenCalled();
   });
+
+  it('debería llamar a markFormGroupTouched si el formulario es inválido vfd', () => {
+    // Marcar el formulario como inválido
+    component.brandForm.get('name')?.setErrors({ required: true });
+    // Espiar la función markFormGroupTouched
+    const markFormGroupTouchedSpy = jest.spyOn(validationService, 'markFormGroupTouched');
+
+    // Llamar al método getData, que debería disparar la validación
+    component.getData();
+
+    // Verificar que markFormGroupTouched se haya llamado
+    expect(markFormGroupTouchedSpy).toHaveBeenCalledWith(component.brandForm);
+  });
+  
+  it('should call alertService.showError with default message when error object does not contain a message', () => {
+    const mockError = { error: {} };
+    const fetchUserAuxDataSpy = jest.spyOn(brandService, 'fetchBrandData').mockReturnValue(throwError(mockError));
+    const showErrorSpy = jest.spyOn(alertMessageService, 'showError').mockReturnValue(alertMessageService.showError('Hubo un error al enviar'));
+
+    component.brandForm.controls['name'].setValue('Test Brand');
+    component.brandForm.controls['description'].setValue('Test Description');
+    component.getData();
+
+    expect(fetchUserAuxDataSpy).toHaveBeenCalled();
+    expect(showErrorSpy).toHaveBeenCalledWith('Hubo un error al enviar');
+  });
+
+  it('should call alertService.showError with specific message when error object contains a message', () => {
+    const mockError = { error: { message: 'Test Error' } };
+    const fetchUserAuxDataSpy = jest.spyOn(brandService, 'fetchBrandData').mockReturnValue(throwError(mockError));
+    const showErrorSpy = jest.spyOn(alertMessageService, 'showError').mockReturnValue(alertMessageService.showError('Test Error'));
+
+    component.brandForm.controls['name'].setValue('Test Brand');
+    component.brandForm.controls['description'].setValue('Test Description');
+    component.getData();
+
+    expect(fetchUserAuxDataSpy).toHaveBeenCalled();
+    expect(showErrorSpy).toHaveBeenCalledWith('Test Error');
+  });
+
+ 
 });

@@ -10,7 +10,6 @@ import { TextInputComponent } from './components/atoms/text-input/text-input.com
 import { CardCategoryComponent } from './components/molecules/card-category/card-category.component';
 import { CardBrandComponent } from './components/molecules/card-brand/card-brand.component';
 import { CardArticleComponent } from './components/molecules/card-article/card-article.component';
-import { CardUserAuxComponent } from './components/molecules/card-user-aux/card-user-aux.component';
 import { CardGetStockComponent } from './components/molecules/card-get-stock/card-get-stock.component';
 import { NavBarComponent } from './components/molecules/nav-bar/nav-bar.component';
 import { FooterComponent } from './components/molecules/footer/footer.component';
@@ -33,6 +32,7 @@ import { PageStoreComponent } from './components/template/page-store/page-store.
 import { MarketplaceComponent } from './components/organisms/marketplace-component/marketplace-component.component';
 import { CarComponent } from './components/organisms/car/car.component';
 import { TarjetBuyComponent } from './components/molecules/tarjet-buy/tarjet-buy.component';
+import { CardAuxComponent } from './components/molecules/card-aux/card-aux.component';
 
 
 
@@ -44,7 +44,6 @@ import { TarjetBuyComponent } from './components/molecules/tarjet-buy/tarjet-buy
     CardCategoryComponent,
     CardBrandComponent,
     CardArticleComponent,
-    CardUserAuxComponent,
     PanelAdminComponent,
     CardGetStockComponent,
     NavBarComponent,
@@ -67,6 +66,7 @@ import { TarjetBuyComponent } from './components/molecules/tarjet-buy/tarjet-buy
     PageStoreComponent,
     CarComponent,
     TarjetBuyComponent,
+    CardAuxComponent,
   
     
   ],

@@ -228,6 +228,8 @@ describe('CardArticleComponent', () => {
 
     // Mock the fetchArticleData method to return an observable
     jest.spyOn(articleService, 'fetchArticleData').mockReturnValue(of(mockArticleEmty));
+    validationService.markFormGroupTouched(component.articleForm);
+    validationService.markFormGroupTouched(component.articleForm);
 
     // Call the method that triggers the validation and fetch
     component.getData();
@@ -236,6 +238,126 @@ describe('CardArticleComponent', () => {
     // Optionally, check if the service was called (if needed)
     expect(articleService.fetchArticleData).toHaveBeenCalledWith(component.articleForm.value);
   });
-  
+
+
+  it('should call articleService.fetchArticleData and alertService.showSuccess on successful form submission', () => {
+    // Set the form to a valid state
+    component.articleForm.setValue({
+      name: 'Valid Article',
+      description: 'Valid Description',
+      quantity: 1,
+      price: 1,
+      brand: 1,
+      articleCategories: [1]
+    });
+
+    // Mock the fetchArticleData to return an observable (mock success response)
+    const fetchArticleDataSpy = jest.spyOn(articleService, 'fetchArticleData').mockReturnValue(of(mockArticle));
+    const showSuccessSpy = jest.spyOn(alertMessageService, 'showSuccess').mockReturnValue(
+      alertMessageService.showSuccess('Articulo creado exitosamente'));
+
+    // Call getData()
+    component.getData();
+
+    // Ensure fetchArticleData and showSuccess are called
+    expect(showSuccessSpy).toHaveBeenCalledWith('Articulo creado exitosamente');
+  });
+
+  it('should call alertService.showError on failed form submission', () => {
+    // Set the form to a valid state
+    component.articleForm.setValue({
+      name: 'Valid Article',
+      description: 'Valid Description',
+      quantity: 1,
+      price: 1,
+      brand: 1,
+      articleCategories: [1]
+    });
+
+    // Mock the fetchArticleData to return an observable (mock error response)
+    const mockError = { error: { message: 'Hubo un error al enviar' } };
+    const fetchArticleDataSpy = jest.spyOn(articleService, 'fetchArticleData').mockReturnValue(throwError(mockError));
+    const showErrorSpy = jest.spyOn(alertMessageService, 'showError').mockReturnValue(alertMessageService.showError('Hubo un error al enviar'));
+
+    // Call getData()
+    component.getData();
+
+    // Ensure fetchArticleData and showError are called
+    expect(fetchArticleDataSpy).toHaveBeenCalledWith(component.articleForm.value);
+    expect(showErrorSpy).toHaveBeenCalledWith('Hubo un error al enviar');
+  });
+
+  it('should emit refresGet event after successful form submission', () => {
+    // Set the form to a valid state
+    component.articleForm.setValue({
+      name: 'Valid Article',
+      description: 'Valid Description',
+      quantity: 1,
+      price: 1,
+      brand: 1,
+      articleCategories: [1]
+    });
+
+    // Spy on refresGet emit
+    const emitSpy = jest.spyOn(component.refresGet, 'emit');
+
+    // Mock the fetchArticleData to return an observable (mock success response)
+    jest.spyOn(articleService, 'fetchArticleData').mockReturnValue(of(mockArticle));
+
+    // Call getData()
+    component.getData();
+
+    // Ensure refresGet emit is called
+    expect(emitSpy).toHaveBeenCalled();
+  });
+
+  it('debería llamar a markFormGroupTouched si el formulario es inválido vfd', () => {
+    // Marcar el formulario como inválido
+    component.articleForm.get('name')?.setErrors({ required: true });
+    // Espiar la función markFormGroupTouched
+    const markFormGroupTouchedSpy = jest.spyOn(validationService, 'markFormGroupTouched');
+
+    // Llamar al método getData, que debería disparar la validación
+    component.getData();
+
+    // Verificar que markFormGroupTouched se haya llamado
+    expect(markFormGroupTouchedSpy).toHaveBeenCalledWith(component.articleForm);
+  });
+
+  it('should call alertService.showError with default message when error object does not contain a message', () => {
+    const mockError = { error: {} };
+    const fetchUserAuxDataSpy = jest.spyOn(articleService, 'fetchArticleData').mockReturnValue(throwError(mockError));
+    const showErrorSpy = jest.spyOn(alertMessageService, 'showError').mockReturnValue(alertMessageService.showError('Hubo un error al enviar'));
+
+    component.articleForm.controls['name'].setValue('Test Article');
+    component.articleForm.controls['description'].setValue('Test Description');
+    component.articleForm.controls['quantity'].setValue(1);
+    component.articleForm.controls['price'].setValue(1);
+    component.articleForm.controls['brand'].setValue(1);
+    component.articleForm.controls['articleCategories'].setValue([1]);
+    component.getData();
+
+    expect(fetchUserAuxDataSpy).toHaveBeenCalled();
+    expect(showErrorSpy).toHaveBeenCalledWith('Hubo un error al enviar');
+  });
+
+ 
+  it('should call alertService.showError with specific message when error object contains a message', () => {
+    const mockError = { error: { message: 'Test Error' } };
+    const fetchUserAuxDataSpy = jest.spyOn(articleService, 'fetchArticleData').mockReturnValue(throwError(mockError));
+    const showErrorSpy = jest.spyOn(alertMessageService, 'showError').mockReturnValue(alertMessageService.showError('Test Error'));
+
+    component.articleForm.controls['name'].setValue('Test Article');
+    component.articleForm.controls['description'].setValue('Test Description');
+    component.articleForm.controls['quantity'].setValue(1);
+    component.articleForm.controls['price'].setValue(1);
+    component.articleForm.controls['brand'].setValue(1);
+    component.articleForm.controls['articleCategories'].setValue([1]);
+    component.getData();
+
+    expect(fetchUserAuxDataSpy).toHaveBeenCalled();
+    expect(showErrorSpy).toHaveBeenCalledWith('Test Error');
+  });
+
 }); 
  
