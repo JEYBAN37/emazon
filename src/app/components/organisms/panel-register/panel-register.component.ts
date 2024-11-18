@@ -1,9 +1,9 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { REGISTER_CONSTANTS } from 'src/app/shared/constants/constant';
 import { UserAux } from 'src/app/shared/models/aux-interface';
 import { AlertMessageService } from 'src/app/shared/services/alerts-services/alert-message.service';
-import { AuxUserService } from 'src/app/shared/services/auxUser/aux-user.service';
 import { AuthService } from 'src/app/shared/services/factory-api/auth-service.service';
 import { UserRegisterFormBuilderService } from 'src/app/shared/services/user/user-register-form-builder.service';
 import { UserRegisterService } from 'src/app/shared/services/user/user-register.service';
@@ -18,8 +18,10 @@ import { ValidationService } from 'src/app/shared/services/validations/validatio
 export class PanelRegisterComponent implements OnInit {
 
 public userRegisterForm !: FormGroup;
-public title : string  = 'Registro de Usuario';
-public subtitle : string = 'Ingresa tus datos para registrarte';
+public title : string  = REGISTER_CONSTANTS.TITLE;
+public subtitle : string = REGISTER_CONSTANTS.SUBTITLE;
+public successMessage: string = REGISTER_CONSTANTS.SUCCESSMESSAGE;
+public erroMessage: string = REGISTER_CONSTANTS.ERRORMESSAGE
 
   constructor(
     public userFormBuilder: UserRegisterFormBuilderService,
@@ -46,13 +48,13 @@ public subtitle : string = 'Ingresa tus datos para registrarte';
     this.useService.fetchUserData(user).subscribe({
       next: (response) => {
 
-        this.alertService.showSuccess('Usuario Cliente creado exitosamente');
+        this.alertService.showSuccess(this.successMessage);
         this.userRegisterForm.reset();
         this.toLogin()
       },
       error: (error) => {
         this.alertService.showError(
-          error.error?.message || 'Hubo un error al enviar'
+          error.error?.message ||  this.erroMessage
         );
       },
     });

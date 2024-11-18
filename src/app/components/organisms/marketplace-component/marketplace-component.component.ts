@@ -24,7 +24,7 @@ export class MarketplaceComponent implements OnInit {
     byName: string | null;
     byBrand: string | null;
     byCategory: string | null 
-  } = { size: 10, byName: null, byBrand: null, byCategory: null };
+  } = { size: 9, byName: null, byBrand: null, byCategory: null };
 
   constructor(
     private apiFactory: ApiFactoryService,
@@ -72,7 +72,7 @@ export class MarketplaceComponent implements OnInit {
     return this.cartService.isInCart(product);
   }
 
-  handleFilterChange(selectedFilter: { name: string | null, brand: string |null, category: string | null }): void {
+  handleFilterChange(selectedFilter: { name: string | null, brand: string | null, category: string| null}): void {
     this.articleCustomParams.byName = selectedFilter.name || null;
     this.articleCustomParams.byBrand = selectedFilter.brand || null;
     this.articleCustomParams.byCategory = selectedFilter.category || null;

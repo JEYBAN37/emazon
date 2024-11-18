@@ -12,8 +12,10 @@ export class UserRegisterService {
 
   constructor(private apiFactory: ApiFactoryService) {}
 
-  fetchUserData(user: UserAux): Observable<UserAux> {
-    this.apiFactory.createPost<any>(this.apiUrl2,undefined);
-    return this.apiFactory.createPost<UserAux>(this.apiUrl, user);
+  fetchUserData(user: UserAux): Observable<any> {
+    return this.apiFactory.createPost<any>(this.apiUrl, user);
   }
+
+  fechCreateCar() {
+    return this.apiFactory.createPost<any>(this.apiUrl2,null);}
 }

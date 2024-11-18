@@ -5,6 +5,7 @@ import { AlertMessageService } from 'src/app/shared/services/alerts-services/ale
 import { AuxFormBuilderService } from 'src/app/shared/services/auxUser/aux-form-builder.service';
 import { AuxUserService } from 'src/app/shared/services/auxUser/aux-user.service';
 import { ValidationService } from 'src/app/shared/services/validations/validation.service';
+import { USER_CONSTANTS } from 'src/app/shared/constants/constant';
 
 @Component({
   selector: 'app-card-aux',
@@ -13,9 +14,11 @@ import { ValidationService } from 'src/app/shared/services/validations/validatio
   providers: [AlertMessageService]
 })
 export class CardAuxComponent implements OnInit {
-  public userAuxForm !: FormGroup
-  public title : string = "Crear Usuario Auxiliar"
-  public subtitle : string = "Agrega nuevo Usuario Auxiliar"
+  public userAuxForm !: FormGroup;
+  public title : string =USER_CONSTANTS.TITLE;
+  public subtitle : string = USER_CONSTANTS.SUBTITLE;
+  public successMessage: string = USER_CONSTANTS.SUCCESSMESSAGE;
+  public erroMessage: string = USER_CONSTANTS.ERRORMESSAGE;
   
   constructor(
     public userAuxService: AuxUserService,
@@ -39,12 +42,12 @@ export class CardAuxComponent implements OnInit {
 
     this.userAuxService.fetchUserAuxData(userAux).subscribe({
       next: (response) => {
-        this.alertService.showSuccess('Usuario Auxiliar creado exitosamente');
+        this.alertService.showSuccess(this.successMessage);
         this.userAuxForm.reset();
       },
       error: (error) => {
         this.alertService.showError(
-          error.error?.message || 'Hubo un error al enviar'
+          error.error?.message || this.erroMessage
         );
       },
     });

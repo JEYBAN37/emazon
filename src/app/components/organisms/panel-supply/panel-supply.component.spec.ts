@@ -35,7 +35,7 @@ describe('PanelSupplyComponent', () => {
     expect(component.responseData).toBeUndefined();
     expect(component.articlesClass).toBeDefined();
     expect(component.supplies).toEqual([]);
-    expect(component.articleCustomParams).toEqual({ size: 5, byName: null, brand: null, article: null });
+    expect(component.articleCustomParams).toEqual({ size: 5, byName: null, byBrand: null, byCategory: null });
     expect(component.selectedTab).toBe(0);
     expect(component.apiUrlArticles).toBe('http://localhost:8086/secure/articles/');
   });
@@ -55,15 +55,14 @@ describe('PanelSupplyComponent', () => {
 
 
   it('should set articleCustomParams and call makeSearchRequest and refresh when handleSearchParams is called', () => {
-    const searchParams = { name: 'TestName', brand: 'TestBrand', article: 'TestArticle' };
-    const makeSearchRequestSpy = jest.spyOn(component, 'makeSearchRequest');
+    const searchParams = { name: 'TestName', brand: 'TestBrand', category: 'TestArticle' };
     const refreshSpy = jest.spyOn(component.getArticle, 'refresh');
 
     component.handleSearchParams(searchParams);
 
     expect(component.articleCustomParams.byName).toBe('TestName');
-    expect(component.articleCustomParams.brand).toBe('TestBrand');
-    expect(component.articleCustomParams.article).toBe('TestArticle');
+    expect(component.articleCustomParams.byBrand).toBe('TestBrand');
+    expect(component.articleCustomParams.byCategory).toBe('TestArticle');
     expect(refreshSpy).toHaveBeenCalled();
     expect(component.getArticle.refresh).toHaveBeenCalled();
   });
@@ -72,22 +71,6 @@ describe('PanelSupplyComponent', () => {
     const newSupply: Supply = {  quantity: 50, state: 'New', idArticle: 4 };
     component.addSupply(newSupply);
     expect(component.supplies).toContain(newSupply);
-  });
-
-
-  it('should log search parameters in makeSearchRequest', () => {
-    const consoleSpy = jest.spyOn(console, 'log');
-    component.articleCustomParams = { size: 10, byName: 'Test', brand: 'BrandTest', article: 'ArticleTest' };
-
-    component.makeSearchRequest();
-
-    expect(consoleSpy).toHaveBeenCalledWith('Haciendo búsqueda con los siguientes parámetros:', {
-      size: 10,
-      byName: 'Test',
-      brand: 'BrandTest',
-      article: 'ArticleTest',
-    });
-
   });
   // Other tests for PanelSupplyComponent can go here
 });

@@ -1,9 +1,9 @@
 import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { SUPPLY_CONSTANTS } from 'src/app/shared/constants/constant';
 import { Supply } from 'src/app/shared/models/supply-interface';
 import { AlertMessageService } from 'src/app/shared/services/alerts-services/alert-message.service';
 import { SupplyFormBuilderService } from 'src/app/shared/services/supply/supply-form-builder.service';
-import { SupplyService } from 'src/app/shared/services/supply/supply.service';
 import { ValidationService } from 'src/app/shared/services/validations/validation.service';
 
 @Component({
@@ -14,8 +14,10 @@ import { ValidationService } from 'src/app/shared/services/validations/validatio
 })
 export class CardSupplyComponent implements OnInit {
   public supplyForm !: FormGroup
-  public title : string = "Crear Insumo"
-  public subtitle : string = "Agrega nuevo Insumo"
+  public title : string = SUPPLY_CONSTANTS.TITLE;
+  public subtitle : string = SUPPLY_CONSTANTS.SUBTITLE;
+  public successMessage: string = SUPPLY_CONSTANTS.SUCCESSMESSAGE;
+
   supplyToSend: Supply[] = [];
   @Output() supplyAdded  = new EventEmitter<Supply>();
 
@@ -37,7 +39,7 @@ export class CardSupplyComponent implements OnInit {
     }
 
     const supply: Supply = { ...this.supplyForm.value };
-    this.alertService.showSuccess('Sumistro Agregado exitosamente');
+    this.alertService.showSuccess(this.successMessage);
     this.supplyToSend.push(supply);
     this.supplyAdded.emit(supply);
     this.supplyForm.reset();

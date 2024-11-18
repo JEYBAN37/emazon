@@ -58,7 +58,8 @@
       "!src/**/*.module.ts",
       "!src/main.ts",
       "!src/environments/**",
-      "!src/polyfills.ts"
+      "!src/polyfills.ts",
+      "!src/app/shared/services/factory-api/auth-service.service.spec.ts"
     ],
     "verbose": true,
     "globals": {

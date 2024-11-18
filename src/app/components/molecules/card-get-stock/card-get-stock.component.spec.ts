@@ -117,4 +117,40 @@ describe('CardGetStockComponent', () => {
       expect(loadDataSpy).toHaveBeenCalled();
     });
   });
+
+  it('should retrieve nested property value', () => {
+    const obj = { a: { b: { c: 'value' } } };
+    const key = 'a.b.c';
+    const result = component.getPropertyValue(obj, key);
+    expect(result).toBe('value');
+  });
+
+  it('should retrieve array index value', () => {
+    const obj = { a: [{ b: 'value' }] };
+    const key = 'a.0.b';
+    const result = component.getPropertyValue(obj, key);
+    expect(result).toBe('value');
+  });
+
+  it('should return undefined for non-existent property', () => {
+    const obj = { a: { b: { c: 'value' } } };
+    const key = 'a.b.d';
+    const result = component.getPropertyValue(obj, key);
+    expect(result).toBeUndefined();
+  });
+
+  it('should return undefined for non-existent array index', () => {
+    const obj = { a: [{ b: 'value' }] };
+    const key = 'a.1.b';
+    const result = component.getPropertyValue(obj, key);
+    expect(result).toBeUndefined();
+  });
+
+
+  it('should handle null object', () => {
+    const obj = null;
+    const key = 'a.b.c';
+    const result = component.getPropertyValue(obj, key);
+    expect(result).toBeNull();
+  });
 });

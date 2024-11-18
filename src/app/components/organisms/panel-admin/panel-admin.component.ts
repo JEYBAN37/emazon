@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ArticleJson, BrandJson, CategoryJson } from 'src/app/shared/models/article-json';
 import { CardGetStockComponent } from '../../molecules/card-get-stock/card-get-stock.component';
+import { QUERY_CONSTANTS } from 'src/app/shared/constants/constant';
 
 interface Tab {
   label: string;
@@ -43,9 +44,9 @@ export class PanelAdminComponent implements OnInit {
   stockColumns = ['Nombre', 'Descripcion'];
 
 
-  apiUrlArticles = 'http://localhost:8086/secure/articles/';
-  apiUrlCategory = 'http://localhost:8086/secure/category/';
-  apiUrlBrand = 'http://localhost:8086/secure/brands/';
+  apiUrlArticles = QUERY_CONSTANTS.API_STOCK;
+  apiUrlCategory = QUERY_CONSTANTS.API_CATEGORY;
+  apiUrlBrand = QUERY_CONSTANTS.API_BRAND;
 
   constructor() {}
 

@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { SEND_SUPPLY_CONSTANTS } from 'src/app/shared/constants/constant';
 import { Supply } from 'src/app/shared/models/supply-interface';
 import { AlertMessageService } from 'src/app/shared/services/alerts-services/alert-message.service';
 import { SupplyService } from 'src/app/shared/services/supply/supply.service';
@@ -16,6 +17,10 @@ export class SendSupplyComponent implements OnInit {
   @Input() columns: string[] = [];
   @Output() suppliesUpdated = new EventEmitter<any>();
 
+  public successMessage: string = SEND_SUPPLY_CONSTANTS.SUCCESSMESSAGE;
+  public erroMessage: string = SEND_SUPPLY_CONSTANTS.ERRORMESSAGESEND;
+  public errorSend: string = SEND_SUPPLY_CONSTANTS.ERRORMESSAGE;
+
   constructor(
     public alertService: AlertMessageService,
     public supplyService: SupplyService,
@@ -26,19 +31,19 @@ export class SendSupplyComponent implements OnInit {
 
   sendSupplies(): void {
     if (!this.supplies.length) {
-      this.alertService.showError('No se han agregado suministros');
+      this.alertService.showError(this.errorSend);
       return;
     }
 
     this.supplyService.fetchSupplyData(this.supplies).subscribe({
       next: (response) => {
-        this.alertService.showSuccess('Suministros enviados exitosamente');
+        this.alertService.showSuccess(this.successMessage);
         this.suppliesUpdated.emit(response);
         this.supplies = [];
       },
       error: (error) => {
         this.alertService.showError(
-          error.error?.message || 'Hubo un error al enviar'
+          error.error?.message || this.erroMessage
         );
       },
     });

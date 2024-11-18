@@ -11,7 +11,7 @@ export class PanelSearchComponent {
   searchBrand: string = '';
   searchArticle: string = '';
 
-  @Output() searchParams = new EventEmitter<{ name: string, brand: string, article: string }>();
+  @Output() searchParams = new EventEmitter<{ name: string, brand: string, category: string }>();
 
   handleSearchName(event: string): void {
     this.searchName = event;
@@ -32,7 +32,7 @@ export class PanelSearchComponent {
     this.searchParams.emit({
       name: this.searchName,
       brand: this.searchBrand,
-      article: this.searchArticle
+      category: this.searchArticle
     });
   }
 }

@@ -74,6 +74,13 @@ export class CardGetStockComponent<T> implements OnInit {
 
   // Método para obtener el valor de una propiedad específica en un objeto
   getPropertyValue(obj: any, key: string): any {
-    return key.split('.').reduce((acc, part) => acc && acc[part], obj);
+    return key.split('.').reduce((acc, part) => {
+      // Si 'part' es un número, se accede al índice del array
+      if (acc && !isNaN(Number(part))) {
+        return acc[parseInt(part, 10)];
+      }
+      return acc && acc[part];
+    }, obj);
   }
+  
 }

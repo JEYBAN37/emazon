@@ -14,6 +14,7 @@ describe('AuthService', () => {
     localStorage.clear();
   });
 
+
   afterEach(() => {
     // Ensure localStorage is cleared after each test
     localStorage.clear();
@@ -24,7 +25,7 @@ describe('AuthService', () => {
     localStorage.setItem('auth_token', testToken);
 
     const token = authService.getToken();
-    expect(token).toBe(testToken);
+    expect(token).toBe('test-token');
   });
 
   it('should return an empty string if no token is stored', () => {

@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { SESSION_CONSTANTS } from 'src/app/shared/constants/constant';
 import { AlertMessageService } from 'src/app/shared/services/alerts-services/alert-message.service';
 import { AuthService } from 'src/app/shared/services/factory-api/auth-service.service';
 import { UserLoginFormBuilderService } from 'src/app/shared/services/user-login/user-login-form-builder.service';
@@ -18,6 +19,8 @@ export class FormSessionComponent implements OnInit {
   @Input() public subtitle !: string;
   @Input() public route !: string;
 
+  public successMessage: string = SESSION_CONSTANTS.SUCCESSMESSAGE;
+  public erroMessage: string = SESSION_CONSTANTS.ERRORMESSAGE;
 
   constructor(
     public userLoginFormBuilder: UserLoginFormBuilderService,
@@ -41,13 +44,13 @@ export class FormSessionComponent implements OnInit {
 
     this.userLoginService.fetchUser(this.userForm.value).subscribe(
       (response) => {
-        this.alertService.showSuccess('Bienvenido');
+        this.alertService.showSuccess(this.successMessage);
         this.authService.setToken(response.token);
         this.router.navigate([this.route]);
       },
       (error) => {
         this.alertService.showError(
-          error.error?.message || 'Hubo un error al enviar'
+          error.error?.message || this.erroMessage
         );
       }
     );

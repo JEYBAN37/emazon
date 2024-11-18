@@ -37,7 +37,7 @@ describe('PanelSearchComponent', () => {
     expect(emitSpy).toHaveBeenCalledWith({
       name: mockName,
       brand: '',
-      article: ''
+      category: ''
     });
   });
 
@@ -50,7 +50,7 @@ describe('PanelSearchComponent', () => {
     expect(emitSpy).toHaveBeenCalledWith({
       name: '',
       brand: mockBrand,
-      article: ''
+      category: ''
     });
   });
 
@@ -63,7 +63,7 @@ describe('PanelSearchComponent', () => {
     expect(emitSpy).toHaveBeenCalledWith({
       name: '',
       brand: '',
-      article: mockArticle
+      category: mockArticle
     });
   });
 
@@ -79,7 +79,7 @@ describe('PanelSearchComponent', () => {
     expect(emitSpy).toHaveBeenCalledWith({
       name: 'Test Name',
       brand: 'Test Brand',
-      article: 'Test Article'
+      category: 'Test Article'
     });
   });
 });

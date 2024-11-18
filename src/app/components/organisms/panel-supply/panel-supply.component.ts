@@ -20,10 +20,10 @@ export class PanelSupplyComponent {
   articlesClass = ArticleJson;
   supplies: Supply[] = [];
   // Parámetros personalizados
-  articleCustomParams: { size: number; byName: string | null; brand: string | null; article: string | null } = { size: 5, byName: null, brand: null, article: null };
+  articleCustomParams: { size: number; byName: string | null; byBrand: string | null; byCategory: string | null } = { size: 5, byName: null, byBrand: null, byCategory: null };
 
   apiUrlArticles = 'http://localhost:8086/secure/articles/';
-  articlesColumns = ['id','Nombre', 'Cantidad', 'Precio', 'Marca'];
+  articlesColumns = ['id','Nombre', 'Cantidad', 'Precio', 'Marca','Categoria'];
   supplyColumnsToSend = ['id','Cantidad','Estado'];
   supplyColumns = ['Orden','id','Cantidad','Estado','fecha'];
 
@@ -33,6 +33,7 @@ export class PanelSupplyComponent {
     { key: 'quantity', label: 'Cantidad' },
     { key: 'price', label: 'Precio' },
     { key: 'brand.name', label: 'Marca' },
+    { key: 'articleCategories.0.name', label: 'Categoria' },
   ];
 
   supplyFieldsToSend: { key: string; label: string }[] = [
@@ -64,18 +65,15 @@ export class PanelSupplyComponent {
 
 
 
-  handleSearchParams(searchParams: { name: string, brand: string, article: string }): void {
+  handleSearchParams(searchParams: { name: string, brand: string, category: string }): void {
     // Desestructuramos los parámetros del evento
-    const { name, brand, article } = searchParams;
+    const { name, brand, category } = searchParams;
 
     // Asignamos los valores de búsqueda a articleCustomParams
     // Si no se proporcionan valores, se asignan null
     this.articleCustomParams.byName = name;
-    this.articleCustomParams.brand = brand ;
-    this.articleCustomParams.article = article ;
-
-    // Llamamos a la función para hacer la búsqueda
-    this.makeSearchRequest();
+    this.articleCustomParams.byBrand = brand ;
+    this.articleCustomParams.byCategory = category ;
 
     // Refrescamos el componente hijo
     this.getArticle.refresh();
@@ -84,12 +82,5 @@ export class PanelSupplyComponent {
   addSupply(supply: Supply): void {
     this.supplies.push(supply);
   }
-
-  makeSearchRequest(): void {
-    // La lógica para hacer la búsqueda y enviar los parámetros
-    console.log('Haciendo búsqueda con los siguientes parámetros:', this.articleCustomParams);
-    // Aquí puedes hacer la llamada HTTP para obtener los datos usando los parámetros
-  }
-
 
 }
