@@ -16,6 +16,4 @@ export class UserRegisterService {
     return this.apiFactory.createPost<any>(this.apiUrl, user);
   }
 
-  fechCreateCar() {
-    return this.apiFactory.createPost<any>(this.apiUrl2,null);}
 }

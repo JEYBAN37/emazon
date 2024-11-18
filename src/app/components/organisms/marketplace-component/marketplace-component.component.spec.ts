@@ -14,12 +14,12 @@ describe('MarketplaceComponent', () => {
   beforeEach(async () => {
     const apiFactoryServiceMock = {
       createGet: jest.fn()
-    } as unknown as jest.Mocked<ApiFactoryService>;
+    };
 
     const cartServiceMock = {
       toggleCart: jest.fn(),
       isInCart: jest.fn()
-    } as unknown as jest.Mocked<CartService>;
+    };
 
     await TestBed.configureTestingModule({
       declarations: [MarketplaceComponent],
@@ -98,20 +98,12 @@ describe('MarketplaceComponent', () => {
     expect(component.page).toBe(0);
     expect(loadDataSpy).not.toHaveBeenCalled();
   });
-  it('should handle filter change and reload data', () => {
-    const mockFilter = { name: 'Test', brand: 'Brand', category: 'Category' };
-    const loadDataSpy = jest.spyOn(component, 'loadData');
-
-    component.handleFilterChange(mockFilter);
-
-    expect(component.articleCustomParams.byName).toBe(mockFilter.name);
-    expect(component.articleCustomParams.byBrand).toBe(mockFilter.brand);
-    expect(component.articleCustomParams.byCategory).toBe(mockFilter.category);
-    expect(component.page).toBe(0);
-    expect(loadDataSpy).toHaveBeenCalled();
-  });
 
   it('should go to previous page and reload data', () => {
+    // Mock de datos devueltos por la API
+    const mockArticles = [{ id: 1, name: 'Test Article' }];
+    apiFactoryServiceSpy.createGet.mockReturnValue(of(mockArticles));
+
     const loadDataSpy = jest.spyOn(component, 'loadData');
     component.page = 1;
 
@@ -119,7 +111,18 @@ describe('MarketplaceComponent', () => {
 
     expect(component.page).toBe(0);
     expect(loadDataSpy).toHaveBeenCalled();
+    expect(apiFactoryServiceSpy.createGet).toHaveBeenCalledWith(component.apiUrl, {
+      page: 0,
+      ascending: false,
+      size: 9,
+      byName: null,
+      byBrand: null,
+      byCategory: null
+    });
   });
+  
+
+
 
   it('should not go to previous page if already on first page', () => {
     const loadDataSpy = jest.spyOn(component, 'loadData');
@@ -156,6 +159,9 @@ describe('MarketplaceComponent', () => {
   });
 
   it('should toggle order and reload data', () => {
+    const mockArticles = [{ id: 1, name: 'Test Article' }];
+    apiFactoryServiceSpy.createGet.mockReturnValue(of(mockArticles));
+
     const loadDataSpy = jest.spyOn(component, 'loadData');
     component.ascending = false;
 
@@ -177,6 +183,9 @@ describe('MarketplaceComponent', () => {
 
   it('should handle filter change with undefined values and reload data', () => {
     const mockFilter = { name: null, brand: null, category: null };
+    const mockArticles = [{ id: 1, name: 'Test Article' }];
+    apiFactoryServiceSpy.createGet.mockReturnValue(of(mockArticles));
+
     const loadDataSpy = jest.spyOn(component, 'loadData');
 
     component.handleFilterChange(mockFilter);

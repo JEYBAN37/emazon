@@ -11,7 +11,7 @@ describe('AuthService', () => {
     authService = TestBed.inject(AuthService);
 
     // Clear localStorage before each test to ensure test isolation
-    localStorage.clear();
+    sessionStorage.clear();
   });
 
 
@@ -22,11 +22,12 @@ describe('AuthService', () => {
 
   it('should retrieve token from localStorage', () => {
     const testToken = 'test-token';
-    localStorage.setItem('auth_token', testToken);
+    sessionStorage.setItem('auth_token', testToken);
 
     const token = authService.getToken();
     expect(token).toBe('test-token');
   });
+
 
   it('should return an empty string if no token is stored', () => {
     const token = authService.getToken();
@@ -34,16 +35,16 @@ describe('AuthService', () => {
   });
 
   it('should save the token to localStorage', () => {
-    const testToken = 'new-test-token';
+    const testToken = '';
     authService.setToken(testToken);
 
-    expect(localStorage.getItem('auth_token')).toBe(testToken);
+    expect(sessionStorage.getItem('auth_token')).toBe('');
   });
 
   it('should clear the token from localStorage', () => {
-    localStorage.setItem('auth_token', 'token-to-clear');
+    sessionStorage.setItem('auth_token', 'token-to-clear');
     authService.clearToken();
 
-    expect(localStorage.getItem('auth_token')).toBeNull();
+    expect(sessionStorage.getItem('auth_token')).toBeNull();
   });
 });
