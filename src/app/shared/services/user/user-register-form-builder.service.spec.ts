@@ -23,7 +23,6 @@ describe('UserRegisterFormBuilderService', () => {
     // Verify the form initialization
     expect(form).toBeDefined();
     expect(form.controls).toHaveProperty('name');
-    expect(form.controls).toHaveProperty('confirmPassword');
     expect(form.controls).toHaveProperty('lastName');
     expect(form.controls).toHaveProperty('dni');
     expect(form.controls).toHaveProperty('telephone');
@@ -33,7 +32,6 @@ describe('UserRegisterFormBuilderService', () => {
 
     // Verify default values for each control
     expect(form.get('name')?.value).toBe('');
-    expect(form.get('confirmPassword')?.value).toBe('');
     expect(form.get('lastName')?.value).toBe('');
     expect(form.get('dni')?.value).toBe('');
     expect(form.get('telephone')?.value).toBe('');
@@ -45,7 +43,7 @@ describe('UserRegisterFormBuilderService', () => {
     expect(hasValidator(form.get('name'), Validators.required)).toBe(false);
     expect(hasValidator(form.get('name'), Validators.maxLength(50))).toBe(false);
 
-    expect(hasValidator(form.get('confirmPassword'), Validators.required)).toBe(false);
+  
 
     expect(hasValidator(form.get('lastName'), Validators.required)).toBe(false);
     expect(hasValidator(form.get('lastName'), Validators.maxLength(90))).toBe(false);

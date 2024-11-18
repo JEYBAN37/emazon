@@ -122,5 +122,20 @@ describe('SendSupplyComponent', () => {
     const value = component.getPropertyValue(obj, 'details.nonexistent');
     expect(value).toBeUndefined();
   });
+
+  it('should call alertService.showSuccess, emit suppliesUpdated, and clear supplies on successful sendSupplies', () => {
+  const response = [{ id: 1, name: 'Supply 1' }];
+  component.supplies = [{ id: 1, name: 'Supply 1' } as Supply];
+  jest.spyOn(mockSupplyService, 'fetchSupplyData').mockReturnValue(of( component.supplies));
+  const showSuccessSpy = jest.spyOn(mockAlertService, 'showSuccess');
+  const emitSpy = jest.spyOn(component.suppliesUpdated, 'emit');
+
+  component.sendSupplies();
+
+  expect(showSuccessSpy).toHaveBeenCalledWith('Suministros enviados exitosamente');
+  expect(emitSpy).toHaveBeenCalledWith(response);
+  expect(component.supplies).toEqual([]);
 });
 
+
+});

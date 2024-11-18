@@ -16,7 +16,7 @@
   
       <div class="tabs-content">
         <ng-container *ngIf="selectedTab === 0">
-          <div style="width: 100%;  justify-items: center; flex-direction: column; padding: 10px;">
+          <div style="width: 100%;  justify-items: center;">
             <app-panel-search (searchParams)="handleSearchParams($event)"></app-panel-search>
             <div style="width: 90% ;margin: 20px ;">
               <app-card-get-stock
@@ -35,13 +35,11 @@
   
         <ng-container *ngIf="selectedTab === 1">
 
-          <div
-          style="width: 100%; display: flex; flex-direction: row"
-        >
-          <div style="width: 35%">
+          <div class="supply-container">
+          <div  class="tabs-left">
             <app-card-supply (supplyAdded)="addSupply($event)" ></app-card-supply>
           </div>
-          <div style="width: 65%">
+          <div  class="tabs-right">
             <app-send-supply  
             (suppliesUpdated)="onSuppliesUpdated($event)"
             [supplies]="supplies"

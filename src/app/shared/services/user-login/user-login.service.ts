@@ -11,7 +11,7 @@ export class UserLoginService {
 
   constructor(private apiFactory : ApiFactoryService) {}
 
-  fetchUser(user: User): Observable<User> {
-    return this.apiFactory.createPost<User>(this.apiUrl, user);
+  public fetchUser(user: User): Observable<any> {
+    return this.apiFactory.createPost<any>(this.apiUrl, user);
   }
 }

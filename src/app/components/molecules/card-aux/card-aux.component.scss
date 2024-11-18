@@ -155,3 +155,53 @@
     padding: 0px 30px 0px  30px;  /* Opcional: espacio interno para los hijos */
     box-sizing: border-box; /* Para incluir padding y border en el cálculo del width */
 }
+
+@media (max-width: 768px) {
+  .card {
+      max-width: 100%; /* La tarjeta ocupa todo el ancho en pantallas pequeñas */
+      margin: 1rem; /* Agregar márgenes para mejor espaciado */
+  }
+
+  .card-title {
+      font-size: 24px; /* Reducir el tamaño del título */
+  }
+
+  .card-description {
+      font-size: 12px;
+  }
+
+  .form-double {
+      flex-direction: column; /* Apilar los campos en pantallas pequeñas */
+  }
+
+  .child {
+      width: 100%; /* Hacer que los campos ocupen todo el ancho disponible */
+      padding: 0 10px; /* Espaciado ajustado */
+  }
+
+  .form-input-aux {
+      width: 100%; /* Ajustar los campos para ocupar el ancho completo */
+  }
+}
+
+@media (max-width: 480px) {
+  .card-title {
+      font-size: 20px; /* Ajustar el tamaño del título en pantallas muy pequeñas */
+  }
+
+  .card-description {
+      font-size: 11px;
+  }
+
+  .card-footer {
+      font-size: 0.75rem; /* Reducir el tamaño de fuente en pie de página */
+  }
+
+  .form-double {
+      flex-direction: column; /* Apilar los campos en pantallas muy pequeñas */
+  }
+
+  .child {
+      width: 100%; /* Hacer que cada campo ocupe el 100% del ancho */
+  }
+}

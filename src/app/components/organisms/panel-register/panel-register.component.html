@@ -1,5 +1,6 @@
 
 <div class="login-container">
+  <app-alert-message-display></app-alert-message-display>  
     <div class="card">
         <div  class="card-header">
             <h1 class="card-title">{{title}}</h1>
@@ -101,14 +102,7 @@
                 </div>
         
                 <div class="child">
-                  <app-input
-                    [control]="getFormControl('confirmPassword')"
-                    label="Confirmar Contraseña"
-                    type="password"
-                    [errorMessages]="[
-                      { key: 'required', message: 'Confirmar Contraseña es requerido' }
-                    ]"
-                  ></app-input>
+                 
                 </div>
               </div>
             </div>

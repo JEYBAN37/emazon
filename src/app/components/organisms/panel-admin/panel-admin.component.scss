@@ -1,69 +1,154 @@
 /* Container */
 .container {
   font-family: "Poppins", sans-serif;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 1rem;
-    overflow-y: auto;
-    display: block;
-  }
-  
-  /* Heading */
-  .container h1 {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-  }
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+  overflow-y: auto;
+  display: block;
+}
 
-  
-  /* Tabs List */
+/* Heading */
+.container h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+/* Tabs List */
+.tabs-list {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Individual Tab Triggers */
+.tabs-trigger {
+  font-family: 'Poppins', sans-serif;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  background-color: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.375rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+.tabs-trigger:hover {
+  background-color: #dddddd;
+}
+
+.tabs-trigger.active {
+  background-color: #9D3FE7;
+  color: white;
+  border-color: #cbd5e0;
+}
+
+/* Tabs Content */
+.tabs-content {
+  padding: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06); /* Sombra */
+  border: 1px solid #e2e8f0;
+  border-radius: 0.375rem;
+  background-color: white;
+  height: 498px;
+  overflow: hidden;
+}
+
+.card-title {
+  font-size: 30px; /* Tamaño de fuente para título */
+  font-weight: 700;
+  line-height: 36px;
+  letter-spacing: -0.025em;
+  font-style: normal;
+  margin-bottom: -5px;
+}
+
+/* CSS para las filas de la pestaña */
+.tabs-row {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+/* CSS para la columna izquierda de la pestaña */
+.tabs-left {
+  width: 100%;
+}
+
+/* CSS para la columna derecha de la pestaña */
+.tabs-right {
+  width: 100%;
+}
+
+/* CSS para la altura de la tercera pestaña */
+.full-height {
+  height: 462px;
+}
+
+/* CSS para el contenedor del card auxiliar */
+.card-aux-container {
+  width: 100%;
+  margin-top: 20px;
+}
+
+/* Media Queries para Responsividad */
+
+/* Para dispositivos con pantallas pequeñas (por ejemplo, móviles) */
+@media (max-width: 768px) {
   .tabs-list {
-    display: grid;
-    width: 100%;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-    margin-bottom: 1rem;
-  }
-  
-  /* Individual Tab Triggers */
-  .tabs-trigger {
-    font-family: 'Poppins', sans-serif;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    background-color: #f1f5f9;
-    border: 1px solid #e2e8f0;
-    border-radius: 0.375rem;
-    text-align: center;
-    font-weight: 500;
+    grid-template-columns: 1fr; /* Muestra las pestañas de una en una */
+    gap: 1rem;
   }
 
-  .tabs-trigger:hover{
-    background-color: #dddddd;
-  }
-  
-  .tabs-trigger.active {
-    background-color: #9D3FE7;
-    color: white;
-    border-color: #cbd5e0;;
+  .tabs-row {
+    flex-direction: column; /* Cambia la dirección de la fila a columna */
   }
 
-  
-  /* Tabs Content */
+  .tabs-left, .tabs-right {
+    width: 100%; /* Ambos ocupan todo el ancho en pantallas pequeñas */
+  }
+
   .tabs-content {
-    padding: 1rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06); /* Sombra */
-    border: 1px solid #e2e8f0;
-    border-radius: 0.375rem;
-    background-color: white;
-    height: 498px;
-    overflow: hidden;
+    height: auto; /* La altura de las pestañas no se fija en pantallas pequeñas */
   }
 
   .card-title {
-    font-size: 30px; /* Tamaño de fuente para título */
-    font-weight: 700;
-    line-height: 36px;
-    letter-spacing: -0.025em;
-    font-style: normal;
-    margin-bottom: -5px;
+    font-size: 1.2rem; /* Reduce el tamaño de la fuente del título */
   }
+
+  .tabs-trigger {
+    padding: 0.5rem; /* Reduce el padding para que no ocupe tanto espacio */
+    font-size: 0.875rem; /* Disminuye el tamaño de la fuente */
+  }
+}
+
+/* Para dispositivos más grandes (como tabletas) */
+@media (max-width: 1024px) {
+  .tabs-list {
+    grid-template-columns: repeat(2, 1fr); /* Muestra dos pestañas por fila */
+    gap: 1rem;
+  }
+
+ 
+
+  
+}
+
+/* Para pantallas grandes (desktops y más grandes) */
+@media (min-width: 1200px) {
+  .tabs-list {
+    grid-template-columns: repeat(3, 1fr); /* Tres columnas de pestañas */
+    gap: 1.5rem;
+  }
+
+  .tabs-left {
+    width: 35%;
+  }
+
+  .tabs-right {
+    width: 65%;
+  }
+}

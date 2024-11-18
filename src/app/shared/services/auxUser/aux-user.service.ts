@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuxUserService {
-  private apiUrl = 'http://localhost:8086/admin/register/aux_bodega';
+  private apiUrl = 'http://localhost:8088/admin/register/aux_bodega';
 
   constructor(private apiFactory: ApiFactoryService) {}
 

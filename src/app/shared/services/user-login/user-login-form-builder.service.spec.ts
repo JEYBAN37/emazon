@@ -20,7 +20,7 @@ describe('UserLoginFormBuilderService', () => {
   });
 
   it('should initialize user login form with email and password fields', () => {
-    const form: FormGroup = service.InicialUserLoginForm();
+    const form: FormGroup = service.inicialUserLoginForm();
 
     // Check that the form is defined
     expect(form).toBeDefined();

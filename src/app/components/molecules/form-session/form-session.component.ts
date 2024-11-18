@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertMessageService } from 'src/app/shared/services/alerts-services/alert-message.service';
+import { AuthService } from 'src/app/shared/services/factory-api/auth-service.service';
 import { UserLoginFormBuilderService } from 'src/app/shared/services/user-login/user-login-form-builder.service';
 import { UserLoginService } from 'src/app/shared/services/user-login/user-login.service';
 import { ValidationService } from 'src/app/shared/services/validations/validation.service';
@@ -24,11 +25,12 @@ export class FormSessionComponent implements OnInit {
     public validationService: ValidationService,
     public alertService: AlertMessageService,
     public cdr : ChangeDetectorRef,
+    public authService: AuthService,
     private router: Router
   ) { }
 
   ngOnInit(): void {
-    this.userForm = this.userLoginFormBuilder.InicialUserLoginForm();
+    this.userForm = this.userLoginFormBuilder.inicialUserLoginForm();
   }
 
   getData(): void {
@@ -37,7 +39,18 @@ export class FormSessionComponent implements OnInit {
       return;
     }
 
-    this.router.navigate([this.route]); 
+    this.userLoginService.fetchUser(this.userForm.value).subscribe(
+      (response) => {
+        this.alertService.showSuccess('Bienvenido');
+        this.authService.setToken(response.token);
+        this.router.navigate([this.route]);
+      },
+      (error) => {
+        this.alertService.showError(
+          error.error?.message || 'Hubo un error al enviar'
+        );
+      }
+    );
 
   }
   

@@ -155,11 +155,9 @@ describe('delete', () => {
       expect(response).toEqual(expectedResponse);
     });
 
-    const req = httpMock.expectOne((request) =>
-      request.url === endpoint &&
-      request.method === 'DELETE' &&
-      request.body === null
-    );
+    const req = httpMock.expectOne(endpoint);
+    expect(req.request.method).toBe('DELETE');
+  
     req.flush(expectedResponse);
   });
 

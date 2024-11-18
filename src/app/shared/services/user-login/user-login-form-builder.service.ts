@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +7,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 export class UserLoginFormBuilderService {
 
   constructor(private formBuilder: FormBuilder) {}
-  InicialUserLoginForm() {
+  inicialUserLoginForm():FormGroup {
     return this.formBuilder.group({
       email: ['',Validators.required],
       password: ['',Validators.required]

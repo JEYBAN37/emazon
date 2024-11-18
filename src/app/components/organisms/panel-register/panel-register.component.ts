@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { UserAux } from 'src/app/shared/models/aux-interface';
 import { AlertMessageService } from 'src/app/shared/services/alerts-services/alert-message.service';
 import { AuxUserService } from 'src/app/shared/services/auxUser/aux-user.service';
+import { AuthService } from 'src/app/shared/services/factory-api/auth-service.service';
 import { UserRegisterFormBuilderService } from 'src/app/shared/services/user/user-register-form-builder.service';
 import { UserRegisterService } from 'src/app/shared/services/user/user-register.service';
 import { ValidationService } from 'src/app/shared/services/validations/validation.service';
@@ -26,6 +27,7 @@ public subtitle : string = 'Ingresa tus datos para registrarte';
     public validationService: ValidationService,
     public alertService: AlertMessageService,
     public cdr: ChangeDetectorRef,
+    private authService: AuthService,
     public router: Router
   ) { }
 
@@ -40,8 +42,10 @@ public subtitle : string = 'Ingresa tus datos para registrarte';
     }
 
     const user: UserAux = { ...this.userRegisterForm.value };
+    this.authService.clearToken();
     this.useService.fetchUserData(user).subscribe({
       next: (response) => {
+
         this.alertService.showSuccess('Usuario Cliente creado exitosamente');
         this.userRegisterForm.reset();
         this.toLogin()

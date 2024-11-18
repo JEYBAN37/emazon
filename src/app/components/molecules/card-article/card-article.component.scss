@@ -38,7 +38,6 @@
   font-size: 1rem; /* Tamaño de fuente base */
   color: #4a5568; /* Gris oscuro para contenido */
   height: 100%; /* Altura máxima del contenedor */
-
 }
 
 .card-footer {
@@ -59,8 +58,6 @@
   margin-top: 1rem; 
 }
 
-
-
 .form-textarea:focus {
   border-color: #4B3A5A; /* Borde azul al enfocar */
   outline: none; /* Quitar borde de enfoque predeterminado */
@@ -79,4 +76,58 @@
   margin-bottom: 0.5rem; /* Espacio inferior */
 }
 
+/* Media queries for responsiveness */
 
+@media (max-width: 768px) {
+  .card {
+    max-width: 100%; /* Full width on smaller screens */
+    padding: 1rem; /* Add some padding for mobile */
+  }
+
+  .card-header {
+    padding: 0.75rem; /* Reduced padding for mobile */
+  }
+
+  .card-title {
+    font-size: 24px; /* Smaller title on mobile */
+  }
+
+  .card-description {
+    font-size: 12px; /* Smaller description on mobile */
+  }
+
+  .card-content {
+    padding: 1rem;
+  }
+
+  .card-footer {
+    padding: 0.75rem; /* Reduced footer padding for mobile */
+  }
+
+  .form-label {
+    font-size: 0.75rem; /* Smaller font for labels */
+  }
+
+  .form-textarea, .input-container {
+    margin-bottom: 0.75rem; /* Reduced space between form elements */
+  }
+}
+
+@media (max-width: 480px) {
+  .card-title {
+    font-size: 20px; /* Even smaller title on extra small screens */
+  }
+
+  .card-description {
+    font-size: 11px; /* Smaller description */
+  }
+
+  .card-content {
+    padding: 0.5rem;
+  }
+
+  .card-footer {
+    padding: 0.5rem;
+  }
+  
+}

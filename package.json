@@ -57,7 +57,8 @@
       "src/**/*.ts",
       "!src/**/*.module.ts",
       "!src/main.ts",
-      "!src/environments/**"
+      "!src/environments/**",
+      "!src/polyfills.ts"
     ],
     "verbose": true,
     "globals": {

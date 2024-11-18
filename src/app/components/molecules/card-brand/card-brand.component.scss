@@ -1,15 +1,18 @@
+/* Contenedor de la tarjeta */
 .card {
   max-height: max-content;
   font-family: 'Poppins', sans-serif;
   max-width: 24rem; /* Ancho máximo */
-  border: 1px solid #e2e8f0;
   border-radius: 0.5rem; /* Bordes redondeados */
+  border: 1px solid #e2e8f0;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06); /* Sombra */
   background-color: #ffffff; /* Fondo blanco */
+
 }
 
+/* Cabecera de la tarjeta */
 .card-header {
-  padding: 1rem; /* Espaciado interno */
+  padding: 1rem;
   border-bottom: 1px solid #e2e8f0; /* Separador */
   background-color: #f9fafb; /* Fondo claro */
 }
@@ -30,14 +33,16 @@
   color: #4B3A5A; /* Color gris para descripción */
 }
 
+/* Contenido de la tarjeta */
 .card-content {
   padding: 1.5rem 1.5rem 1rem 1rem;
   font-size: 1rem; /* Tamaño de fuente base */
   color: #4a5568; /* Gris oscuro para contenido */
   height: 100%; /* Altura máxima del contenedor */
-
+  overflow-y: auto; /* Permite el desplazamiento vertical */
 }
 
+/* Footer de la tarjeta */
 .card-footer {
   padding: 1rem 1.5rem 1rem 1rem;
   border-top: 1px solid #e2e8f0; /* Separador */
@@ -46,6 +51,7 @@
   font-size: 0.875rem; /* Tamaño de fuente más pequeño */
 }
 
+/* Espaciado vertical para formularios */
 .space-vertical {
   display: flex;
   margin-top: 10px;
@@ -56,18 +62,12 @@
   margin-top: 1rem; 
 }
 
-
-
-.form-textarea:focus {
-  border-color: #4B3A5A; /* Borde azul al enfocar */
-  outline: none; /* Quitar borde de enfoque predeterminado */
-  background-color: #ffffff; /* Fondo blanco al enfocar */
-}
-
+/* Contenedor para inputs */
 .input-container {
   margin-bottom: 1rem; /* Espacio inferior para separación */
 }
 
+/* Etiquetas de los formularios */
 .form-label {
   font-size: 0.875rem; /* Tamaño de fuente pequeño */
   font-weight: 500;    /* Peso medio */
@@ -76,4 +76,75 @@
   margin-bottom: 0.5rem; /* Espacio inferior */
 }
 
+/* Estilo de los inputs */
+.form-textarea:focus {
+  border-color: #4B3A5A; /* Borde azul al enfocar */
+  outline: none; /* Quitar borde de enfoque predeterminado */
+  background-color: #ffffff; /* Fondo blanco al enfocar */
+}
 
+/* Reglas para hacer el diseño responsivo */
+@media (max-width: 768px) {
+  /* Hacer que las tarjetas ocupen el 100% del ancho en pantallas pequeñas */
+  .card {
+      max-width: 100%;
+      margin: 1rem;
+  }
+
+  .card-title {
+      font-size: 1.25rem; /* Reducir tamaño de título */
+  }
+
+  .card-description {
+      font-size: 0.875rem; /* Reducir tamaño de descripción */
+  }
+
+  .card-content {
+      padding: 1rem;
+  }
+
+  .card-footer {
+      text-align: center; /* Centrar texto en el footer */
+  }
+
+  .input-container {
+      margin-bottom: 0.75rem; /* Reducir el margen inferior de inputs */
+  }
+
+  .form-label {
+      font-size: 0.75rem; /* Reducir tamaño de las etiquetas */
+  }
+
+  .form-textarea {
+      width: 100%; /* Asegurar que los inputs ocupen todo el ancho */
+  }
+}
+
+/* Reglas para hacer el diseño responsivo en pantallas muy pequeñas (móviles) */
+@media (max-width: 480px) {
+  /* Reducir aún más el tamaño de la tarjeta */
+  .card {
+      max-width: 100%;
+      padding: 1rem;
+  }
+
+  .card-title {
+      font-size: 1.125rem; /* Aún más pequeño el tamaño del título */
+  }
+
+  .card-description {
+      font-size: 0.75rem; /* Aún más pequeño el tamaño de descripción */
+  }
+
+  .card-footer {
+      font-size: 0.75rem; /* Reducir el tamaño del footer */
+  }
+
+  .input-container {
+      margin-bottom: 0.5rem; /* Menor espacio entre inputs */
+  }
+
+  .form-textarea {
+      padding: 0.75rem; /* Asegurar espacio cómodo en el input */
+  }
+}

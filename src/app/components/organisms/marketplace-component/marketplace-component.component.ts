@@ -72,10 +72,10 @@ export class MarketplaceComponent implements OnInit {
     return this.cartService.isInCart(product);
   }
 
-  handleFilterChange(selectedFilter: { name: string, brand: string, article: string }): void {
+  handleFilterChange(selectedFilter: { name: string | null, brand: string |null, category: string | null }): void {
     this.articleCustomParams.byName = selectedFilter.name || null;
     this.articleCustomParams.byBrand = selectedFilter.brand || null;
-    this.articleCustomParams.byCategory = selectedFilter.article || null;
+    this.articleCustomParams.byCategory = selectedFilter.category || null;
 
     this.page = 0;
     this.loadData();

@@ -4,7 +4,7 @@
     <h2 class="card-description">{{ description }}</h2>
   </div>
   <div class="card-content">
-    <div style="width: 100%; padding-bottom: 10px">
+    <div class="button-container">
       <button class="btn-primary" (click)="toggleOrder()">
         {{ ascending ? "dsc" : "Asc" }}
       </button>
@@ -23,23 +23,14 @@
       </tbody>
     </table>
     <!-- Botones de paginación -->
-    <div
-      style="
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        margin-top: 5px;
-      "
-    >
+    <div class="pagination-container">
       <button
         (click)="prevPage()"
         [disabled]="page === 0"
         class="btn-secundary"
       >
         <img
-          style="height: 20px; transform: rotate(180deg); z-index: -1"
+          class="pagination-arrow rotation"
           src="assets\arrow_forward_ios.svg"
           alt="Anterior"
         />
@@ -47,9 +38,9 @@
       <span>{{ page + 1 }}</span>
       <button (click)="nextPage()" class="btn-secundary">
         <img
-          style="height: 20px; z-index: -1"
+          class="pagination-arrow"
           src="assets\arrow_forward_ios.svg"
-          alt="Sigueinte"
+          alt="Siguiente"
         />
       </button>
     </div>

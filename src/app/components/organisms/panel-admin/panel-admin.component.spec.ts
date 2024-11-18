@@ -81,4 +81,14 @@ describe('PanelAdminComponent', () => {
     const tabs = fixture.debugElement.queryAll(By.css('.tab'));
     expect(tabs.length).toBe(0);
   });
+  it('should call the refresh method of the passed component', () => {
+    const mockComponent = {
+      refresh: jest.fn()
+    } as unknown as CardGetStockComponent<any>;
+
+    component.refreshBHandler(mockComponent);
+
+    expect(mockComponent.refresh).toHaveBeenCalled();
+  });
+
 });
