@@ -1,0 +1,11 @@
+<div class="stats-container">
+  <div class="title">ID : {{id}}</div>
+  <div 
+    class="stats-bar" 
+    [style.width.%]="percentage" 
+    [style.height.px]="height"
+    [style.backgroundColor]="barColor"
+    style="margin-top: 20px;">
+  </div>
+</div>
+<p>{{ percentage }}%</p>

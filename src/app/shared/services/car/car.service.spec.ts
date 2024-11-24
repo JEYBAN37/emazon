@@ -137,4 +137,24 @@ describe('CartService', () => {
       expect(service.isInCart(product)).toBe(false);
     });
   });
+  
+  describe('deleteProductFromCart', () => {
+  
+    it('should show an error message if API fails', () => {
+      const product: ArticleJson = { id: 1, name: 'Test Product' } as any;
+  
+      // Mock API delete failure
+      apiFactoryMock.delete.mockReturnValue(throwError({ error: { message: 'Error al eliminar' } }));
+  
+      service['cart'].set(product.id, { product, quantity: 2 });
+  
+      service['deleteProductFromCart'](product);
+  
+      expect(apiFactoryMock.delete).toHaveBeenCalledWith(service['apiUrlCarDelete'], { idArticle: product.id });
+      expect(alertServiceMock.showError).toHaveBeenCalledWith('Error al eliminar');
+      expect(service.isInCart(product)).toBe(true); // Verificar que el producto sigue en el carrito
+    });
+  });
+  
+  
 });

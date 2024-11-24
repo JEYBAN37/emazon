@@ -1,0 +1,33 @@
+<div class="card">
+    <app-alert-message-display></app-alert-message-display>
+    <div class="card-header">
+      <h1 class="card-title">{{ title }}</h1>
+      <h2 class="card-description">{{ subtitle }}</h2>
+    </div>
+  <div class="card-header">
+    <div>
+      <h3>Total en Ventas</h3>
+      <div>{{price}}</div>
+    </div>
+
+    <div>
+      <h3>Total de Articulos Vendidos</h3>
+      <div>{{quantity}}</div>
+    </div>
+  
+  </div>
+      <div class="card-content space-vertical-content">
+        <div>
+          <h3>Top 5 Articulos mas vendidos</h3>
+        </div>
+    
+                <app-stats-bar
+        *ngFor="let sale of salesData"
+        [id]="sale.id"
+        [percentage]="sale.percentage"
+        [barColor]="sale.color"
+      ></app-stats-bar>
+    </div>
+
+    </div>
+   

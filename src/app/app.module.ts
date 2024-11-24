@@ -33,6 +33,9 @@ import { MarketplaceComponent } from './components/organisms/marketplace-compone
 import { CarComponent } from './components/organisms/car/car.component';
 import { TarjetBuyComponent } from './components/molecules/tarjet-buy/tarjet-buy.component';
 import { CardAuxComponent } from './components/molecules/card-aux/card-aux.component';
+import { CardStatisticsComponent } from './components/molecules/card-statistics/card-statistics.component';
+import { StatsBarComponent } from './components/atoms/stats-bar/stats-bar.component';
+
 
 
 
@@ -67,6 +70,8 @@ import { CardAuxComponent } from './components/molecules/card-aux/card-aux.compo
     CarComponent,
     TarjetBuyComponent,
     CardAuxComponent,
+    CardStatisticsComponent,
+    StatsBarComponent,
   
     
   ],

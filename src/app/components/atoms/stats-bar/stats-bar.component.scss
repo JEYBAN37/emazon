@@ -1,0 +1,30 @@
+.stats-container {
+    width: 100%; /* Tamaño total de la barra */
+    height: 20px; /* Altura de la barra */
+    background-color: #e0e0e0; /* Color de fondo de la barra */
+    border-radius: 5px; /* Bordes redondeados */
+    overflow: hidden; /* Para recortar la barra si se sale */
+    margin-bottom: 8px; /* Espaciado inferior */
+  }
+
+  .title {
+    font-family: "Poppins", sans-serif;
+    font-size: 3rem;
+    color: #000;
+    font-weight: bold;
+    margin-bottom: 2rem;
+  }
+  
+  .stats-bar {
+    margin-top: 10px;
+    height: 40px; /* La barra ocupa toda la altura del contenedor */
+    transition: width 0.3s ease-in-out; /* Animación suave */
+    background-color: #4caf50; /* Color por defecto de la barra */
+  }
+  
+  p {
+    font-size: 14px; /* Tamaño del texto */
+    color: #333; /* Color del texto */
+    margin: 0;
+  }
+  

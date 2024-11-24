@@ -59,3 +59,10 @@ export const REGISTER_CONSTANTS = {
     ERRORMESSAGE:'Hubo un error al enviar',
     SUCCESSMESSAGE: 'Usuario Cliente creado exitosamente',
     };
+
+export const STATISTICS_CONSTANS = {
+        TITLE: 'Estadisticas Actuales',
+        SUBTITLE: 'Observa como va tu tienda',
+        ERRORMESSAGE:'Hubo un error al enviar',
+        SUCCESSMESSAGE: 'Usuario Cliente creado exitosamente',
+        };

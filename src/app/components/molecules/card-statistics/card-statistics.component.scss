@@ -1,0 +1,207 @@
+.card {
+    font-family: 'Poppins', sans-serif;
+    max-width: 24rem; /* Ancho máximo */
+    border-radius: 0.5rem; /* Bordes redondeados */
+    overflow: hidden; /* Oculta el desbordamiento */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06); /* Sombra */
+    background-color: #ffffff; /* Fondo blanco */
+    border: 1px solid #e2e8f0; /* Borde ligero */
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    max-width: 100%;
+  }
+  
+  .card-header {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem; /* Espaciado interno */
+    border-bottom: 1px solid #e2e8f0; /* Separador */
+    background-color: #f9fafb; /* Fondo claro */
+  }
+  
+  .card-title {
+    font-size: 30px; /* Tamaño de fuente para título */
+    font-weight: 700;
+    line-height: 36px;
+    letter-spacing: -0.025em;
+    font-style: normal;
+    margin-bottom: -5px;
+  }
+  
+  .card-description {
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 19.6px; /* Tamaño de fuente más pequeño */
+    color: #4B3A5A; /* Color gris para descripción */
+  }
+  
+  .card-content {
+    padding: 1.5rem; /* Espaciado interno */
+    font-size: 1rem; /* Tamaño de fuente base */
+    color: #4a5568; /* Gris oscuro para contenido */
+    flex: 1; /* Permite que el contenido crezca */
+
+  }
+  
+  .card-footer {
+    padding: 1rem; /* Espaciado interno */
+    border-top: 1px solid #e2e8f0; /* Separador */
+    background-color: #f9fafb; /* Fondo claro */
+    text-align: right; /* Alineación del contenido del footer */
+    font-size: 0.875rem; /* Tamaño de fuente más pequeño */
+  }
+
+  .space-vertical {
+    display: flex;
+    margin-top: 0.5rem; 
+    flex-direction: column;
+  }
+
+  .space-vertical-content > * + * {
+    margin-top: 1rem; 
+  }
+
+
+  
+  .form-textarea:focus {
+    border-color: #4B3A5A; /* Borde azul al enfocar */
+    outline: none; /* Quitar borde de enfoque predeterminado */
+    background-color: #ffffff; /* Fondo blanco al enfocar */
+  }
+  
+  .btn-primary {
+    padding: 0.5rem 1rem; /* Espacio interno */
+    background-color: #9D3FE7; /* Fondo azul */
+    color: #ffffff; /* Texto blanco */
+    font-size: 1rem; /* Tamaño de fuente base */
+    font-weight: 600; /* Negrita ligera */
+    border: none; /* Sin borde */
+    border-radius: 0.375rem; /* Bordes redondeados */
+    cursor: pointer; /* Cursor de mano */
+    transition: background-color 0.2s; /* Transición de color */
+  }
+  
+  .btn-primary:hover {
+    background-color: #602093; /* Fondo más oscuro al pasar el mouse */
+  }
+  
+  .btn-primary:focus {
+    outline: 2px solid #63b3ed; /* Enfoque azul claro */
+    outline-offset: 2px;
+  }
+  
+  .span-error{
+    color:#D51A52 ;
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 2.76;
+  }
+
+  
+  .form-double{
+    display: flex;
+    flex-direction: row; /* Alineación horizontal */
+    justify-content: space-between; /* O puedes usar 'space-evenly' o 'center' según tu preferencia */
+    width: 100%; /* Asegura que el contenedor ocupe todo el espacio disponible */
+  }
+  
+  .form-input-aux{
+    margin-bottom: -30px;
+    width: 50%;
+    padding: 10px; 
+  }
+
+  .alert-success {
+    color: #fff;
+    background-color: #00B990;
+    padding: 5px;
+    margin-top: 10px;
+    border-radius: 5px;
+  }
+  
+  .alert-danger {
+    color: #D51A52;
+    background-color: #f8d7da;
+    padding: 5px;
+    margin-top: 10px;
+    border-radius: 5px;
+  }
+  
+  .alert {
+    visibility: hidden; /* Inicialmente oculto */
+    opacity: 0; /* Inicialmente invisible */
+    transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out; /* Transición para aparecer y desaparecer */
+    pointer-events: none; /* Evita que el ratón interactúe con el elemento */
+    height: 20px; /* Altura fija para mantener el tamaño del div */
+    margin-top: 10px; /* Espacio superior */
+    text-align: center;
+  }
+  
+  .alert.show {
+    visibility: visible; /* Visible cuando se le añade la clase show */
+    opacity: 1; /* Hace que sea visible */
+    pointer-events: auto; /* Permite la interacción */
+  }
+  
+  .alert.fade-out {
+    opacity: 0; /* Cuando se inicia la desaparición */
+    visibility: hidden; /* Oculta el elemento después de la transición */
+  }
+  
+  .child {
+    flex: 1; /* Hace que cada hijo ocupe el mismo espacio disponible */
+    width: 50%; /* O puedes usar solo flex: 1 para un reparto proporcional */
+    padding: 0px 30px 0px  30px;  /* Opcional: espacio interno para los hijos */
+    box-sizing: border-box; /* Para incluir padding y border en el cálculo del width */
+}
+
+@media (max-width: 768px) {
+  .card {
+      max-width: 100%; /* La tarjeta ocupa todo el ancho en pantallas pequeñas */
+      margin: 1rem; /* Agregar márgenes para mejor espaciado */
+  }
+
+  .card-title {
+      font-size: 24px; /* Reducir el tamaño del título */
+  }
+
+  .card-description {
+      font-size: 12px;
+  }
+
+  .form-double {
+      flex-direction: column; /* Apilar los campos en pantallas pequeñas */
+  }
+
+  .child {
+      width: 100%; /* Hacer que los campos ocupen todo el ancho disponible */
+      padding: 0 10px; /* Espaciado ajustado */
+  }
+
+  .form-input-aux {
+      width: 100%; /* Ajustar los campos para ocupar el ancho completo */
+  }
+}
+
+@media (max-width: 480px) {
+  .card-title {
+      font-size: 20px; /* Ajustar el tamaño del título en pantallas muy pequeñas */
+  }
+
+  .card-description {
+      font-size: 11px;
+  }
+
+  .card-footer {
+      font-size: 0.75rem; /* Reducir el tamaño de fuente en pie de página */
+  }
+
+  .form-double {
+      flex-direction: column; /* Apilar los campos en pantallas muy pequeñas */
+  }
+
+  .child {
+      width: 100%; /* Hacer que cada campo ocupe el 100% del ancho */
+  }
+}
