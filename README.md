@@ -1,5 +1,8 @@
 # Emazon
 
+![image](https://github.com/user-attachments/assets/a801b60c-0bb6-406d-ad3e-a073bd7490e2)
+
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.13.
 
 ## Development server
